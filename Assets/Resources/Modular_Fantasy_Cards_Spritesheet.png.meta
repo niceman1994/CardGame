@@ -1,0 +1,2311 @@
+fileFormatVersion: 2
+guid: c0f16028dc0545c4b92752499d38a449
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 210
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0c943e1b129af54ebe70b81ea730202
+      internalID: 1534139356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 210
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a03f8ea7b644d014189243b1e719806c
+      internalID: -1652761670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 210
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4be87d432e37f68479639b38b39c414c
+      internalID: -1571104386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 210
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef1d66e5a3e64e34e97c0a8c0daef8dc
+      internalID: 1198812378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 210
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f227d97e5a47217439c9330bd0225ab3
+      internalID: 1974425844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 210
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b59a70cb4aa865a4cb8020c619e61f3b
+      internalID: 1114307190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 206
+        width: 76
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92e437d1a5374ed4281358b47fd30f9e
+      internalID: -486632454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 288
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5ab876257a7e02408e5c390c3139bdc
+      internalID: -1716884410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 297
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0be2e319ac5f4e24e94ef6df28433ff9
+      internalID: -427819010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 711
+        y: 303
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcc055a9592c8624cb4c825e6213a171
+      internalID: 255762966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 303
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b7ca32c5b5104f46a6a043b2b0d0cef
+      internalID: 412355623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 294
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db68e9ec07778f84bb3ce77d91840232
+      internalID: 704705423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 303
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0eea01ca25fb2fe4ea1d660d33993944
+      internalID: -613025561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 303
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af7bf8f98f3ca6d41a54eff873bd3034
+      internalID: 2094695600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 711
+        y: 296
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 206e6db1657d4c44894e3ef0db83f0e0
+      internalID: -2025931575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 296
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d57de0bee2f039046a16dc1f9d8153b8
+      internalID: -1811227920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_16
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 295
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8e7ec78015828e4c91550d7bcc016cd
+      internalID: 1663264769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_17
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 295
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e14120765cfe1d4b98091fae099eaf9
+      internalID: 1677584553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_18
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 284
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0955ab77f8117948a1fcde786b8843f
+      internalID: 1042011337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_19
+      rect:
+        serializedVersion: 2
+        x: 711
+        y: 289
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04cc719e58330ed488a967d85105d970
+      internalID: -299292448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_20
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 289
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6a24c0693a584045829aae16d76782e
+      internalID: 523006072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_21
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 278
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a33e52f2460dc124d8f43a1779186404
+      internalID: 49924576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_22
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 287
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0ccdc76ca60a8a4b80788357b8670a7
+      internalID: -433987790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_23
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 287
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cff919e69e0ca3e4c939e08b705f8e3f
+      internalID: -1689738146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_24
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 266
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf68bf81c83ede1489d754e39469de04
+      internalID: 1679791025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_25
+      rect:
+        serializedVersion: 2
+        x: 711
+        y: 282
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d15ce9261d3bd5d4eaea43aadf26cf1f
+      internalID: 1476723091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_26
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 282
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f436ee99b4f451248b9dc08ee7b1e749
+      internalID: 806996782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_27
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 279
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a92682f12d5620468612de4e8a65217
+      internalID: -1904888455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_28
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 279
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6a60ebab616ce04d8ed849f0cb3fbed
+      internalID: -1316481115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_29
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 271
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3a9deef93e87e3478b7e037fe9c98d0
+      internalID: 82708433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_30
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 262
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97bcbb846ecd08b448adc05e60bb47b9
+      internalID: 488314753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_31
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 271
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c21b84c2ee36d14dbbcf15f933a8f16
+      internalID: 399046091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_32
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 271
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 360c6a4f85a2bcf4dba47a30c677adb5
+      internalID: -1950929926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_33
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 244
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db30a4e2f1f4d9a4eb16e05bf3fa482f
+      internalID: -1967997425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_34
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 258
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 374adfd7eb816794c89c414672965c60
+      internalID: 1306285986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_35
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 263
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 405321ffe59c344438ad625073645fdf
+      internalID: 543763162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_36
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 263
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 661e447b9c5342e4eb71dd087e2143c5
+      internalID: -534069338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_37
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 245
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd866f054f43634479171b547088f8d3
+      internalID: -1220388383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_38
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 246
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eda24781a2f3a7347bbaa39b1500eaee
+      internalID: 2053169566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_39
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 255
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94ddc5821a4f28247a2d77c4a8f859fc
+      internalID: -1991584563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_40
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 255
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a35d8064b5ef31f47acd90dc5fc0985f
+      internalID: 1170718463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_41
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 247
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5b0df4c0d26a564dac73ddb0e90b4f1
+      internalID: -587124872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_42
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 247
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e375291b7196a54f8dc095de407d782
+      internalID: -758586018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_43
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 222
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 508a257588317e041b77ce00428c1dc5
+      internalID: -213834096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_44
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 232
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ab59e3ff528b9348b4592c5f96bfe9f
+      internalID: 2046950499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_45
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 239
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e827dd1e6cb734b49b7fad5d84d9e6ef
+      internalID: 1257470781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_46
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 239
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ac6ccae2c1c3254381c90b4c40a92be
+      internalID: 1081195667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_47
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 200
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adbc925ebef10fd4996b4e4890f8897d
+      internalID: -1006033275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_48
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 219
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5caede4f250d5dc4cb19044773ccd03b
+      internalID: 1462257336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_49
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 206
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd5a35fd77271674f92f8c4dd7b0f8b1
+      internalID: -845974094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_50
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 107
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5d6af3a183a32541914fd48ac813acd
+      internalID: -1461364536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_51
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 107
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f64daa8b2cb8c94d84d3dcbde249c41
+      internalID: -1656842917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_52
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 107
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4d4d3f1a72bc0442ae746596288e361
+      internalID: 1013233277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_53
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 107
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 491af2b80b8293d4b94c825d134fd0f3
+      internalID: 1626889090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_54
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 107
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c962a6d425cbd3b4c9fbecdf9e4d2dac
+      internalID: -1177381093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_55
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 107
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c2c31b01c74dc74dbc8eda89ade553e
+      internalID: 1838280364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_56
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 151
+        width: 64
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55acec7388e75f04d86f0350c6334575
+      internalID: -1003620732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_57
+      rect:
+        serializedVersion: 2
+        x: 538
+        y: 151
+        width: 64
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83a3a50c69f2fce41bddec71c042a035
+      internalID: -234053609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_58
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 168
+        width: 10
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f887de8f3a16c7941824cce3fb96c802
+      internalID: -1043250734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_59
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 168
+        width: 10
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4baebd792e24a6045bb4908e15d69ac9
+      internalID: 714582958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_60
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 190
+        width: 30
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74c1356925c60524ebca596dfcffb3b6
+      internalID: -692485824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_61
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 178
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59d18195373130945a216ddf587ef27c
+      internalID: -1982711594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_62
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 193
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e0f8c38556fcf14782b915bb0498511
+      internalID: 1426756179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_63
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 178
+        width: 30
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8033d1f90bf1e104c9eeab0038740bf1
+      internalID: -724174697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_64
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 166
+        width: 37
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a77db42979d38bf4abd2bbbc7e2a9b56
+      internalID: -701299464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_65
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 156
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d15b8ab409c3994caec51afb59d79a0
+      internalID: -1211474327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_66
+      rect:
+        serializedVersion: 2
+        x: 611
+        y: 136
+        width: 10
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd090d51dff6eec4da8f61ce8e0a534f
+      internalID: 677393667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_67
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 136
+        width: 10
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d597e1c19ce6325479d85fb8e42d85b3
+      internalID: 1002265269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_68
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 154
+        width: 37
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b67a8110fa49f942a3fd97f4b996c36
+      internalID: -443950579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_69
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 109
+        width: 62
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8683741a29dd4d14cac8e099d3d8722e
+      internalID: 552519067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_70
+      rect:
+        serializedVersion: 2
+        x: 539
+        y: 109
+        width: 62
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3564d9266e87a92458f2abeaca82c7ea
+      internalID: -1894039148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_71
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 134
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf48afc8db0b99a4082b49c9f2aab0da
+      internalID: -2059180490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_72
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 100
+        width: 10
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8cc5294a9d7a8d4eb2fcd2693edff5b
+      internalID: 1208179756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_73
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 100
+        width: 10
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9e930b5aaa9aa54fa8f2b0e836c5c92
+      internalID: 1545474814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_74
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 124
+        width: 31
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49479e80b575f1c4bab6180e7c06e8c1
+      internalID: -2132001057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_75
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 112
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5366eada35b830b428f19536fae44c68
+      internalID: -882585161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_76
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 112
+        width: 31
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c9718008b65d4b4d8f14246cb080819
+      internalID: -122939349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_77
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 100
+        width: 39
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b456853678edbaf43a41b0103272faee
+      internalID: -958458964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_78
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 4
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f56882e622de414b81f5c22f6c1df5a
+      internalID: 1818949903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_79
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 4
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8507b4764f6b6764d82367894799cc1d
+      internalID: -2005016407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_80
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 4
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f442dec2886b214abeb5793538acfd6
+      internalID: -586926656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_81
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 4
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 332cd138f0a07d64a88c43271ffaab7b
+      internalID: -1944008709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_82
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 4
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04979c976e504584b9810a9ebe54c2ab
+      internalID: -1459535846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_83
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 4
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81eade2c0e10076479c0e0ac666bb3ce
+      internalID: 1788345925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_84
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 4
+        width: 68
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f11638d6df2591439c52e6a3c2e0a9b
+      internalID: -1732010406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_85
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 91
+        width: 64
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa61998abf2bcce4bb517982ae946262
+      internalID: -1778927027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_86
+      rect:
+        serializedVersion: 2
+        x: 611
+        y: 67
+        width: 10
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e1fdbde56d668e4b8d5a2f1e5086b53
+      internalID: 23167331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_87
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 67
+        width: 10
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 496ff67d04f9144499d6944a467c9bd7
+      internalID: -1224310675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_88
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 88
+        width: 39
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7be66f59a81d81f488fdb79d4213efdd
+      internalID: 1723595557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_89
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 80
+        width: 64
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78ea5167e01cd2046ac46a655b5fd134
+      internalID: 1461904446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_90
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 68
+        width: 64
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 267ea177ebfd6a84bb1fb6132986391f
+      internalID: -1262182255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_91
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 58
+        width: 64
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71253c0837e9aeb479ad5ad16476c7e8
+      internalID: 1948031077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_92
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 52
+        width: 66
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8021ed8d3084a224c966087065521ace
+      internalID: 426073601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_93
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 47
+        width: 64
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 867331b99eaf26043aa9f22a81343f8f
+      internalID: -1286865490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_94
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 41
+        width: 64
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33d2a75df027e44489a166b433b6e904
+      internalID: 11934227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_95
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 35
+        width: 64
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33159bed9688f724fab89430d655c937
+      internalID: -170608936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_96
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 30
+        width: 64
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5da8bf74a7426eb47a207f9c8b59b972
+      internalID: -379887152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_97
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 17
+        width: 66
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 225c36ae437289f438ad9b0e332e0070
+      internalID: 1759897218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_98
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 206
+        width: 76
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 371e2a5f298c6ad45af7ba6ea7c5bd47
+      internalID: 1026876078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Modular_Fantasy_Cards_Spritesheet_99
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 206
+        width: 76
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 183f0374eae8648479472687976fff25
+      internalID: 1984803689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Modular_Fantasy_Cards_Spritesheet_0: 1534139356
+      Modular_Fantasy_Cards_Spritesheet_1: -1652761670
+      Modular_Fantasy_Cards_Spritesheet_10: 412355623
+      Modular_Fantasy_Cards_Spritesheet_11: 704705423
+      Modular_Fantasy_Cards_Spritesheet_12: -613025561
+      Modular_Fantasy_Cards_Spritesheet_13: 2094695600
+      Modular_Fantasy_Cards_Spritesheet_14: -2025931575
+      Modular_Fantasy_Cards_Spritesheet_15: -1811227920
+      Modular_Fantasy_Cards_Spritesheet_16: 1663264769
+      Modular_Fantasy_Cards_Spritesheet_17: 1677584553
+      Modular_Fantasy_Cards_Spritesheet_18: 1042011337
+      Modular_Fantasy_Cards_Spritesheet_19: -299292448
+      Modular_Fantasy_Cards_Spritesheet_2: -1571104386
+      Modular_Fantasy_Cards_Spritesheet_20: 523006072
+      Modular_Fantasy_Cards_Spritesheet_21: 49924576
+      Modular_Fantasy_Cards_Spritesheet_22: -433987790
+      Modular_Fantasy_Cards_Spritesheet_23: -1689738146
+      Modular_Fantasy_Cards_Spritesheet_24: 1679791025
+      Modular_Fantasy_Cards_Spritesheet_25: 1476723091
+      Modular_Fantasy_Cards_Spritesheet_26: 806996782
+      Modular_Fantasy_Cards_Spritesheet_27: -1904888455
+      Modular_Fantasy_Cards_Spritesheet_28: -1316481115
+      Modular_Fantasy_Cards_Spritesheet_29: 82708433
+      Modular_Fantasy_Cards_Spritesheet_3: 1198812378
+      Modular_Fantasy_Cards_Spritesheet_30: 488314753
+      Modular_Fantasy_Cards_Spritesheet_31: 399046091
+      Modular_Fantasy_Cards_Spritesheet_32: -1950929926
+      Modular_Fantasy_Cards_Spritesheet_33: -1967997425
+      Modular_Fantasy_Cards_Spritesheet_34: 1306285986
+      Modular_Fantasy_Cards_Spritesheet_35: 543763162
+      Modular_Fantasy_Cards_Spritesheet_36: -534069338
+      Modular_Fantasy_Cards_Spritesheet_37: -1220388383
+      Modular_Fantasy_Cards_Spritesheet_38: 2053169566
+      Modular_Fantasy_Cards_Spritesheet_39: -1991584563
+      Modular_Fantasy_Cards_Spritesheet_4: 1974425844
+      Modular_Fantasy_Cards_Spritesheet_40: 1170718463
+      Modular_Fantasy_Cards_Spritesheet_41: -587124872
+      Modular_Fantasy_Cards_Spritesheet_42: -758586018
+      Modular_Fantasy_Cards_Spritesheet_43: -213834096
+      Modular_Fantasy_Cards_Spritesheet_44: 2046950499
+      Modular_Fantasy_Cards_Spritesheet_45: 1257470781
+      Modular_Fantasy_Cards_Spritesheet_46: 1081195667
+      Modular_Fantasy_Cards_Spritesheet_47: -1006033275
+      Modular_Fantasy_Cards_Spritesheet_48: 1462257336
+      Modular_Fantasy_Cards_Spritesheet_49: -845974094
+      Modular_Fantasy_Cards_Spritesheet_5: 1114307190
+      Modular_Fantasy_Cards_Spritesheet_50: -1461364536
+      Modular_Fantasy_Cards_Spritesheet_51: -1656842917
+      Modular_Fantasy_Cards_Spritesheet_52: 1013233277
+      Modular_Fantasy_Cards_Spritesheet_53: 1626889090
+      Modular_Fantasy_Cards_Spritesheet_54: -1177381093
+      Modular_Fantasy_Cards_Spritesheet_55: 1838280364
+      Modular_Fantasy_Cards_Spritesheet_56: -1003620732
+      Modular_Fantasy_Cards_Spritesheet_57: -234053609
+      Modular_Fantasy_Cards_Spritesheet_58: -1043250734
+      Modular_Fantasy_Cards_Spritesheet_59: 714582958
+      Modular_Fantasy_Cards_Spritesheet_6: -486632454
+      Modular_Fantasy_Cards_Spritesheet_60: -692485824
+      Modular_Fantasy_Cards_Spritesheet_61: -1982711594
+      Modular_Fantasy_Cards_Spritesheet_62: 1426756179
+      Modular_Fantasy_Cards_Spritesheet_63: -724174697
+      Modular_Fantasy_Cards_Spritesheet_64: -701299464
+      Modular_Fantasy_Cards_Spritesheet_65: -1211474327
+      Modular_Fantasy_Cards_Spritesheet_66: 677393667
+      Modular_Fantasy_Cards_Spritesheet_67: 1002265269
+      Modular_Fantasy_Cards_Spritesheet_68: -443950579
+      Modular_Fantasy_Cards_Spritesheet_69: 552519067
+      Modular_Fantasy_Cards_Spritesheet_7: -1716884410
+      Modular_Fantasy_Cards_Spritesheet_70: -1894039148
+      Modular_Fantasy_Cards_Spritesheet_71: -2059180490
+      Modular_Fantasy_Cards_Spritesheet_72: 1208179756
+      Modular_Fantasy_Cards_Spritesheet_73: 1545474814
+      Modular_Fantasy_Cards_Spritesheet_74: -2132001057
+      Modular_Fantasy_Cards_Spritesheet_75: -882585161
+      Modular_Fantasy_Cards_Spritesheet_76: -122939349
+      Modular_Fantasy_Cards_Spritesheet_77: -958458964
+      Modular_Fantasy_Cards_Spritesheet_78: 1818949903
+      Modular_Fantasy_Cards_Spritesheet_79: -2005016407
+      Modular_Fantasy_Cards_Spritesheet_8: -427819010
+      Modular_Fantasy_Cards_Spritesheet_80: -586926656
+      Modular_Fantasy_Cards_Spritesheet_81: -1944008709
+      Modular_Fantasy_Cards_Spritesheet_82: -1459535846
+      Modular_Fantasy_Cards_Spritesheet_83: 1788345925
+      Modular_Fantasy_Cards_Spritesheet_84: -1732010406
+      Modular_Fantasy_Cards_Spritesheet_85: -1778927027
+      Modular_Fantasy_Cards_Spritesheet_86: 23167331
+      Modular_Fantasy_Cards_Spritesheet_87: -1224310675
+      Modular_Fantasy_Cards_Spritesheet_88: 1723595557
+      Modular_Fantasy_Cards_Spritesheet_89: 1461904446
+      Modular_Fantasy_Cards_Spritesheet_9: 255762966
+      Modular_Fantasy_Cards_Spritesheet_90: -1262182255
+      Modular_Fantasy_Cards_Spritesheet_91: 1948031077
+      Modular_Fantasy_Cards_Spritesheet_92: 426073601
+      Modular_Fantasy_Cards_Spritesheet_93: -1286865490
+      Modular_Fantasy_Cards_Spritesheet_94: 11934227
+      Modular_Fantasy_Cards_Spritesheet_95: -170608936
+      Modular_Fantasy_Cards_Spritesheet_96: -379887152
+      Modular_Fantasy_Cards_Spritesheet_97: 1759897218
+      Modular_Fantasy_Cards_Spritesheet_98: 1026876078
+      Modular_Fantasy_Cards_Spritesheet_99: 1984803689
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
