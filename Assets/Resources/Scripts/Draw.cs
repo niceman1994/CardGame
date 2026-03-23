@@ -12,8 +12,6 @@ public class Draw
 
     public bool IsDraw => isDraw;
 
-    public event Action<bool> onDraw;
-
     public Draw(Transform cardTransform)
     {
         this.cardTransform = cardTransform;
@@ -41,8 +39,6 @@ public class Draw
         }
         else
             drawCheckSequence.Join(cardTransform.DOLocalMove(startPos, 0.01f).SetEase(Ease.OutExpo));
-
-        onDraw?.Invoke(isDraw);
     }
 
     public void SetIsDraw(bool isDraw)

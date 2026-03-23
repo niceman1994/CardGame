@@ -31,8 +31,12 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private void Awake()
     {
         draw = new Draw(transform);
-        //draw.onDraw += 
         SetCardState(CardState.InDeck);
+    }
+
+    public void SetCardData(CardData cardData)
+    {
+        cardFront.SetCardData(cardData);
     }
 
     public void SetCardPos(float drawDelay, Vector3 startPos, Vector3 endScale, float cardRotateZ)
@@ -190,7 +194,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         if (handCardState == CardState.Used)
         {
             onUsedCard?.Invoke(this);
-            onUsedCard = null;
+            onUsedCard = null;          // 카드를 재사용할 때 함수 중복 등록을 피하기 위해 null을 넣음
         }
     }
     #endregion

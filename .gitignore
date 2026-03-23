@@ -10,6 +10,18 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+[Aa]ssets/2D_Background_SunshineForest/
+[Aa]ssets/2D_Background_SunshineForest.meta
+[Aa]ssets/Card_Shirts_Lite/
+[Aa]ssets/Card_Shirts_Lite.meta
+[Aa]ssets/Medieval Warrior Pack/
+[Aa]ssets/Medieval Warrior Pack.meta
+[Aa]ssets/Monsters Creatures Fantasy/
+[Aa]ssets/Monsters Creatures Fantasy.meta
+[Aa]ssets/SpellBookPreface/
+[Aa]ssets/SpellBookPreface.meta
+[Aa]ssets/Wizard/
+[Aa]ssets/Wizard.meta
 *.log
 
 # MemoryCaptures can get excessive in size.

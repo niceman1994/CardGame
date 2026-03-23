@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bacd995438df9a4cb3a4b25bb19b32c, type: 3}
+  m_Name: GoblinData
+  m_EditorClassIdentifier: 
+  monsterHp: 55
+  monsterMaxHp: 55
+  monsterAtk: 5
+  monsterName: Goblin
+  attackSound: {fileID: 8300000, guid: 59d32884e61ebd94d9529c17e1a9b2d5, type: 3}

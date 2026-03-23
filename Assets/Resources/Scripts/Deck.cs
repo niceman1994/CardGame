@@ -10,15 +10,12 @@ using UnityEditor;
 
 public class Deck : MonoBehaviour
 {
-    [SerializeField] int needDeckCardCount;     // 덱 구성을 위한 최소 카드 수
-    [SerializeField] Card cardPrefab;
     [SerializeField] List<Card> currentDeckList = new List<Card>();
     [SerializeField] AudioSource deckShuffleSound;
     [SerializeField] int drawCardCount;
 
-    private List<Card> totalDeckList = new List<Card>();
-
     public event Action<Card> onHandToCard;
+    public event Action<List<Card>, Transform> onAddCard;
 
     private void Start()
     {
@@ -28,21 +25,13 @@ public class Deck : MonoBehaviour
 
     private void InitDeck()
     {
-        // 덱 구성을 위한 최소 카드 수를 생성함
-        for (int i = 0; i < needDeckCardCount; i++)
-        {
-            Card cardGameobject = Instantiate(cardPrefab, transform);
-            cardGameobject.name = $"Card_{i}";
-            cardGameobject.transform.localPosition = new Vector3(0, 0, cardGameobject.transform.localPosition.z + i);
-
-            currentDeckList.Add(cardGameobject);
-            totalDeckList.Add(cardGameobject);
-        }
+        onAddCard?.Invoke(currentDeckList, transform);
+        ResetDeckCardPos();
     }
 
     public void CardDraw(int drawCardCount)
     {
-        // 드로우할 카드가 현재 덱의 카드 수보다 많으면 그 수만큼 드로우하도록 예외 처리
+        // 드로우할 카드가 현재 덱의 카드 수보다 많으면 그 수만큼만 드로우되게 함
         if (drawCardCount > currentDeckList.Count && currentDeckList.Count != 0)
             drawCardCount = currentDeckList.Count;
 
@@ -65,13 +54,7 @@ public class Deck : MonoBehaviour
             Debug.LogError("덱에 카드가 없어 셔플할 수 없습니다!");
             return;
         }
-        // CardShuffle 시퀀스가 끝나기 전에 ResetDeckCardPos 함수가 호출되기 때문에 OnComplete로 호출 시점을 정함
-        DeckShuffleSequence().OnComplete(() => ResetDeckCardPos());
-    }
-
-    private Sequence DeckShuffleSequence()
-    {
-       Sequence deckShuffleSequence = DOTween.Sequence();
+        Sequence deckShuffleSequence = DOTween.Sequence();
 
         for (int i = currentDeckList.Count - 1; i > 0; i--)
         {
@@ -83,8 +66,8 @@ public class Deck : MonoBehaviour
             deckShuffleSequence.Join(currentDeckList[i].CardShuffle(0.01f * i));
         }
         deckShuffleSound.Play();
-
-        return deckShuffleSequence;
+        // ResetDeckCardPos 함수의 호출 타이밍을 뒤로 미루기 위해 OnComplete를 사용함
+        deckShuffleSequence.OnComplete(() => ResetDeckCardPos()); 
     }
 
     private void ResetDeckCardPos()

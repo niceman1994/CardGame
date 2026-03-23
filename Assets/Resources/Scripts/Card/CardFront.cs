@@ -13,14 +13,19 @@ public class CardFront : MonoBehaviour
 
     private void Start()
     {
-        SetCardData();
+        GetCardData();
     }
 
-    private void SetCardData()
+    private void GetCardData()
     {
         cardFrontImage.sprite = cardData.cardFrontImage;
         cardCost.text = $"Cost : {cardData.cardCost}";
         cardName.text = cardData.cardName;
         description.text = cardData.description;
+    }
+
+    public void SetCardData(CardData cardData)
+    {
+        this.cardData = cardData;
     }
 }
