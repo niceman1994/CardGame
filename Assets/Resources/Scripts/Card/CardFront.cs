@@ -11,6 +11,9 @@ public class CardFront : MonoBehaviour
     [SerializeField] Text cardName;
     [SerializeField] Text description;
 
+    public CardType GetCardType => cardData.cardType;
+    public int CardCost => int.Parse(cardCost.text);
+
     private void Start()
     {
         GetCardData();
@@ -19,7 +22,7 @@ public class CardFront : MonoBehaviour
     private void GetCardData()
     {
         cardFrontImage.sprite = cardData.cardFrontImage;
-        cardCost.text = $"Cost : {cardData.cardCost}";
+        cardCost.text = $"{cardData.cardCost}";
         cardName.text = cardData.cardName;
         description.text = cardData.description;
     }
@@ -27,5 +30,10 @@ public class CardFront : MonoBehaviour
     public void SetCardData(CardData cardData)
     {
         this.cardData = cardData;
+    }
+
+    public void Execute(IHealth target)
+    {
+        cardData.Execute(target);
     }
 }

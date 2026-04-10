@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d3b63ee096ff6b45a08f247f1dda5ca, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  playerHp: 75
-  playerMaxHp: 75
-  attackSound: {fileID: 8300000, guid: ce100566b4b0ba24cbb455f1b630da5f, type: 3}
+  playerHp: 125
+  playerMaxHp: 125
+  deathSound: {fileID: 0}

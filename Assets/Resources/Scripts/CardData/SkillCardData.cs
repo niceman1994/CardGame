@@ -6,4 +6,11 @@ using UnityEngine;
 public class SkillCardData : CardData
 {
     public int skillValue;
+    public AudioClip skillClip;
+
+    public override void Execute(IHealth target = null)
+    {
+        GameEvents.OnPlayerAoeAttack.Invoke(skillValue);
+        SoundManager.Instance.PlaySkillSound(skillClip);
+    }
 }

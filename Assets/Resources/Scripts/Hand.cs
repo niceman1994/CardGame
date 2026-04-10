@@ -2,12 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Hand : MonoBehaviour
 {
     [SerializeField] Deck deck;
     [SerializeField] DiscardPile discardPile;
-    [SerializeField] RectTransform handArea;
+    [SerializeField] RectTransform canvas;
+    [SerializeField] RectTransform cardUseArea;
+    [SerializeField] CardManaController cardManaController;
     [SerializeField] List<Card> handCardList = new List<Card>();
 
     private float handRotateOffset;
@@ -21,24 +24,46 @@ public class Hand : MonoBehaviour
 
     private void InitHandCard()
     {
-        cardSpacing = 120.0f;
+        cardSpacing = 180.0f;
         handRotateOffset = 5000.0f;
-        deck.onHandToCard += GetCardToHand;
+        deck.OnHandToCard += GetCardToHand;
+        GameEvents.OnTurnEnd += DiscardAllCards;
     }
 
     private void GetCardToHand(Card targetCard)
     {
         handCardList.Add(targetCard);
-        targetCard.transform.SetParent(handArea);
-        targetCard.GetCardParent(handArea);
+        targetCard.transform.SetParent(transform);
+        targetCard.SetCardParentRects(canvas, cardUseArea);
         SetCardPos();
-        targetCard.onUsedCard += OnUsedCard;    // 손으로 카드를 가져올 때 카드 사용 관련 함수를 등록함
+
+        targetCard.OnRaycastChange += SetOtherCardsRaycastTarget;
+        targetCard.OnCancelCard += SetCardPos;
+        targetCard.OnUsedCard += OnUsedCard;     // 손으로 카드를 가져올 때 카드 사용 관련 함수를 등록함
     }
 
-    private void OnUsedCard(Card usedCard)
+    private void SetOtherCardsRaycastTarget(Card targetCard)
     {
-        handCardList.Remove(usedCard);
-        discardPile.MoveToDiscardPile(usedCard);
+        for (int i = 0; i < handCardList.Count; i++)
+        {
+            if (targetCard != handCardList[i])
+                handCardList[i].SetCardRaycastTarget(false);
+        }
+    }
+
+    private void OnUsedCard(Card usedCard, int cardCost)
+    {
+        if (cardManaController.TrySpendMana(cardCost))
+        {
+            usedCard.ExecuteCard();
+            handCardList.Remove(usedCard);
+            discardPile.MoveToDiscardPile(usedCard);
+
+            // 카드를 사용하면 등록한 함수를 해제함
+            usedCard.OnRaycastChange -= SetOtherCardsRaycastTarget;
+            usedCard.OnCancelCard -= SetCardPos;
+            usedCard.OnUsedCard -= OnUsedCard;
+        }
         SetCardPos();
     }
 
@@ -56,5 +81,19 @@ public class Hand : MonoBehaviour
             // y에 반지름을 뺀 값과 x값을 넣어 손패의 좌표 정렬 함수를 실행함
             handCardList[i].SetCardPos(0.03f * (i + 1), new Vector3(cardPosX, cardPosY - handRotateOffset, 0), Vector3.one, cardRotZ);
         }
+    }
+
+    // 턴 종료시 손패 카드를 전부 묘지로 보냄
+    private void DiscardAllCards()
+    {
+        for (int i = 0; i < handCardList.Count; i++)
+        {
+            handCardList[i].OnRaycastChange -= SetOtherCardsRaycastTarget;
+            handCardList[i].OnCancelCard -= SetCardPos;
+            handCardList[i].OnUsedCard -= OnUsedCard;
+            discardPile.MoveToDiscardPile(handCardList[i]);
+        }
+
+        handCardList.Clear();
     }
 }

@@ -6,4 +6,9 @@ using UnityEngine;
 public class AttackCardData : CardData
 {
     public int damage;
+
+    public override void Execute(IHealth target)
+    {
+        GameEvents.OnPlayerAttack?.Invoke(damage, target);
+    }
 }

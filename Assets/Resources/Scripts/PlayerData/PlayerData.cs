@@ -7,5 +7,5 @@ public class PlayerData : ScriptableObject
 {
     public int playerHp;
     public int playerMaxHp;
-    public AudioClip attackSound;
+    public AudioClip deathSound;
 }

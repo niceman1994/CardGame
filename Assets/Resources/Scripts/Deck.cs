@@ -14,22 +14,22 @@ public class Deck : MonoBehaviour
     [SerializeField] AudioSource deckShuffleSound;
     [SerializeField] int drawCardCount;
 
-    public event Action<Card> onHandToCard;
-    public event Action<List<Card>, Transform> onAddCard;
+    public event Action<Card> OnHandToCard;
+    public event Action<List<Card>, Transform> OnAddCard;
 
     private void Start()
     {
         InitDeck();
-        CardDraw(drawCardCount);
     }
 
     private void InitDeck()
     {
-        onAddCard?.Invoke(currentDeckList, transform);
+        OnAddCard?.Invoke(currentDeckList, transform);
         ResetDeckCardPos();
+        GameEvents.OnCardDraw += CardDraw;
     }
 
-    public void CardDraw(int drawCardCount)
+    public void CardDraw()
     {
         // 드로우할 카드가 현재 덱의 카드 수보다 많으면 그 수만큼만 드로우되게 함
         if (drawCardCount > currentDeckList.Count && currentDeckList.Count != 0)
@@ -43,7 +43,7 @@ public class Deck : MonoBehaviour
             // 덱 맨 위부터 드로우하기 때문에 리스트의 마지막 요소부터 시작함
             var targetCard = currentDeckList[currentDeckList.Count - 1];
             currentDeckList.Remove(targetCard);
-            onHandToCard?.Invoke(targetCard);
+            OnHandToCard?.Invoke(targetCard);
         }
     }
 
@@ -84,11 +84,7 @@ public class Deck : MonoBehaviour
     public Sequence MoveToDeck(Card returnCard)
     {
         return returnCard.CardTransition(transform, currentDeckList, CardState.InDeck)
-            .JoinCallback(() =>
-            {
-                returnCard.FlipCard(false);
-                returnCard.ResetCardPos(currentDeckList);
-            });
+            .JoinCallback(() => returnCard.FlipCard(false));
     }
 }
 
@@ -101,11 +97,11 @@ public class DeckEditor : Editor
         base.OnInspectorGUI();
 
         Deck deckManager = (Deck)target;
-        SerializedProperty _drawCountIndex = serializedObject.FindProperty("drawCardCount");
+        //SerializedProperty _drawCountIndex = serializedObject.FindProperty("drawCardCount");
 
         if (GUILayout.Button("카드 드로우"))
         {
-            deckManager.CardDraw(_drawCountIndex.intValue);
+            deckManager.CardDraw();
         }
 
         if (GUILayout.Button("덱 셔플"))

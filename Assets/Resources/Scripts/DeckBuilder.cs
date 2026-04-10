@@ -19,7 +19,7 @@ public class DeckBuilder : Singleton<DeckBuilder>
     protected override void Awake()
     {
         base.Awake();
-        deck.onAddCard += MakeCard;
+        deck.OnAddCard += MakeCard;
     }
 
     private void MakeCard(List<Card> currentDeckList, Transform parent)
@@ -29,8 +29,7 @@ public class DeckBuilder : Singleton<DeckBuilder>
             for (int j = 0; j < cardDatas[i].cardCount; j++)
             {
                 Card cardGameobject = Instantiate(deckCardPrefab, parent);
-                cardGameobject.SetCardData(cardDatas[i].cardData);
-                cardGameobject.name = $"{cardDatas[i].cardData.name}";
+                cardGameobject.SetCardData(cardDatas[i].cardData, j);
 
                 currentDeckList.Add(cardGameobject);
             } 

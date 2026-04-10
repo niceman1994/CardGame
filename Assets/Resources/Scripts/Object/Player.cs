@@ -2,64 +2,90 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+[System.Serializable]
+public class PlayerRuntimeStat
+{
+    public int currentShield;
+    public int currentHp;
+    public int maxHp;
+}
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IHealth
 {
     [SerializeField] PlayerData playerData;
-    [SerializeField] int currentHp;
-    [SerializeField] AudioSource attackAudio;
+    [SerializeField] PlayerRuntimeStat runtimeStat;
+    [SerializeField] HealthBar healthBar;
+    [SerializeField] ObjectSound objectSound;
 
-    private int maxHp;
     private Animator animator;
+
+    private void OnEnable()
+    {
+        GameEvents.OnPlayerAttack += PlayAttackAni;
+        GameEvents.OnPlayerDefend += SetShieldFromCard;
+        GameEvents.OnPlayerDeath += PlayDeathAni;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnPlayerAttack -= PlayAttackAni;
+        GameEvents.OnPlayerDefend -= SetShieldFromCard;
+        GameEvents.OnPlayerDeath -= PlayDeathAni;
+    }
 
     private void Start()
     {
         InitPlayer();
     }
 
-    private void InitPlayer()
+    public void InitPlayer()
     {
+        GameEvents.OnPlayerRegistered.Invoke(this);
+        GameEvents.OnTurnStart?.Invoke();
+
         animator = GetComponent<Animator>();
-        currentHp = playerData.playerHp;
-        maxHp = playerData.playerMaxHp;
+        runtimeStat.currentShield = 0;
+        runtimeStat.currentHp = playerData.playerHp;
+        runtimeStat.maxHp = playerData.playerMaxHp;
+        healthBar.SetHealthBar(runtimeStat.currentHp, runtimeStat.maxHp);
     }
 
-    public void PlayAttackAni()
+    private void PlayAttackAni(int attackPower, IHealth target)
     {
         animator.Play("Attack");
-
-        attackAudio.clip = playerData.attackSound;
-        attackAudio.Play();
+        target.TakeDamage(attackPower);
     }
 
-    public void PlayDeathAni()
+    private void SetShieldFromCard(int shieldAmount)
+    {
+        runtimeStat.currentShield += shieldAmount;
+        healthBar.SetShield(runtimeStat.currentShield);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        animator.Play("Take Hit");
+
+        if (runtimeStat.currentShield - damage < 0)
+        {
+            damage -= runtimeStat.currentShield;
+            runtimeStat.currentShield = 0;
+        }
+        else
+        {
+            runtimeStat.currentShield -= damage;
+            damage = 0;
+        }
+        healthBar.SetShield(runtimeStat.currentShield);
+        runtimeStat.currentHp -= damage;
+        healthBar.SetHealthBar(runtimeStat.currentHp, runtimeStat.maxHp);
+
+        if (runtimeStat.currentHp <= 0)
+            GameEvents.OnPlayerDeath?.Invoke();
+    }
+
+    private void PlayDeathAni()
     {
         animator.Play("Death");
     }
 }
-
-#if UNITY_EDITOR
-[CustomEditor(typeof(Player))]
-public class PlayerEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-
-        Player player = (Player)target;
-
-        if (GUILayout.Button("공격 실행"))
-        {
-            player.PlayAttackAni();
-        }
-
-        if (GUILayout.Button("사망 실행"))
-        {
-            player.PlayDeathAni();
-        }
-    }
-}
-#endif

@@ -5,21 +5,22 @@ using UnityEngine;
 
 public class CardSound : MonoBehaviour
 {
+    [SerializeField] AudioSource cardAudio;
     [SerializeField] AudioClip cardDrawClip;
     [SerializeField] AudioClip cardHoverClip;
 
-    public void PlayDrawSound(AudioSource audioSource)
+    public void PlayDrawSound()
     {
-        audioSource.clip = cardDrawClip;
-        audioSource.Play();
+        cardAudio.clip = cardDrawClip;
+        cardAudio.Play();
     }
 
-    public void PlayHoverSound(AudioSource audioSource)
+    public void PlayHoverSound()
     {
-        if (!audioSource.isPlaying)
+        if (!cardAudio.isPlaying)
         {
-            audioSource.clip = cardHoverClip;
-            audioSource.Play();
+            cardAudio.clip = cardHoverClip;
+            cardAudio.Play();
         }
     }
 }

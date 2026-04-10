@@ -13,21 +13,29 @@ public class DiscardPile : MonoBehaviour
     [SerializeField] Deck deck;
     [SerializeField] List<Card> discardPileList = new List<Card>();
 
+    private void Awake()
+    {
+        GameEvents.OnTurnStart += ReturnToDeck;
+    }
+
     public void MoveToDiscardPile(Card card)
     {
         Sequence moveDiscardPileSequence = DOTween.Sequence();
 
         moveDiscardPileSequence.Join(card.CardTransition(transform, discardPileList, CardState.InDiscardPile))
-            .AppendCallback(() => card.ResetCardPos(discardPileList));
+            .AppendCallback(() =>
+            {
+                for (int i = 0; i < discardPileList.Count; i++)
+                {
+                    int index = i;
+                    discardPileList[index].transform.DOLocalMove(new Vector3(0, 0, index), 0.3f);
+                }
+            });
     }
 
     public void ReturnToDeck()
     {
-        if (discardPileList.Count == 0)
-        {
-            Debug.LogError($"{name}에 카드가 없습니다!");
-            return;
-        }
+        if (discardPileList.Count == 0) return;
 
         Sequence moveDeckSequence = DOTween.Sequence();
 

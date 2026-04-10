@@ -6,4 +6,9 @@ using UnityEngine;
 public class DefenseCardData : CardData
 {
     public int shield;
+
+    public override void Execute(IHealth target = null)
+    {
+        GameEvents.OnPlayerDefend?.Invoke(shield);
+    }
 }

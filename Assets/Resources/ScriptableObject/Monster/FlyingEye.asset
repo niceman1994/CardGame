@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a13bcdf9eeee8cb429f0241829cfd634, type: 3}
+  m_Name: FlyingEye
+  m_EditorClassIdentifier: 
+  monsterHp: 35
+  monsterMaxHp: 35
+  monsterAtk: 2
+  monsterName: FlyingEye
+  shieldClip: {fileID: 8300000, guid: 112338c90a9fe8344979300c8458b713, type: 3}
+  deathSound: {fileID: 8300000, guid: 8c0783f14739a8b469a6e388910050f8, type: 3}
