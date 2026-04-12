@@ -37,7 +37,7 @@ public class TurnManager : Singleton<TurnManager>
 
     public void StartPlayerTurn()
     {
-        // 플레이어 턴인걸 텍스트로 알려준 다음 드로우가 실행되게하는 시퀀스
+        // 플레이어 턴인걸 텍스트로 알려준 다음, 드로우가 실행되게하는 시퀀스
         turnSequence = DOTween.Sequence();
         turnSequence.AppendCallback(() =>
             {
@@ -71,7 +71,7 @@ public class TurnManager : Singleton<TurnManager>
     {
         GameEvents.OnTurnEnd?.Invoke();
 
-        // 적 턴인걸 텍스트로 알려준 다음에 적의 공격을 차례대로 실행시키는 시퀀스
+        // 적 턴인걸 텍스트로 알려준 다음, 적의 공격을 차례대로 실행시키는 시퀀스
         turnSequence = DOTween.Sequence();
         turnSequence.AppendCallback(() =>
             {
@@ -107,6 +107,10 @@ public class TurnManager : Singleton<TurnManager>
             yield return StartCoroutine(monsterAction);
         }
         yield return null;
+
+        foreach (var monster in activeMonsters)
+            monster.CheckStatusEffect();
+
         currentTurnState = TurnState.PlayerTurn;
         GameEvents.OnTurnStart?.Invoke();           // 몬스터들의 공격이 끝나면 플레이어의 턴을 시작함
     }

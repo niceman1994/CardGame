@@ -6,6 +6,7 @@ using UnityEngine;
 public class ManaBoostCardData : CardData
 {
     public int addMana;
+    public int cardCostDown;
 
     public override void Execute(IHealth target = null)
     {

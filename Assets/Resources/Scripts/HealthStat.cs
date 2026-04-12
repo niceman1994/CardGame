@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class HealthStat : MonoBehaviour
 {
     [SerializeField] Image healthImage;
     [SerializeField] Text currentHpText;
     [SerializeField] Text maxHpText;
     [SerializeField] GameObject shield;
     [SerializeField] Text currentShieldText;
+    [SerializeField] Text statusText1;
+    [SerializeField] Text statusText2;
 
     private int currentHp;
     private int currentShield;
@@ -34,5 +36,21 @@ public class HealthBar : MonoBehaviour
         }
         else
             shield.SetActive(false);
+    }
+
+    public void ActiveStatusEffect(string statusEffectName)
+    {
+        if (statusText1.text.Contains(statusEffectName))
+            statusText1.gameObject.SetActive(true);
+        else
+            statusText2.gameObject.SetActive(true);
+    }
+
+    public void DeactiveStatusEffect(string statusEffectName)
+    {
+        if (statusText1.text.Contains(statusEffectName))
+            statusText1.gameObject.SetActive(false);
+        else
+            statusText2.gameObject.SetActive(false);
     }
 }

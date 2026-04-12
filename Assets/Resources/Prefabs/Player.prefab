@@ -411,7 +411,7 @@ MonoBehaviour:
     currentShield: 0
     currentHp: 0
     maxHp: 0
-  healthBar: {fileID: 5231331437123158168}
+  healthStat: {fileID: 5231331437123158168}
   objectSound: {fileID: 7750099632200414043}
 --- !u!114 &5231331437123158168
 MonoBehaviour:

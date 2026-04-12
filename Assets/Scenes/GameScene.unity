@@ -224,7 +224,7 @@ RectTransform:
   m_GameObject: {fileID: 119182239}
   m_LocalRotation: {x: 0.34202653, y: 0.1907643, z: 0.18013816, w: -0.90231764}
   m_LocalPosition: {x: 0, y: 0, z: -63}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1841424836}
@@ -232,7 +232,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -49.213, y: 175.156, z: 25.705}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -813, y: -428}
+  m_AnchoredPosition: {x: -838, y: -436}
   m_SizeDelta: {x: 240, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &119182241
@@ -295,13 +295,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardDatas:
   - cardData: {fileID: 11400000, guid: 83ad01405d8559f43bc01b55d6a21316, type: 2}
-    cardCount: 12
+    cardCount: 3
   - cardData: {fileID: 11400000, guid: 39b5b2b8a7b39bb44b18944def77ec9e, type: 2}
     cardCount: 5
   - cardData: {fileID: 11400000, guid: f890ce8280268f34692c133e8baf9065, type: 2}
-    cardCount: 12
+    cardCount: 7
   - cardData: {fileID: 11400000, guid: 3eb345946f798314e9ec63023fc42829, type: 2}
+    cardCount: 5
+  - cardData: {fileID: 11400000, guid: 20b82b114b8e4dd40b0976094e6870bc, type: 2}
     cardCount: 3
+  - cardData: {fileID: 11400000, guid: 5dd1cc50332373543bed1ad8a6938f8e, type: 2}
+    cardCount: 5
+  - cardData: {fileID: 11400000, guid: 774bb0d6d0c28f04780e423a8ce65ec9, type: 2}
+    cardCount: 2
   deck: {fileID: 493443820}
   deckCardPrefab: {fileID: 168668846283535954, guid: 50ab2dd7ae41b9a4f90f8f5dd6acad56, type: 3}
 --- !u!1 &160157796
@@ -603,8 +609,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 493443818}
   m_LocalRotation: {x: 0.39704493, y: -0.12999529, z: -0.21921627, w: -0.8817034}
-  m_LocalPosition: {x: 0, y: 0, z: -47}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -32}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1841424836}
@@ -612,7 +618,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 811, y: -433}
+  m_AnchoredPosition: {x: 831, y: -447}
   m_SizeDelta: {x: 240, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &493443820
@@ -1842,7 +1848,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5, y: -370}
+  m_AnchoredPosition: {x: -5, y: -380}
   m_SizeDelta: {x: 1320, y: 360}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1876748380

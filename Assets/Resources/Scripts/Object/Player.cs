@@ -14,7 +14,7 @@ public class Player : MonoBehaviour, IHealth
 {
     [SerializeField] PlayerData playerData;
     [SerializeField] PlayerRuntimeStat runtimeStat;
-    [SerializeField] HealthBar healthBar;
+    [SerializeField] HealthStat healthStat;
     [SerializeField] ObjectSound objectSound;
 
     private Animator animator;
@@ -47,7 +47,7 @@ public class Player : MonoBehaviour, IHealth
         runtimeStat.currentShield = 0;
         runtimeStat.currentHp = playerData.playerHp;
         runtimeStat.maxHp = playerData.playerMaxHp;
-        healthBar.SetHealthBar(runtimeStat.currentHp, runtimeStat.maxHp);
+        healthStat.SetHealthBar(runtimeStat.currentHp, runtimeStat.maxHp);
     }
 
     private void PlayAttackAni(int attackPower, IHealth target)
@@ -59,7 +59,7 @@ public class Player : MonoBehaviour, IHealth
     private void SetShieldFromCard(int shieldAmount)
     {
         runtimeStat.currentShield += shieldAmount;
-        healthBar.SetShield(runtimeStat.currentShield);
+        healthStat.SetShield(runtimeStat.currentShield);
     }
 
     public void TakeDamage(int damage)
@@ -76,9 +76,9 @@ public class Player : MonoBehaviour, IHealth
             runtimeStat.currentShield -= damage;
             damage = 0;
         }
-        healthBar.SetShield(runtimeStat.currentShield);
+        healthStat.SetShield(runtimeStat.currentShield);
         runtimeStat.currentHp -= damage;
-        healthBar.SetHealthBar(runtimeStat.currentHp, runtimeStat.maxHp);
+        healthStat.SetHealthBar(runtimeStat.currentHp, runtimeStat.maxHp);
 
         if (runtimeStat.currentHp <= 0)
             GameEvents.OnPlayerDeath?.Invoke();
@@ -88,4 +88,6 @@ public class Player : MonoBehaviour, IHealth
     {
         animator.Play("Death");
     }
+
+    public void AddStatusEffect(StatusEffectData data) { }
 }

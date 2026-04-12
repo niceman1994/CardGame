@@ -9,8 +9,11 @@ public static class GameEvents
     public static Action OnTurnStart;
     public static Action OnTurnEnd;
 
-    // 카드 드로우, 마나 관련
+    // 카드 드로우
     public static Action OnCardDraw;
+    public static Action<int> OnExtraCardDraw;
+
+    // 마나 관련
     public static Action OnManaRestore;
     public static Action<int> OnManaBoost;
 

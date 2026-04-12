@@ -26,15 +26,21 @@ public class Deck : MonoBehaviour
     {
         OnAddCard?.Invoke(currentDeckList, transform);
         ResetDeckCardPos();
-        GameEvents.OnCardDraw += CardDraw;
+        GameEvents.OnCardDraw += CardDraw;              // 턴을 시작할 때 드로우하는 함수
+        GameEvents.OnExtraCardDraw += AddCardToHand;    // 카드를 사용해 드로우하는 함수
     }
 
-    public void CardDraw()
+    private void CardDraw()
     {
         // 드로우할 카드가 현재 덱의 카드 수보다 많으면 그 수만큼만 드로우되게 함
         if (drawCardCount > currentDeckList.Count && currentDeckList.Count != 0)
             drawCardCount = currentDeckList.Count;
 
+        AddCardToHand(drawCardCount);
+    }
+
+    private void AddCardToHand(int drawCardCount)
+    {
         for (int i = 0; i < drawCardCount; i++)
         {
             // 덱의 카드 수가 0이면 예외 처리
@@ -87,27 +93,3 @@ public class Deck : MonoBehaviour
             .JoinCallback(() => returnCard.FlipCard(false));
     }
 }
-
-#if UNITY_EDITOR
-[CustomEditor(typeof(Deck))]
-public class DeckEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-
-        Deck deckManager = (Deck)target;
-        //SerializedProperty _drawCountIndex = serializedObject.FindProperty("drawCardCount");
-
-        if (GUILayout.Button("카드 드로우"))
-        {
-            deckManager.CardDraw();
-        }
-
-        if (GUILayout.Button("덱 셔플"))
-        {
-            deckManager.DeckShuffle();
-        }
-    }
-}
-#endif

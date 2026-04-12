@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5235f9ba00df254792c607d3cc8fd57, type: 3}
+  m_Name: ExtraDrawCardData
+  m_EditorClassIdentifier: 
+  cardCost: 1
+  cardName: "\uCE74\uB4DC \uCD94\uAC00"
+  description: "\uCE74\uB4DC\uB97C 2\uC7A5 \uB4DC\uB85C\uC6B0\uD569\uB2C8\uB2E4"
+  cardFrontImage: {fileID: 21300000, guid: 7df7ef7a23e39fb45a91256052a868e8, type: 3}
+  cardType: 4
+  addDrawCount: 2

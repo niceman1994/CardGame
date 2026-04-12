@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum CardType
 {
-    Attack, Defense, Skill, Buff
+    Attack, Defense, Skill, Buff, Draw
 }
 
 /// <summary>
@@ -14,7 +14,7 @@ public abstract class CardData : ScriptableObject
 {
     public int cardCost;
     public string cardName;
-    public string description;
+    [TextArea] public string description;
     public Sprite cardFrontImage;
     public CardType cardType;
 

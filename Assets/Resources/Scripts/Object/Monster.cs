@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,12 +17,13 @@ public class Monster : MonoBehaviour, IHealth
 {
     [SerializeField] MonsterData monsterData;
     [SerializeField] MonsterRuntimeStat runtimeStat;
-    [SerializeField] HealthBar healthBar;
+    [SerializeField] HealthStat healthStat;
     [SerializeField] MonsterBattleStat monsterBattleStat;
     [SerializeField] ObjectSound objectSound;
 
     private Animator animator;
     private Sequence deathSequence;
+    private List<StatusEffectInstance> effects = new List<StatusEffectInstance>();
 
     private void OnEnable()
     {
@@ -44,36 +46,43 @@ public class Monster : MonoBehaviour, IHealth
         runtimeStat.maxHp = monsterData.monsterMaxHp;
         runtimeStat.currentAtk = monsterData.monsterAtk;
 
-        healthBar.SetHealthBar(runtimeStat.currentHp, runtimeStat.maxHp);
+        healthStat.SetHealthBar(runtimeStat.currentHp, runtimeStat.maxHp);
         monsterBattleStat.SetAttackPower(runtimeStat.currentAtk);
     }
 
     public IEnumerator ExecuteMonsterAction(IHealth target)
     {
-        switch (monsterBattleStat.DecideAction())
+        if (!effects.Any(x => x.data.effectName.Equals("기절")))
         {
-            case MonsterActionType.Attack:
-                yield return new WaitForSeconds(0.5f);  // 살짝 지연시켜서 몬스터들의 공격이 빨리 처리되지 않게 하기 위해서임
-                animator.Play("Attack");
-                yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-                target.TakeDamage(runtimeStat.currentAtk);
-                break;
-            case MonsterActionType.Shield:
-                yield return new WaitForSeconds(1.0f);
-                SetShield(3);
-                break;
+            switch (monsterBattleStat.DecideAction())
+            {
+                case MonsterActionType.Attack:
+                    yield return new WaitForSeconds(0.5f);  // 살짝 지연시켜서 몬스터들의 공격이 빨리 처리되지 않게 하기 위해서임
+                    animator.Play("Attack");
+                    yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length + 0.1f);
+                    target.TakeDamage(runtimeStat.currentAtk);
+                    break;
+                case MonsterActionType.Shield:
+                    yield return new WaitForSeconds(1.0f);
+                    SetShield(3);
+                    break;
+            }
         }
     }
 
     private void SetShield(int shieldAmount)
     {
         runtimeStat.currentShield += shieldAmount;
-        healthBar.SetShield(runtimeStat.currentShield);
+        healthStat.SetShield(runtimeStat.currentShield);
         objectSound.PlayShieldSound(monsterData.shieldClip);
     }
 
     public void TakeDamage(int damage)
     {
+        // 약점 상태일 때 받는 대미지 50% 증가(소수점 버림)
+        if (effects.Any(x => x.data.effectName.Contains("약점")))
+            damage = (int)(damage * 1.5f);
+
         animator.Play("Take Hit");
 
         if (runtimeStat.currentShield - damage < 0)
@@ -86,12 +95,42 @@ public class Monster : MonoBehaviour, IHealth
             runtimeStat.currentShield -= damage;
             damage = 0;
         }
-        healthBar.SetShield(runtimeStat.currentShield);
+        healthStat.SetShield(runtimeStat.currentShield);
         runtimeStat.currentHp -= damage;
-        healthBar.SetHealthBar(runtimeStat.currentHp, runtimeStat.maxHp);
+        healthStat.SetHealthBar(runtimeStat.currentHp, runtimeStat.maxHp);
 
         if (runtimeStat.currentHp <= 0)
             GameEvents.OnEnemyDeath?.Invoke(this);
+    }
+
+    public void AddStatusEffect(StatusEffectData data)
+    {
+        var effectInstance = new StatusEffectInstance(data);
+        var effectExisting = effects.Find(e => e.data == data);
+
+        // 같은 상태이상이 중첩될 경우 적용 턴을 추가함
+        if (effectExisting == null)
+            effects.Add(effectInstance);
+        else
+            effectExisting.AddStatusTurn();
+
+        data.Apply(this);
+        healthStat.ActiveStatusEffect(data.effectName);
+    }
+
+    public void CheckStatusEffect()
+    {
+        for (int i = effects.Count - 1; i >= 0; i--)
+        {
+            effects[i].remainingTurn--;
+
+            if (effects[i].remainingTurn <= 0)
+            {
+                healthStat.DeactiveStatusEffect(effects[i].data.effectName);
+                effects[i].data.Remove(this);
+                effects.RemoveAt(i);
+            }
+        }
     }
 
     public void PlayDeathAni(Monster monster)

@@ -11,6 +11,14 @@ public enum CardState
     InDeck, InHand, Hover, Drag, Used, InDiscardPile
 }
 
+public struct MouseInCard
+{
+    public int cardOriginIndex;
+    public Vector3 shufflePos;
+    public Vector3 cardOriginPos;
+    public Vector3 cardOriginScale;
+}
+
 public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     [SerializeField] Image cardEdgeImage;
@@ -20,11 +28,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     [SerializeField] CardSound cardSound;
 
     private CardState handCardState;
-    private Vector3 shufflePos;
-    private Vector3 cardOriginPos;
+    private MouseInCard mouseInCard;
     private RectTransform parentRectTransform;      // 마우스 위치에 따라 카드를 따라가게 만들기 위한 RectTransform 변수
     private RectTransform cardAreaRectTransform;
     private Draw draw;
+    private Sequence cardHoverSequence;
 
     public event Action<Card> OnRaycastChange;
     public event Action OnCancelCard;
@@ -35,6 +43,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         draw = new Draw(transform);
         SetCardState(CardState.InDeck);
+        mouseInCard.cardOriginScale = transform.localScale;
     }
 
     public void SetCardData(CardData cardData, int index)
@@ -45,13 +54,17 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void SetCardPos(float drawDelay, Vector3 startPos, Vector3 endScale, float cardRotateZ)
     {
-        cardOriginPos = startPos;
+        mouseInCard.cardOriginPos = startPos;
 
         draw.DrawSequence(drawDelay, startPos, endScale)
             .OnStart(() => cardEdgeImage.raycastTarget = false)
             .JoinCallback(() => CheckFirstDraw(draw.IsDraw, cardRotateZ))
             .SetDelay(0.1f)
-            .OnComplete(() => cardEdgeImage.raycastTarget = true);
+            .OnComplete(() =>
+            {
+                cardEdgeImage.raycastTarget = true;
+                mouseInCard.cardOriginIndex = transform.GetSiblingIndex();
+            });
     }
 
     private void CheckFirstDraw(bool isDraw, float cardRotateZ)
@@ -77,11 +90,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public Sequence CardShuffle(float delay)
     {
-        shufflePos = new Vector3(0, cardEdgeImage.rectTransform.rect.height, transform.localPosition.z);
+        mouseInCard.shufflePos = new Vector3(0, cardEdgeImage.rectTransform.rect.height, transform.localPosition.z);
 
         Sequence deckCardShuffleSequence = DOTween.Sequence();
 
-        deckCardShuffleSequence.SetDelay(delay).Append(transform.DOLocalMove(shufflePos, 0.08f).SetEase(Ease.InOutCubic))
+        deckCardShuffleSequence.SetDelay(delay).Append(transform.DOLocalMove(mouseInCard.shufflePos, 0.08f).SetEase(Ease.InOutCubic))
             .Append(transform.DOLocalMove(new Vector3(0, 0, transform.localPosition.z), 0.08f).SetEase(Ease.InOutCubic))
             .JoinCallback(() => SetCardState(CardState.InDeck));
 
@@ -126,8 +139,13 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     private void ResetCardOriginPos()
     {
-        transform.DOLocalMove(cardOriginPos, 0.2f).OnStart(() => cardEdgeImage.raycastTarget = false)
-                .OnComplete(() => cardEdgeImage.raycastTarget = true);  // 여러 카드를 빠르게 쓸 때 일부 카드가 마우스를 따라가지 않는 현상을 방지하기 위한 코드
+        transform.DOLocalMove(mouseInCard.cardOriginPos, 0.2f).OnStart(() =>
+            {
+                cardEdgeImage.raycastTarget = false;
+                transform.DOScale(mouseInCard.cardOriginScale, 0.2f);
+                transform.SetSiblingIndex(mouseInCard.cardOriginIndex);
+            })
+            .OnComplete(() => cardEdgeImage.raycastTarget = true); // 여러 카드를 빠르게 쓸 때 일부 카드가 마우스를 따라가지 않는 현상을 방지하기 위한 코드
     }
 
     public void SetCardRaycastTarget(bool isActive)
@@ -149,8 +167,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         if (handCardState == CardState.Drag) return;
 
         SetCardState(CardState.Hover);
-        transform.DOKill();
-        transform.DOLocalMove(transform.localPosition + Vector3.up * 30.0f, 0.2f);
+        cardHoverSequence = DOTween.Sequence();
+        // 카드 위에 마우스가 있다면 해당 카드를 위로 조금 이동시키고 크기를 키우면서 다른 카드에 의해 텍스트가 가려지지 않게 하는 시퀀스
+        cardHoverSequence.AppendCallback(() => transform.SetAsLastSibling())
+            .Append(transform.DOLocalMove(transform.localPosition + Vector3.up * 100.0f, 0.2f))
+            .Join(transform.DOScale(transform.localScale * 1.6f, 0.2f));
         cardSound.PlayHoverSound();
     }
 

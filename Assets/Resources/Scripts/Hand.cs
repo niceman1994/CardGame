@@ -25,7 +25,7 @@ public class Hand : MonoBehaviour
     private void InitHandCard()
     {
         cardSpacing = 180.0f;
-        handRotateOffset = 5000.0f;
+        handRotateOffset = 6000.0f;
         deck.OnHandToCard += GetCardToHand;
         GameEvents.OnTurnEnd += DiscardAllCards;
     }
@@ -55,9 +55,9 @@ public class Hand : MonoBehaviour
     {
         if (cardManaController.TrySpendMana(cardCost))
         {
-            usedCard.ExecuteCard();
             handCardList.Remove(usedCard);
             discardPile.MoveToDiscardPile(usedCard);
+            usedCard.ExecuteCard();
 
             // 카드를 사용하면 등록한 함수를 해제함
             usedCard.OnRaycastChange -= SetOtherCardsRaycastTarget;

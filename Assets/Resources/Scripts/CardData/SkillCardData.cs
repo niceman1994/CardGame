@@ -8,9 +8,9 @@ public class SkillCardData : CardData
     public int skillValue;
     public AudioClip skillClip;
 
-    public override void Execute(IHealth target = null)
+    public override void Execute(IHealth target)
     {
         GameEvents.OnPlayerAoeAttack.Invoke(skillValue);
-        SoundManager.Instance.PlaySkillSound(skillClip);
+        SoundManager.Instance.PlaySkillSound(skillClip);  
     }
 }
