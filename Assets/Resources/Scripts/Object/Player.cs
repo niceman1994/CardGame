@@ -41,6 +41,7 @@ public class Player : MonoBehaviour, IHealth
     public void InitPlayer()
     {
         GameEvents.OnPlayerRegistered.Invoke(this);
+        GameEvents.OnBattleStart?.Invoke();
         GameEvents.OnTurnStart?.Invoke();
 
         animator = GetComponent<Animator>();
@@ -50,10 +51,10 @@ public class Player : MonoBehaviour, IHealth
         healthStat.SetHealthBar(runtimeStat.currentHp, runtimeStat.maxHp);
     }
 
-    private void PlayAttackAni(int attackPower, IHealth target)
+    private void PlayAttackAni(int attackDamage, IHealth target)
     {
         animator.Play("Attack");
-        target.TakeDamage(attackPower);
+        target.TakeDamage(attackDamage);
     }
 
     private void SetShieldFromCard(int shieldAmount)
@@ -89,5 +90,5 @@ public class Player : MonoBehaviour, IHealth
         animator.Play("Death");
     }
 
-    public void AddStatusEffect(StatusEffectData data) { }
+    public void AddStatusEffect(StatusEffectData data, int duration) { }
 }

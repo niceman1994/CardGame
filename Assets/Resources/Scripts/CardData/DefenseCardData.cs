@@ -6,9 +6,24 @@ using UnityEngine;
 public class DefenseCardData : CardData
 {
     public int shield;
+    [Header("°­È­")]
+    public int upgradeShield;
 
-    public override void Execute(IHealth target = null)
+    public override void Execute(CardInstance cardInstance, IHealth target = null)
     {
-        GameEvents.OnPlayerDefend?.Invoke(shield);
+        int finalShield = cardInstance.isUpgraded ? upgradeShield : shield;
+        GameEvents.OnPlayerDefend?.Invoke(finalShield);
+    }
+
+    public override int GetCardCost(CardInstance cardInstance)
+    {
+        return cardInstance.isUpgraded ? 1 : cardCost;
+    }
+
+    public override string GetDescription(CardInstance cardInstance)
+    {
+        int finalShield = cardInstance.isUpgraded ? upgradeShield : shield;
+
+        return description.Replace("{shield}", $"{finalShield}");
     }
 }

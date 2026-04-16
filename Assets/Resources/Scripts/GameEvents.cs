@@ -1,21 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public static class GameEvents
 {
+    // 전투 시작, 종료
+    public static Action OnBattleStart;
+    public static Action OnBattleEnd;
+
     // 턴 시작, 종료
     public static Action OnTurnStart;
     public static Action OnTurnEnd;
 
-    // 카드 드로우
+    // 카드 관련
     public static Action OnCardDraw;
     public static Action<int> OnExtraCardDraw;
+    public static Action OnReturnToDeck;
+    public static Action<CardInstance> OnUpdateCardText;
 
     // 마나 관련
     public static Action OnManaRestore;
     public static Action<int> OnManaBoost;
+    public static Action<int> OnCostDown;
 
     // 플레이어
     public static Action<IHealth> OnPlayerRegistered;

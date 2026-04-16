@@ -25,6 +25,11 @@ public class Monster : MonoBehaviour, IHealth
     private Sequence deathSequence;
     private List<StatusEffectInstance> effects = new List<StatusEffectInstance>();
 
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     private void OnEnable()
     {
         GameEvents.OnPlayerAoeAttack += TakeDamage;
@@ -41,7 +46,6 @@ public class Monster : MonoBehaviour, IHealth
 
     public void InitMonster()
     {
-        animator = GetComponent<Animator>();
         runtimeStat.currentHp = monsterData.monsterHp;
         runtimeStat.maxHp = monsterData.monsterMaxHp;
         runtimeStat.currentAtk = monsterData.monsterAtk;
@@ -103,16 +107,15 @@ public class Monster : MonoBehaviour, IHealth
             GameEvents.OnEnemyDeath?.Invoke(this);
     }
 
-    public void AddStatusEffect(StatusEffectData data)
+    public void AddStatusEffect(StatusEffectData data, int duration)
     {
-        var effectInstance = new StatusEffectInstance(data);
         var effectExisting = effects.Find(e => e.data == data);
 
-        // 같은 상태이상이 중첩될 경우 적용 턴을 추가함
+        // 같은 상태이상이 추가될 경우 적용 턴을 추가함
         if (effectExisting == null)
-            effects.Add(effectInstance);
+            effects.Add(new StatusEffectInstance(data, duration));
         else
-            effectExisting.AddStatusTurn();
+            effectExisting.AddStatusTurn(duration);
 
         data.Apply(this);
         healthStat.ActiveStatusEffect(data.effectName);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardManaController : MonoBehaviour
+public class ManaController : MonoBehaviour
 {
     [SerializeField] Text currentManaText;
     [SerializeField] Text maxManaText;

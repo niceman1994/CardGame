@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IHealth
 {
     void TakeDamage(int damage);
-    void AddStatusEffect(StatusEffectData data);
+    void AddStatusEffect(StatusEffectData data, int duration);
 }

@@ -7,14 +7,14 @@ public class StatusEffectInstance
     public StatusEffectData data;
     public int remainingTurn;
 
-    public StatusEffectInstance(StatusEffectData data)
+    public StatusEffectInstance(StatusEffectData data, int duration)
     {
         this.data = data;
-        remainingTurn = data.duration;
+        remainingTurn = duration;
     }
 
-    public void AddStatusTurn()
+    public void AddStatusTurn(int duration)
     {
-        remainingTurn += data.duration;
+        remainingTurn += duration;
     }
 }

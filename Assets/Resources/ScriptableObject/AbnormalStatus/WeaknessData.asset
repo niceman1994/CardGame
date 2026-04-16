@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectName: "\uC57D\uC810"
   duration: 2
-  isWeakness: 0
+  upgradeDuration: 3

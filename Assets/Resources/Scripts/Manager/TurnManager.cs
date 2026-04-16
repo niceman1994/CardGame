@@ -24,6 +24,11 @@ public class TurnManager : Singleton<TurnManager>
     protected override void Awake()
     {
         base.Awake();
+        InitDeckManager();
+    }
+
+    private void InitDeckManager()
+    {
         GameEvents.OnPlayerRegistered += SetPlayer;
         GameEvents.OnTurnStart += StartPlayerTurn;
         GameEvents.OnEnemyRegistered += SetEnemyRegister;

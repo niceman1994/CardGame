@@ -71,18 +71,22 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
         {
             pooledObject.gameObject.SetActive(false);
 
-            for (int i = 0; i < monsterPools.Values.Count; i++)
+            for (int i = 0; i < monsterPools.Count; i++)
             {
                 Object monster = monsterPools.Values.ElementAt(i).Peek();
 
                 // 오브젝트 풀링으로 재활용하기 큐에서 뺐던 오브젝트와 현재 큐의 맨 앞에 있는 오브젝트를 비교해 일치하면 다시 큐에 넣음
                 if (pooledObject.name.Equals(monster.name))
                 {
+                    pooledObject.InitMonster();
+                    pooledObject.transform.SetParent(monsterParent.parent);
                     monsterPools.Values.ElementAt(i).Enqueue(pooledObject);
                     dequeueMonsters.Remove(pooledObject);
                 }
             }
         }
+        if (dequeueMonsters.Count == 0)
+            GameEvents.OnBattleEnd?.Invoke();
     }
 
     public void ReturnPooledMonsters()

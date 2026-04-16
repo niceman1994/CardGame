@@ -16,6 +16,8 @@ public class DiscardPile : MonoBehaviour
     private void Awake()
     {
         GameEvents.OnTurnStart += ReturnToDeck;
+        GameEvents.OnReturnToDeck += ReturnToDeck;
+        GameEvents.OnBattleEnd += ReturnToDeck;
     }
 
     public void MoveToDiscardPile(Card card)

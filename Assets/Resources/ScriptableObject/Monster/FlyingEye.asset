@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13bcdf9eeee8cb429f0241829cfd634, type: 3}
   m_Name: FlyingEye
   m_EditorClassIdentifier: 
-  monsterHp: 35
-  monsterMaxHp: 35
+  monsterHp: 37
+  monsterMaxHp: 37
   monsterAtk: 2
   monsterName: FlyingEye
   shieldClip: {fileID: 8300000, guid: 112338c90a9fe8344979300c8458b713, type: 3}

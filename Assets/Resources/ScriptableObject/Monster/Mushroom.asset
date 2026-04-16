@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13bcdf9eeee8cb429f0241829cfd634, type: 3}
   m_Name: Mushroom
   m_EditorClassIdentifier: 
-  monsterHp: 59
-  monsterMaxHp: 59
+  monsterHp: 58
+  monsterMaxHp: 58
   monsterAtk: 4
   monsterName: Mushroom
   shieldClip: {fileID: 8300000, guid: 112338c90a9fe8344979300c8458b713, type: 3}

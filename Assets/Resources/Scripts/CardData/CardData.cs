@@ -18,5 +18,12 @@ public abstract class CardData : ScriptableObject
     public Sprite cardFrontImage;
     public CardType cardType;
 
-    public abstract void Execute(IHealth target);
+    public abstract void Execute(CardInstance cardInstance, IHealth target);
+    public abstract int GetCardCost(CardInstance cardInstance);
+    public abstract string GetDescription(CardInstance cardInstance);
+
+    public virtual string GetCardName(CardInstance cardInstance)
+    {
+        return cardInstance.isUpgraded ? $"{cardName}+" : $"{cardName}";
+    }
 }

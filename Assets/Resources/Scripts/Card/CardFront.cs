@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class CardFront : MonoBehaviour
 {
@@ -11,29 +12,33 @@ public class CardFront : MonoBehaviour
     [SerializeField] Text cardName;
     [SerializeField] Text description;
 
-    public CardType GetCardType => cardData.cardType;
-    public int CardCost => int.Parse(cardCost.text);
+    private int displayCardCost;
+    private Sequence costChangeSequence;
+    private Vector3 costTextLocalScale;
 
-    private void Start()
+    public int CardCost => displayCardCost;
+
+    public void SetCardText(CardInstance cardInstance)
     {
-        GetCardData();
+        cardData = cardInstance.cardData;
+        cardFrontImage.sprite = cardInstance.cardData.cardFrontImage;
+        displayCardCost = cardData.GetCardCost(cardInstance);
+        cardCost.text = $"{displayCardCost}";
+        cardName.text = cardInstance.GetCardName();
+        description.text = cardData.GetDescription(cardInstance);
     }
 
-    private void GetCardData()
+    public void CardCostDown(int costDownAmount)
     {
-        cardFrontImage.sprite = cardData.cardFrontImage;
-        cardCost.text = $"{cardData.cardCost}";
-        cardName.text = cardData.cardName;
-        description.text = cardData.description;
-    }
+        costTextLocalScale = cardCost.transform.localScale;
+        displayCardCost -= costDownAmount;
 
-    public void SetCardData(CardData cardData)
-    {
-        this.cardData = cardData;
-    }
+        if (displayCardCost <= 0) displayCardCost = 0;
 
-    public void Execute(IHealth target)
-    {
-        cardData.Execute(target);
+        // 어떤 카드의 코스트가 줄었는지 보여주기 위해 사용하는 시퀀스
+        costChangeSequence = DOTween.Sequence();
+        costChangeSequence.Append(cardCost.transform.DOScale(6.0f, 0.1f))
+            .Append(cardCost.transform.DOScale(costTextLocalScale, 0.1f))
+            .OnComplete(() => cardCost.text = $"{displayCardCost}");
     }
 }

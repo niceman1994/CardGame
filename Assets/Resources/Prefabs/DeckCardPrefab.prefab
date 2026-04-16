@@ -197,6 +197,7 @@ MonoBehaviour:
   cardArrow: {fileID: 4575116158524495201}
   cardBackImage: {fileID: 168668846579591380}
   cardSound: {fileID: 2395453883968237579}
+  cardUpgrade: {fileID: 0}
 --- !u!114 &2395453883968237579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,7 +619,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 168668848093359700}
-  m_CullTransparentMesh: 1
+  m_CullTransparentMesh: 0
 --- !u!114 &168668848093359703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -720,7 +721,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440848cb49c51ed4cbc974213e2112d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
   cardFrontImage: {fileID: 168668846515651626}
   cardCost: {fileID: 168668846306545790}
   cardName: {fileID: 168668848093359703}
