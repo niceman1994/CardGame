@@ -8,6 +8,7 @@ public class CardSound : MonoBehaviour
     [SerializeField] AudioSource cardAudio;
     [SerializeField] AudioClip cardDrawClip;
     [SerializeField] AudioClip cardHoverClip;
+    [SerializeField] AudioClip cardCancelClip;
 
     public void PlayDrawSound()
     {
@@ -22,5 +23,12 @@ public class CardSound : MonoBehaviour
             cardAudio.clip = cardHoverClip;
             cardAudio.Play();
         }
+    }
+
+    // 코스트 부족으로 카드를 쓰지 못할 때 사용하는 함수
+    public void PlayInsufficientCostSound()
+    {
+        cardAudio.clip = cardCancelClip;
+        cardAudio.Play();
     }
 }

@@ -22,6 +22,7 @@ public abstract class CardData : ScriptableObject
     public abstract int GetCardCost(CardInstance cardInstance);
     public abstract string GetDescription(CardInstance cardInstance);
 
+    // 카드 이름이 강화 여부에 따라 바뀜
     public virtual string GetCardName(CardInstance cardInstance)
     {
         return cardInstance.isUpgraded ? $"{cardName}+" : $"{cardName}";

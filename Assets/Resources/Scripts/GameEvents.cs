@@ -8,9 +8,16 @@ public static class GameEvents
     public static Action OnBattleStart;
     public static Action OnBattleEnd;
 
-    // 턴 시작, 종료
+    public static Action OnBattleWin;
+    public static Action OnBattleLose;
+
     public static Action OnTurnStart;
     public static Action OnTurnEnd;
+
+    public static Action OnOpenOptionPopup;
+    public static Action OnCloseOptionPopup;
+    public static Action OnGameRestart;
+    public static Action<IHealth> OnPlayerRegistered;
 
     // 카드 관련
     public static Action OnCardDraw;
@@ -24,7 +31,6 @@ public static class GameEvents
     public static Action<int> OnCostDown;
 
     // 플레이어
-    public static Action<IHealth> OnPlayerRegistered;
     public static Action<int, IHealth> OnPlayerAttack;
     public static Action<int> OnPlayerDefend;
     public static Action OnPlayerDeath;

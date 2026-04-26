@@ -197,7 +197,6 @@ MonoBehaviour:
   cardArrow: {fileID: 4575116158524495201}
   cardBackImage: {fileID: 168668846579591380}
   cardSound: {fileID: 2395453883968237579}
-  cardUpgrade: {fileID: 0}
 --- !u!114 &2395453883968237579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,6 +212,7 @@ MonoBehaviour:
   cardAudio: {fileID: 9151118779378518862}
   cardDrawClip: {fileID: 8300000, guid: 3f906e6e37c80ab429d77c51357005ad, type: 3}
   cardHoverClip: {fileID: 8300000, guid: 013f4c32f839362488c868f753fa6d02, type: 3}
+  cardCancelClip: {fileID: 8300000, guid: ccddcd7652745534ea82ec771414bb9c, type: 3}
 --- !u!82 &9151118779378518862
 AudioSource:
   m_ObjectHideFlags: 0
@@ -721,6 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440848cb49c51ed4cbc974213e2112d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardData: {fileID: 0}
   cardFrontImage: {fileID: 168668846515651626}
   cardCost: {fileID: 168668846306545790}
   cardName: {fileID: 168668848093359703}

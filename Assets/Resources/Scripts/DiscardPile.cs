@@ -2,11 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using System;
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 public class DiscardPile : MonoBehaviour
 {
@@ -18,13 +13,14 @@ public class DiscardPile : MonoBehaviour
         GameEvents.OnTurnStart += ReturnToDeck;
         GameEvents.OnReturnToDeck += ReturnToDeck;
         GameEvents.OnBattleEnd += ReturnToDeck;
+        GameEvents.OnGameRestart += GameRestart;
     }
 
     public void MoveToDiscardPile(Card card)
     {
         Sequence moveDiscardPileSequence = DOTween.Sequence();
 
-        moveDiscardPileSequence.Join(card.CardTransition(transform, discardPileList, CardState.InDiscardPile))
+        moveDiscardPileSequence.Join(card.CardTransitionSequence(transform, discardPileList, CardState.InDiscardPile))
             .AppendCallback(() =>
             {
                 for (int i = 0; i < discardPileList.Count; i++)
@@ -51,22 +47,14 @@ public class DiscardPile : MonoBehaviour
             deck.DeckShuffle();
         });
     }
-}
 
-#if UNITY_EDITOR
-[CustomEditor(typeof(DiscardPile))]
-public class DiscardPileEditor : Editor
-{
-    public override void OnInspectorGUI()
+    private void GameRestart()
     {
-        base.OnInspectorGUI();
-
-        DiscardPile discardPileManager = (DiscardPile)target;
-
-        if (GUILayout.Button("덱으로 되돌리기"))
+        for (int i = 0; i < discardPileList.Count; i++)
         {
-            discardPileManager.ReturnToDeck();
+            discardPileList[i].CardTransition(deck.transform, deck.CurrentDeckList, CardState.InDeck);
+            discardPileList[i].FlipCard(false);
         }
+        discardPileList.Clear();
     }
 }
-#endif

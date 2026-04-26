@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 [System.Serializable]
 public class PlayerRuntimeStat
@@ -18,12 +19,22 @@ public class Player : MonoBehaviour, IHealth
     [SerializeField] ObjectSound objectSound;
 
     private Animator animator;
+    private Sequence deathSequence;
+
+    // ObjectPoolManager에서 생성 후 Player의 Awake가 실행됨
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        GameEvents.OnPlayerRegistered.Invoke(this);
+        InitPlayer();
+    }
 
     private void OnEnable()
     {
         GameEvents.OnPlayerAttack += PlayAttackAni;
         GameEvents.OnPlayerDefend += SetShieldFromCard;
         GameEvents.OnPlayerDeath += PlayDeathAni;
+        GameEvents.OnGameRestart += () => StartCoroutine(GameRestart());
     }
 
     private void OnDisable()
@@ -31,23 +42,15 @@ public class Player : MonoBehaviour, IHealth
         GameEvents.OnPlayerAttack -= PlayAttackAni;
         GameEvents.OnPlayerDefend -= SetShieldFromCard;
         GameEvents.OnPlayerDeath -= PlayDeathAni;
-    }
-
-    private void Start()
-    {
-        InitPlayer();
+        GameEvents.OnGameRestart -= () => StartCoroutine(GameRestart());
     }
 
     public void InitPlayer()
     {
-        GameEvents.OnPlayerRegistered.Invoke(this);
-        GameEvents.OnBattleStart?.Invoke();
-        GameEvents.OnTurnStart?.Invoke();
-
-        animator = GetComponent<Animator>();
         runtimeStat.currentShield = 0;
         runtimeStat.currentHp = playerData.playerHp;
         runtimeStat.maxHp = playerData.playerMaxHp;
+        healthStat.SetShield(runtimeStat.currentShield);
         healthStat.SetHealthBar(runtimeStat.currentHp, runtimeStat.maxHp);
     }
 
@@ -66,6 +69,7 @@ public class Player : MonoBehaviour, IHealth
     public void TakeDamage(int damage)
     {
         animator.Play("Take Hit");
+        healthStat.SetDamageTextTransform(damage);
 
         if (runtimeStat.currentShield - damage < 0)
         {
@@ -87,8 +91,29 @@ public class Player : MonoBehaviour, IHealth
 
     private void PlayDeathAni()
     {
-        animator.Play("Death");
+        deathSequence = DOTween.Sequence();
+        deathSequence.AppendCallback(() => PlayerDeath())
+            .AppendInterval(animator.GetCurrentAnimatorStateInfo(0).length)
+            .OnComplete(() =>
+            {
+                StartCoroutine(SoundManager.Instance.PlayLoseSound());
+                ObjectPoolManager.Instance.ReturnPlayer(this);
+            });
     }
+
+    private void PlayerDeath()
+    {
+        animator.Play("Death");
+        objectSound.PlayDeathSound(playerData.deathSound);
+    }
+
+    private IEnumerator GameRestart()
+    {
+        yield return new WaitForSeconds(0.1f);
+        InitPlayer();
+    }
+
+    public int CurrentHp() => runtimeStat.currentHp;
 
     public void AddStatusEffect(StatusEffectData data, int duration) { }
 }

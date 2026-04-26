@@ -11,11 +11,18 @@ public class HealthStat : MonoBehaviour
     [SerializeField] Text maxHpText;
     [SerializeField] GameObject shield;
     [SerializeField] Text currentShieldText;
+    [SerializeField] Transform damageTextPos;
     [SerializeField] Text statusText1;
     [SerializeField] Text statusText2;
 
     private int currentHp;
     private int currentShield;
+
+    public void ResetStatusEffect()
+    {
+        statusText1.gameObject.SetActive(false);
+        statusText2.gameObject.SetActive(false);
+    }
 
     public void SetHealthBar(int currentHp, int maxHp)
     {
@@ -36,6 +43,11 @@ public class HealthStat : MonoBehaviour
         }
         else
             shield.SetActive(false);
+    }
+
+    public void SetDamageTextTransform(int damage)
+    {
+        TextPoolManager.Instance.ShowDamageText(damage, damageTextPos);
     }
 
     public void ActiveStatusEffect(string statusEffectName)

@@ -15,17 +15,19 @@ public class ManaController : MonoBehaviour
     // Deck의 Start에서 CardDraw함수가 실행되기 때문에 이벤트 등록을 포함하는 InitMana 함수는 Awake에서 함
     private void Awake()
     {
-        InitMana();
+        GameEvents.OnBattleStart += InitMana;
+        GameEvents.OnManaRestore += ManaRestore;
+        GameEvents.OnManaBoost += AddMana;
+        GameEvents.OnBattleEnd += () => currentMana = 0;
     }
 
     private void InitMana()
     {
+        currentMana = 0;
         restoreMana = 5;
         maxMana = 12;
         currentManaText.text = $"{currentMana}";
         maxManaText.text = $"{maxMana}";
-        GameEvents.OnManaRestore += ManaRestore;
-        GameEvents.OnManaBoost += AddMana;
     }
 
     private void ManaRestore()

@@ -35,6 +35,7 @@ public class Monster : MonoBehaviour, IHealth
         GameEvents.OnPlayerAoeAttack += TakeDamage;
         GameEvents.OnEnemyDefend += SetShield;
         GameEvents.OnEnemyDeath += PlayDeathAni;
+        GameEvents.OnGameRestart += () => ObjectPoolManager.Instance.ReturnPooledObject(this);
     }
 
     private void OnDisable()
@@ -42,29 +43,34 @@ public class Monster : MonoBehaviour, IHealth
         GameEvents.OnPlayerAoeAttack -= TakeDamage;
         GameEvents.OnEnemyDefend -= SetShield;
         GameEvents.OnEnemyDeath -= PlayDeathAni;
+        GameEvents.OnGameRestart -= () => ObjectPoolManager.Instance.ReturnPooledObject(this);
     }
 
     public void InitMonster()
     {
+        effects.Clear();
         runtimeStat.currentHp = monsterData.monsterHp;
         runtimeStat.maxHp = monsterData.monsterMaxHp;
         runtimeStat.currentAtk = monsterData.monsterAtk;
 
+        healthStat.ResetStatusEffect();
         healthStat.SetHealthBar(runtimeStat.currentHp, runtimeStat.maxHp);
         monsterBattleStat.SetAttackPower(runtimeStat.currentAtk);
     }
 
     public IEnumerator ExecuteMonsterAction(IHealth target)
     {
-        if (!effects.Any(x => x.data.effectName.Equals("기절")))
+        if (!effects.Any(x => x.data.effectName.Equals("기절")) && target.CurrentHp() > 0)
         {
             switch (monsterBattleStat.DecideAction())
             {
                 case MonsterActionType.Attack:
-                    yield return new WaitForSeconds(0.5f);  // 살짝 지연시켜서 몬스터들의 공격이 빨리 처리되지 않게 하기 위해서임
+                    yield return new WaitForSeconds(0.5f);  // 살짝 지연시켜서 몬스터들의 공격이 빠르게 처리되지 않도록 함
                     animator.Play("Attack");
-                    yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length + 0.1f);
-                    target.TakeDamage(runtimeStat.currentAtk);
+                    yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+                    // 게임을 재시작하면 비활성화되기 때문에 대미지 처리를 하지 않도록 예외처리
+                    if (gameObject.activeInHierarchy)
+                        target.TakeDamage(runtimeStat.currentAtk);
                     break;
                 case MonsterActionType.Shield:
                     yield return new WaitForSeconds(1.0f);
@@ -88,6 +94,7 @@ public class Monster : MonoBehaviour, IHealth
             damage = (int)(damage * 1.5f);
 
         animator.Play("Take Hit");
+        healthStat.SetDamageTextTransform(damage);
 
         if (runtimeStat.currentShield - damage < 0)
         {
@@ -127,13 +134,16 @@ public class Monster : MonoBehaviour, IHealth
         {
             effects[i].remainingTurn--;
 
-            if (effects[i].remainingTurn <= 0)
-            {
-                healthStat.DeactiveStatusEffect(effects[i].data.effectName);
-                effects[i].data.Remove(this);
-                effects.RemoveAt(i);
-            }
+            if (runtimeStat.currentHp <= 0 || effects[i].remainingTurn <= 0)
+                RemoveStatusEffect(effects[i], i);
         }
+    }
+
+    private void RemoveStatusEffect(StatusEffectInstance statusEffectInstance, int index)
+    {
+        healthStat.DeactiveStatusEffect(statusEffectInstance.data.effectName);
+        statusEffectInstance.data.Remove(this);
+        effects.RemoveAt(index);
     }
 
     public void PlayDeathAni(Monster monster)
@@ -141,14 +151,20 @@ public class Monster : MonoBehaviour, IHealth
         if (monster != this) return;
 
         deathSequence = DOTween.Sequence();
-        deathSequence.AppendCallback(() => PlayDeathSound())
+        deathSequence.AppendCallback(() => MonsterDeath())
             .AppendInterval(animator.GetCurrentAnimatorStateInfo(0).length)
-            .OnComplete(() => ObjectPoolManager.Instance.ReturnPooledObject(monster));  // 몬스터 사망 애니메이션이 완료된 후 회수
+            .AppendCallback(() => ObjectPoolManager.Instance.ReturnPooledObject(monster))   // 몬스터 사망 애니메이션이 완료된 후 회수
+            .OnComplete(() => ObjectPoolManager.Instance.OnBattleEnd());
     }
 
-    private void PlayDeathSound()
+    private void MonsterDeath()
     {
         animator.Play("Death");
         objectSound.PlayDeathSound(monsterData.deathSound);
+    }
+
+    public int CurrentHp()
+    {
+        return runtimeStat.currentHp;
     }
 }

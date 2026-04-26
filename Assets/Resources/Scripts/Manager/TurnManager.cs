@@ -13,13 +13,14 @@ public enum TurnState
 public class TurnManager : Singleton<TurnManager>
 {
     [SerializeField] List<Monster> activeMonsters = new List<Monster>();
+    [SerializeField] Button menuButton;
     [SerializeField] Button turnEndButton;
     [SerializeField] Text turnText;
-    [SerializeField] TurnState currentTurnState;
 
+    private TurnState currentTurnState;
     private IHealth player;
-    private Queue<IEnumerator> monsterAttackIEnumerator = new Queue<IEnumerator>();
     private Sequence turnSequence;
+    private Coroutine attackCoroutine;
 
     protected override void Awake()
     {
@@ -29,10 +30,16 @@ public class TurnManager : Singleton<TurnManager>
 
     private void InitDeckManager()
     {
+        turnEndButton.interactable = false;
         GameEvents.OnPlayerRegistered += SetPlayer;
         GameEvents.OnTurnStart += StartPlayerTurn;
         GameEvents.OnEnemyRegistered += SetEnemyRegister;
         turnEndButton.onClick.AddListener(EndPlayerTurn);
+
+        GameEvents.OnBattleEnd += () => turnEndButton.interactable = false;
+        GameEvents.OnOpenOptionPopup += () => turnEndButton.interactable = false;
+        GameEvents.OnCloseOptionPopup += () => turnEndButton.interactable = true;
+        GameEvents.OnGameRestart += GameRestart;
     }
 
     private void SetPlayer(IHealth player)
@@ -40,7 +47,7 @@ public class TurnManager : Singleton<TurnManager>
         this.player = player;
     }
 
-    public void StartPlayerTurn()
+    private void StartPlayerTurn()
     {
         // 플레이어 턴인걸 텍스트로 알려준 다음, 드로우가 실행되게하는 시퀀스
         turnSequence = DOTween.Sequence();
@@ -54,15 +61,19 @@ public class TurnManager : Singleton<TurnManager>
             {
                 SoundManager.Instance.PlayTurnChangeSound();
                 turnText.text = "Player Turn";
+                currentTurnState = TurnState.PlayerTurn;
                 turnText.transform.DOLocalMoveX(0, 0.2f);
             })
             .AppendInterval(0.7f)
-            .AppendCallback(() => turnText.transform.DOLocalMoveX(1600, 0.2f)
-            .OnComplete(() =>
+            .Append(turnText.transform.DOLocalMoveX(1600, 0.2f))
+            .AppendCallback(() =>
             {
-                currentTurnState = TurnState.PlayerTurn;
                 GameEvents.OnCardDraw?.Invoke();
-            }));
+                menuButton.interactable = true;
+            })
+            .AppendInterval(0.3f)
+            .OnComplete(() => turnEndButton.interactable = true);
+
         GameEvents.OnManaRestore?.Invoke();
     }
 
@@ -74,6 +85,7 @@ public class TurnManager : Singleton<TurnManager>
 
     private void EndPlayerTurn()
     {
+        turnEndButton.interactable = false;
         GameEvents.OnTurnEnd?.Invoke();
 
         // 적 턴인걸 텍스트로 알려준 다음, 적의 공격을 차례대로 실행시키는 시퀀스
@@ -88,35 +100,36 @@ public class TurnManager : Singleton<TurnManager>
             {
                 SoundManager.Instance.PlayTurnChangeSound();
                 turnText.text = "Enemy Turn";
+                currentTurnState = TurnState.EnemyTurn;
                 turnText.transform.DOLocalMoveX(0, 0.2f);
             })
             .AppendInterval(0.7f)
-            .AppendCallback(() => turnText.transform.DOLocalMoveX(1600, 0.2f)
-            .OnComplete(() =>
-            {
-                currentTurnState = TurnState.EnemyTurn;
-
-                foreach (var monster in activeMonsters)
-                    monsterAttackIEnumerator.Enqueue(monster.ExecuteMonsterAction(player));
-
-                StartCoroutine(AttackInOrder());
-            }));
+            .AppendCallback(() => turnText.transform.DOLocalMoveX(1600, 0.2f))
+            .OnComplete(() => attackCoroutine = StartCoroutine(AttackInOrder()));
     }
 
     // 몬스터들이 차례대로 공격하게 하는 함수
     private IEnumerator AttackInOrder()
     {
-        while (monsterAttackIEnumerator.Count > 0)
+        foreach (var monster in activeMonsters)
         {
-            var monsterAction = monsterAttackIEnumerator.Dequeue();
+            var monsterAction = monster.ExecuteMonsterAction(player);
             yield return StartCoroutine(monsterAction);
         }
-        yield return null;
-
+        // 공격 이후에 상태이상에 대한 처리를 실행함
         foreach (var monster in activeMonsters)
             monster.CheckStatusEffect();
 
-        currentTurnState = TurnState.PlayerTurn;
+        if (player.CurrentHp() < 0)
+            yield break;
+        
         GameEvents.OnTurnStart?.Invoke();           // 몬스터들의 공격이 끝나면 플레이어의 턴을 시작함
+    }
+
+    // 재시작할 때 실행된 코루틴을 강제로 멈추게 하는 함수
+    private void GameRestart()
+    {
+        if (attackCoroutine != null)
+            StopCoroutine(attackCoroutine);
     }
 }

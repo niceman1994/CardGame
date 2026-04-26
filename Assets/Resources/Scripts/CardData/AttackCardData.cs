@@ -21,7 +21,6 @@ public class AttackCardData : CardData
             int finalDuration = cardInstance.isUpgraded ? statusEffect.upgradeDuration : statusEffect.duration;
             target.AddStatusEffect(cardInstance.statusEffectData, finalDuration);
         }
-
         GameEvents.OnPlayerAttack?.Invoke(finalDamage, target);
         GameEvents.OnExtraCardDraw?.Invoke(extraDraw);
     }

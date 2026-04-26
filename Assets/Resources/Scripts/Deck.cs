@@ -37,6 +37,9 @@ public class Deck : MonoBehaviour
 
     private List<Card> currnetDeckList = new List<Card>();
     private List<CardInstance> cardInstances = new List<CardInstance>();
+    private Sequence deckShuffleSequence;
+
+    public List<Card> CurrentDeckList => currnetDeckList;
     public int CardCount => cardInstances.Count;
 
     public event Action<Card> OnHandToCard;
@@ -73,6 +76,7 @@ public class Deck : MonoBehaviour
         MakeCard();
         GameEvents.OnCardDraw += CardDraw;              // 턴을 시작할 때 드로우하는 함수
         GameEvents.OnExtraCardDraw += AddCardToHand;    // 카드를 사용해 드로우하는 함수
+        GameEvents.OnGameRestart += () => StartCoroutine(GameRestart());
     }
 
     private void MakeCard()
@@ -81,7 +85,7 @@ public class Deck : MonoBehaviour
         {
             Card cardGameobject = Instantiate(deckCardPrefab, transform);
             cardGameobject.SetCardData(cardInstances[i]);
-
+            cardGameobject.name = $"{cardInstances[i].GetCardName()}_{i}";
             currnetDeckList.Add(cardGameobject);
         }
 
@@ -129,7 +133,7 @@ public class Deck : MonoBehaviour
             Debug.LogError("덱에 카드가 없어 셔플할 수 없습니다!");
             return;
         }
-        Sequence deckShuffleSequence = DOTween.Sequence();
+        deckShuffleSequence = DOTween.Sequence();
 
         for (int i = currnetDeckList.Count - 1; i > 0; i--)
         {
@@ -145,10 +149,12 @@ public class Deck : MonoBehaviour
         deckShuffleSequence.OnComplete(() => ResetDeckCardPos()); 
     }
 
-    public void ResetDeckCardPos()
+    private void ResetDeckCardPos()
     {
         for (int i = 0; i < currnetDeckList.Count; i++)
         {
+            currnetDeckList[i].transform.localScale = Vector3.one;
+            currnetDeckList[i].transform.localRotation = Quaternion.Euler(Vector3.zero);
             currnetDeckList[i].transform.localPosition = new Vector3(0, 0, i);
             // 덱을 셔플했을 때 카드가 이상하게 배치되는 현상을 발견함
             // z 값을 기준으로 UI를 렌더링하기 때문에 SetSiblingIndex 로 무작위로 섞은 카드와 하이어라키의 구조를 같게 해줘야함
@@ -158,7 +164,7 @@ public class Deck : MonoBehaviour
 
     public Sequence MoveToDeck(Card returnCard)
     {
-        return returnCard.CardTransition(transform, currnetDeckList, CardState.InDeck)
+        return returnCard.CardTransitionSequence(transform, currnetDeckList, CardState.InDeck)
             .JoinCallback(() => returnCard.FlipCard(false));
     }
 
@@ -166,9 +172,15 @@ public class Deck : MonoBehaviour
     {
         cardInstance.isUpgraded = true;
         GameEvents.OnUpdateCardText?.Invoke(cardInstance);
-        GameEvents.OnBattleEnd?.Invoke();
+    }
+
+    private IEnumerator GameRestart()
+    {
+        yield return new WaitUntil(() => currnetDeckList.Count == cardInstances.Count);
+        DeckShuffle();
+        yield return new WaitUntil(() => deckShuffleSequence.IsPlaying());
+        ObjectPoolManager.Instance.SetMonsters();
         GameEvents.OnBattleStart?.Invoke();
         GameEvents.OnTurnStart?.Invoke();
-        ObjectPoolManager.Instance.SetMonsters();
     }
 }

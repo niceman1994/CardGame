@@ -17,13 +17,13 @@ public class DefenseCardData : CardData
 
     public override int GetCardCost(CardInstance cardInstance)
     {
-        return cardInstance.isUpgraded ? 1 : cardCost;
+        int finalCardCost = cardInstance.isUpgraded ? cardCost - 1 : cardCost;
+        return finalCardCost;
     }
 
     public override string GetDescription(CardInstance cardInstance)
     {
         int finalShield = cardInstance.isUpgraded ? upgradeShield : shield;
-
         return description.Replace("{shield}", $"{finalShield}");
     }
 }

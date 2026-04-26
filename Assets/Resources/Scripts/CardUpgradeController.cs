@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,22 +7,26 @@ using UnityEngine.UI;
 
 public class CardUpgradeController : MonoBehaviour
 {
+    [SerializeField] Image cardUpgradeBackground;
     [SerializeField] Button cardUpgradeButton;
     [SerializeField] Text cardNameText;
 
-    private UnityAction cardUpgradeAction;  // 이벤트 중복 등록을 피하기 위한 UnityAction 변수
+    private UpgradePopupBox upgradeQuestionPopup;
+    private CardInstance cardInstance;
 
     private void Start()
     {
         // 임의의 카드 이름이 적힌 버튼을 클릭하면 해당 카드를 1회 강화
-        cardUpgradeButton.onClick.RemoveAllListeners();
-        cardUpgradeButton.onClick.AddListener(cardUpgradeAction);
+        cardUpgradeButton.onClick.AddListener(OnClickUpgradeButton);
     }
 
-    public void OnClickCardUpgrade(CardInstance cardInstance, UnityAction cardUpgradeAction)
+    public void OnClickCardUpgrade(CardInstance cardInstance, UpgradePopupBox upgradeQuestionPopup)
     {
-        if (this.cardUpgradeAction == null)
-            this.cardUpgradeAction = cardUpgradeAction;
+        if (this.upgradeQuestionPopup == null)
+            this.upgradeQuestionPopup = upgradeQuestionPopup;
+
+        this.cardInstance = cardInstance;
+        cardUpgradeBackground.raycastTarget = true;
 
         if (cardInstance.isUpgraded == true)
             cardUpgradeButton.interactable = false;
@@ -29,5 +34,17 @@ public class CardUpgradeController : MonoBehaviour
             cardUpgradeButton.interactable = true;
 
         cardNameText.text = cardInstance.GetCardName();
+    }
+
+    public void SetRaycastTarget(bool raycastTarget)
+    {
+        cardUpgradeBackground.raycastTarget = raycastTarget;
+    }
+
+    private void OnClickUpgradeButton()
+    {
+        string popupText = $"({this.cardInstance.GetCardName()}) 카드를 강화하시겠습니까?";
+        upgradeQuestionPopup.GetCardInstanceInfo(cardInstance);
+        upgradeQuestionPopup.OpenPopup(popupText);
     }
 }
