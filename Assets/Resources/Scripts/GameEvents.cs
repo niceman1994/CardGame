@@ -14,8 +14,8 @@ public static class GameEvents
     public static Action OnTurnStart;
     public static Action OnTurnEnd;
 
-    public static Action OnOpenOptionPopup;
-    public static Action OnCloseOptionPopup;
+    public static Action OnOpenPopup;
+    public static Action OnClosePopup;
     public static Action OnGameRestart;
     public static Action<IHealth> OnPlayerRegistered;
 

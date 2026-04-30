@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// 생성한 텍스트를 재활용하기 위해 사용하는 클래스
 /// </summary>
-public class TextPoolManager : Singleton<TextPoolManager>
+public class DamageTextManager : Singleton<DamageTextManager>
 {
     [SerializeField] int defaultCapity;
     [SerializeField] GameObject damageTextPrefab;

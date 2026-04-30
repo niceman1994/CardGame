@@ -2759,6 +2759,7 @@ MonoBehaviour:
   - {fileID: 718041930}
   - {fileID: 200759318}
   - {fileID: 1673691545}
+  dequeueMonsters: []
 --- !u!4 &1264442670
 Transform:
   m_ObjectHideFlags: 0
@@ -2898,7 +2899,6 @@ MonoBehaviour:
   menuButton: {fileID: 203461587}
   turnEndButton: {fileID: 479910486}
   turnText: {fileID: 2101566991}
-  currentTurnState: 0
 --- !u!1 &1341387660
 GameObject:
   m_ObjectHideFlags: 0
@@ -3438,7 +3438,7 @@ GameObject:
   - component: {fileID: 1550204782}
   - component: {fileID: 1550204781}
   m_Layer: 0
-  m_Name: TextPoolManager
+  m_Name: DamageTextManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4333,6 +4333,7 @@ MonoBehaviour:
   canvas: {fileID: 1841424836}
   cardUseArea: {fileID: 1876748379}
   manaController: {fileID: 1961353809}
+  handCardList: []
 --- !u!1 &1878626496
 GameObject:
   m_ObjectHideFlags: 0

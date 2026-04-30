@@ -30,7 +30,7 @@ public class MenuPopup : MonoBehaviour
     {
         menuButton.interactable = false;
         menu.gameObject.SetActive(true);
-        GameEvents.OnOpenOptionPopup?.Invoke();
+        GameEvents.OnOpenPopup?.Invoke();
     }
 
     private void OnClickRestartButton()
@@ -42,7 +42,7 @@ public class MenuPopup : MonoBehaviour
     private void OnClickContinueButton()
     {
         menu.gameObject.SetActive(false);
-        GameEvents.OnCloseOptionPopup?.Invoke();
+        GameEvents.OnClosePopup?.Invoke();
         menuButton.interactable = true;
     }
 }

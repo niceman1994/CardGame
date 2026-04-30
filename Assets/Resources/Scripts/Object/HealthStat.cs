@@ -47,7 +47,7 @@ public class HealthStat : MonoBehaviour
 
     public void SetDamageTextTransform(int damage)
     {
-        TextPoolManager.Instance.ShowDamageText(damage, damageTextPos);
+        DamageTextManager.Instance.ShowDamageText(damage, damageTextPos);
     }
 
     public void ActiveStatusEffect(string statusEffectName)

@@ -31,8 +31,8 @@ public class Hand : MonoBehaviour
         GameEvents.OnTurnEnd += DiscardAllCards;
         GameEvents.OnBattleEnd += MoveToDeck;
         // 옵션 팝업과 관련된 함수 등록
-        GameEvents.OnOpenOptionPopup += OpenOptionPopup;
-        GameEvents.OnCloseOptionPopup += CloseOptionPopup;
+        GameEvents.OnOpenPopup += OpenOptionPopup;
+        GameEvents.OnClosePopup += CloseOptionPopup;
         GameEvents.OnGameRestart += GameRestart;
     }
 
@@ -44,7 +44,6 @@ public class Hand : MonoBehaviour
         SetCardPos();
 
         targetCard.OnRaycastChange += SetOtherCardsRaycastTarget;
-        targetCard.OnCancelCard += SetOtherCardsRaycastTarget;
         targetCard.OnUsedCard += OnUsedCard;     // 손으로 카드를 가져올 때 카드 사용 관련 함수를 등록함
     }
 
@@ -101,7 +100,6 @@ public class Hand : MonoBehaviour
     {
         // 카드를 사용하면 등록한 함수를 해제함
         card.OnRaycastChange -= SetOtherCardsRaycastTarget;
-        card.OnCancelCard -= SetOtherCardsRaycastTarget;
         card.OnUsedCard -= OnUsedCard;
     }
 

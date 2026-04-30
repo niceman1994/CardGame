@@ -6,7 +6,6 @@ using TMPro;
 
 public class DamageText : MonoBehaviour
 {
-    // 텍스트가 위로 뜨면서 사라지게할 float 변수 3개
     [SerializeField] float moveSpeed;
     [SerializeField] float textFadeOutTime;
     [SerializeField] Vector3 textMoveVector;
@@ -18,15 +17,14 @@ public class DamageText : MonoBehaviour
         transform.position = target.position + textMoveVector;
         damageText = gameObject.GetComponent<TextMeshProUGUI>();
 
-        // 정수만 나오도록 Math.Truncate()를 사용함
+        // 대미지가 0이면 나오지 않도록 함
         damageText.text = num != 0 ? $"{num}" : "";
         damageText.color = color;
         damageText.name = "Damage Text";
-        StartCoroutine(TextPos(() => TextPoolManager.Instance.ReturnDamageTextObject(this)));
+        StartCoroutine(MoveDamageTextPos());
     }
 
-    // 피해를 받거나 아이템을 사용하거나 체력을 회복했을 때 텍스트가 위로 올라가게 하는 함수
-    private IEnumerator TextPos(Action poolingAction)
+    private IEnumerator MoveDamageTextPos()
     {
         float elapsedTime = 0.0f;
 
@@ -36,6 +34,6 @@ public class DamageText : MonoBehaviour
             elapsedTime += Time.deltaTime;
             transform.Translate(new Vector3(0.0f, moveSpeed * Time.deltaTime, 0.0f));
         }
-        poolingAction.Invoke();
+        DamageTextManager.Instance.ReturnDamageTextObject(this);
     }
 }

@@ -39,7 +39,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private Sequence cardResetSequence;
 
     public event Action<Card, bool> OnRaycastChange;
-    public event Action<Card, bool> OnCancelCard;
     public event Action<Card, int> OnUsedCard;
 
     public CardFront CardFront => cardFront;
@@ -140,12 +139,12 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // 손패->묘지, 묘지->덱으로 카드가 이동할 때 사용하는 시퀀스
     public Sequence CardTransitionSequence(Transform parent, List<Card> cardZoneList, CardState cardState)
     {
-        Sequence cardTransitionSequecne = DOTween.Sequence();
-        cardTransitionSequecne.AppendCallback(() => CardTransition(parent, cardZoneList, cardState))
+        Sequence cardTransitionSequence = DOTween.Sequence();
+        cardTransitionSequence.AppendCallback(() => CardTransition(parent, cardZoneList, cardState))
             .Append(transform.DOScale(Vector3.one, 0.2f))
             .Join(transform.DOLocalRotateQuaternion(Quaternion.Euler(Vector3.zero), 0.2f));
 
-        return cardTransitionSequecne;
+        return cardTransitionSequence;
     }
 
     // 시퀀스없이 게임을 재시작할 때 사용하는 함수
@@ -162,11 +161,12 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         transform.SetParent(cardAreaRectTransform);
         cardEdgeImage.raycastTarget = false;
 
+        cardHoverSequence.Kill();
         cardResetSequence = DOTween.Sequence();
         cardResetSequence.JoinCallback(() => transform.SetSiblingIndex(mouseInCard.cardOriginIndex))
             .Append(transform.DOLocalMove(mouseInCard.cardOriginPos, 0.2f))
             .Join(transform.DOScale(mouseInCard.cardOriginScale, 0.2f))
-            .Join(transform.DORotate(mouseInCard.cardOriginRotate, 0.2f))
+            .Join(transform.DOLocalRotateQuaternion(Quaternion.Euler(mouseInCard.cardOriginRotate), 0.2f))
             .OnComplete(() => cardEdgeImage.raycastTarget = true);  // 여러 카드를 빠르게 쓸 때 일부 카드가 마우스를 따라가지 않는 현상을 방지하기 위한 코드
     }
 
@@ -175,11 +175,21 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         cardEdgeImage.raycastTarget = isActive;
     }
 
+    private bool ShouldUseCard(PointerEventData eventData)
+    {
+        // 공격 타입이 아닌 카드가 손패 영역 밖에 위치했다면 사용으로 간주하고 아니라면 카드 위치를 되돌림
+        if (cardInstance.cardData.cardType != CardType.Attack)
+            return !RectTransformUtility.RectangleContainsScreenPoint(cardAreaRectTransform, eventData.position);
+
+        // 공격 타입 카드의 화살표가 대상을 찾았다면 사용으로 간주하고 아니라면 카드를 되돌림
+        return cardArrow.CheckValidTarget();
+    }
+
     public void CancelCard()
     {
         SetCardState(CardState.InHand);
         ResetCardOriginPos();
-        OnCancelCard?.Invoke(this, true);
+        OnRaycastChange?.Invoke(this, true);
     }
 
     public void ExecuteCard()
@@ -197,10 +207,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         SetCardState(CardState.Hover);
 
-        float cardHoverScale = 1.6f;
+        float cardHoverScale = 1.65f;
         float scaledHeight = cardEdgeImage.rectTransform.rect.height * cardHoverScale;
         Vector3 cardPos = new Vector3(transform.localPosition.x, -Screen.height * 0.5f + scaledHeight * 0.5f, transform.localPosition.z);
 
+        cardResetSequence.Kill();
         cardHoverSequence = DOTween.Sequence();
         // 카드 위에 마우스가 있다면 해당 카드를 위로 조금 이동시키고 크기를 키우면서 다른 카드에 의해 텍스트가 가려지지 않게 하는 시퀀스
         cardHoverSequence.AppendCallback(() =>
@@ -236,6 +247,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             // 카드가 마우스를 잘 따라가도록 최상단 캔버스를 부모로 설정함
             if (cardInstance.cardData.cardType != CardType.Attack)
                 transform.SetParent(parentRectTransform);
+
+            OnRaycastChange?.Invoke(this, false);
         }
     }
 
@@ -258,8 +271,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 cardArrow.DrawArrow(transform.position, eventData.position);
             else                                                                    // 사용한 카드가 공격 이외의 카드일 경우
                 transform.localPosition = localPoint;
-
-            OnRaycastChange?.Invoke(this, false);
         }
     }
 
@@ -271,22 +282,10 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             transform.SetParent(cardAreaRectTransform);
 
-            if (cardInstance.cardData.cardType != CardType.Attack)       // 공격 카드가 아닐 때
-            {
-                // 손패 영역 밖에 카드가 위치했다면 사용으로 간주하고 아니라면 카드 위치를 되돌림
-                if (!RectTransformUtility.RectangleContainsScreenPoint(cardAreaRectTransform, eventData.position))
-                    SetCardState(CardState.Used);
-                else
-                    CancelCard();
-            }
+            if (ShouldUseCard(eventData))
+                SetCardState(CardState.Used);
             else
-            {
-                // 공격 카드의 화살표가 대상을 찾았다면 사용으로 간주하고 아니라면 카드를 되돌림
-                if (cardArrow.CheckValidTarget())
-                    SetCardState(CardState.Used);
-                else
-                    CancelCard();
-            }
+                CancelCard();
         }
 
         if (handCardState == CardState.Used)

@@ -37,8 +37,8 @@ public class TurnManager : Singleton<TurnManager>
         turnEndButton.onClick.AddListener(EndPlayerTurn);
 
         GameEvents.OnBattleEnd += () => turnEndButton.interactable = false;
-        GameEvents.OnOpenOptionPopup += () => turnEndButton.interactable = false;
-        GameEvents.OnCloseOptionPopup += () => turnEndButton.interactable = true;
+        GameEvents.OnOpenPopup += () => turnEndButton.interactable = false;
+        GameEvents.OnClosePopup += () => turnEndButton.interactable = true;
         GameEvents.OnGameRestart += GameRestart;
     }
 
