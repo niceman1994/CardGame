@@ -73,7 +73,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         cardEdgeImage.raycastTarget = false;
 
         draw.DrawSequence(drawDelay, startPos, endScale)
-            .JoinCallback(() => CheckAlreadyInHand(draw.IsDraw, cardRotateZ))
+            .AppendCallback(() => CheckAlreadyInHand(draw.IsDraw, cardRotateZ))
             .OnComplete(() =>
             {
                 cardEdgeImage.raycastTarget = true;
@@ -84,7 +84,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private void CheckAlreadyInHand(bool isDraw, float cardRotateZ)
     {
         Sequence cardDrawSequence = DOTween.Sequence();
-
+        
         // 이미 드로우한 카드의 시퀀스 재실행을 방지하기 위한 코드
         if (isDraw == false)
         {
@@ -94,6 +94,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 {
                     FlipCard(true);
                     cardSound.PlayDrawSound();
+                    draw.SetIsDraw(true);
                 });
         }
         else

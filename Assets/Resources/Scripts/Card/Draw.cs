@@ -21,24 +21,19 @@ public class Draw
     {
         Sequence drawSequence = DOTween.Sequence();
 
-        drawSequence.SetDelay(drawDelay).AppendCallback(() => CheckFirstDraw(startPos, endScale));
-
-        return drawSequence;
-    }
-
-    private void CheckFirstDraw(Vector3 startPos, Vector3 endScale)
-    {
-        Sequence drawCheckSequence = DOTween.Sequence();
-
-        // 이미 드로우한 카드의 시퀀스 재실행을 방지하기 위한 코드
         if (isDraw == false)
         {
-            drawCheckSequence.Join(cardTransform.DOLocalMove(startPos, 0.2f).SetEase(Ease.OutExpo))
-            .Join(cardTransform.DOScale(endScale, 0.2f))       // 덱에 있는 카드를 드로우하면서 커지게 함
-            .JoinCallback(() => isDraw = true);
+            drawSequence.SetDelay(drawDelay)
+            .Append(cardTransform.DOLocalMove(startPos, 0.1f).SetEase(Ease.OutExpo))
+            .Join(cardTransform.DOScale(endScale, 0.1f));        // 덱에 있는 카드를 드로우하면서 커지게 함
         }
-        else
-            drawCheckSequence.Join(cardTransform.DOLocalMove(startPos, 0.01f).SetEase(Ease.OutExpo));
+       else
+        {
+            drawSequence.SetDelay(drawDelay)
+                .Append(cardTransform.DOLocalMove(startPos, 0.01f).SetEase(Ease.OutExpo));
+        }
+
+        return drawSequence;
     }
 
     public void SetIsDraw(bool isDraw)

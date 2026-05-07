@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 993e7c9a91fcab042b0559c1d8dad6c9
+  m_SerializeEntries:
+  - m_GUID: 4e368dfaf5a751a4a9bb296667ae9de8
+    m_Address: UIImages3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 834df334d7b0b4842871e67c839d80af
+    m_Address: UIImages2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0a91795c266d1a74282beed16c7df558
+    m_Address: GameResutlImage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c1b74a23146dd204daf23343b0464fa0
+    m_Address: UIImages1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c0f16028dc0545c4b92752499d38a449
+    m_Address: CardSpritesheet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 58b5238e1fd5507428a8fe7316ad373e
+    m_Address: transparent
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e857d203a10524c4680701153bcc61f3
+    m_Address: ShieldImage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 6a80508acb7632049acd3d024c0c8877, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 6fa2624437e1de747a087d3fabadd36d, type: 2}
+    - {fileID: 11400000, guid: a007444b33abf344588acec03516544f, type: 2}

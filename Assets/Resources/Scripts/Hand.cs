@@ -12,7 +12,7 @@ public class Hand : MonoBehaviour
     [SerializeField] RectTransform cardUseArea;
     [SerializeField] ManaController manaController;
 
-    [SerializeField] List<Card> handCardList = new List<Card>();
+    private List<Card> handCardList = new List<Card>();
     private float handRotateOffset;
     private float cardSpacing;                  // 카드 간격 설정
 

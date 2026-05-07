@@ -15,7 +15,7 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
 
     private Dictionary<int, Queue<Monster>> monsterPools = new Dictionary<int, Queue<Monster>>();
     // 플레이어가 진행 도중에 죽었을 때 남은 몬스터를 회수하기 위해 사용하는 리스트 변수
-    [SerializeField] List<Monster> dequeueMonsters = new List<Monster>();
+    private List<Monster> dequeueMonsters = new List<Monster>();
 
     protected override void Awake()
     {
