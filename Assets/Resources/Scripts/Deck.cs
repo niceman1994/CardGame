@@ -64,7 +64,7 @@ public class Deck : MonoBehaviour
                 cardInstances.Add(new CardInstance
                 {
                     cardData = cardDatas[i].cardData,
-                    statusEffectData = cardDatas[i].cardData.cardType == CardType.Attack ? (cardDatas[i].cardData as AttackCardData).statusEffect : null,
+                    statusEffectData = cardDatas[i].cardData.cardType == CardType.Attack ? (cardDatas[i].cardData as AttackCardData).cardSideEffect.statusEffect : null,
                     isUpgraded = false
                 }) ;
             }

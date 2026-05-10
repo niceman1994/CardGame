@@ -124,8 +124,7 @@ public class Monster : MonoBehaviour, IHealth
         else
             effectExisting.AddStatusTurn(duration);
 
-        data.Apply(this);
-        healthStat.ActiveStatusEffect(data.effectName);
+        data.ShowEffect(healthStat);
     }
 
     public void CheckStatusEffect()
@@ -141,8 +140,7 @@ public class Monster : MonoBehaviour, IHealth
 
     private void RemoveStatusEffect(StatusEffectInstance statusEffectInstance, int index)
     {
-        healthStat.DeactiveStatusEffect(statusEffectInstance.data.effectName);
-        statusEffectInstance.data.Remove(this);
+        statusEffectInstance.data.HideEffect(healthStat);
         effects.RemoveAt(index);
     }
 

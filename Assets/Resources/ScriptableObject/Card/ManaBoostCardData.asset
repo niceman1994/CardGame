@@ -14,8 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardCost: 0
   cardName: "\uB9C8\uB098 \uC99D\uAC00"
-  description: "\uB9C8\uB098\uB97C {addMana} \uC99D\uAC00\uC2DC\uD0B5\uB2C8\uB2E4"
+  description: "\uB9C8\uB098\uB97C {addMana} \uC99D\uAC00\uC2DC\uD0B5\uB2C8\uB2E4."
   cardFrontImage: {fileID: 21300000, guid: 411f88b287eb8504aa08edb04c1443c6, type: 3}
   cardType: 3
   addMana: 2
-  otherCardCostDown: 1
+  cardSideEffect:
+    draw: 0
+    costDown: 1
+    statusEffect: {fileID: 0}

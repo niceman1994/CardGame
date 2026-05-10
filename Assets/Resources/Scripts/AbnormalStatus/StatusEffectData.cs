@@ -9,6 +9,6 @@ public abstract class StatusEffectData : ScriptableObject
     [Header("°­È­")]
     public int upgradeDuration;
 
-    public virtual void Apply(Monster target) { }
-    public virtual void Remove(Monster target) { }
+    public virtual void ShowEffect(HealthStat healthStat) { }
+    public virtual void HideEffect(HealthStat healthStat) { }
 }

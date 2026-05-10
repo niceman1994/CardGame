@@ -6,15 +6,14 @@ using UnityEngine;
 public class ManaBoostCardData : CardData
 {
     public int addMana;
-    [Header("강화")]
-    public int otherCardCostDown;
+    public CardSideEffect cardSideEffect = new CardSideEffect();
 
     public override void Execute(CardInstance cardInstance, IHealth target = null)
     {
         GameEvents.OnManaBoost?.Invoke(addMana);
 
         if (cardInstance.isUpgraded)
-            GameEvents.OnCostDown?.Invoke(otherCardCostDown);
+            GameEvents.OnCostDown?.Invoke(cardSideEffect.costDown);
     }
 
     public override int GetCardCost(CardInstance cardInstance)
@@ -25,8 +24,8 @@ public class ManaBoostCardData : CardData
     public override string GetDescription(CardInstance cardInstance)
     {
         string finalDescription = cardInstance.isUpgraded ?
-            $"마나를 {addMana} 증가시키고\n임의의 카드 비용을 {otherCardCostDown} 줄입니다" : $"마나를 {addMana} 증가시킵니다";
+            $"{description}\n임의의 카드 비용을 {cardSideEffect.costDown} 줄입니다." : $"{description}";
 
-        return description.Replace(description, finalDescription);
+        return finalDescription.Replace("{addMana}", $"{addMana}");
     }
 }

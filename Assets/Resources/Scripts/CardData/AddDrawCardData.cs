@@ -5,13 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AddDrawCardData", menuName = "CardScriptable/CreateAddDrawCardData")]
 public class AddDrawCardData : CardData
 {
-    public int drawCount;
+    public CardSideEffect cardSideEffect = new CardSideEffect();
     [Header("°­È­")]
-    public int addDrawCardCount;
+    public int addDrawCard;
 
     public override void Execute(CardInstance cardInstance, IHealth target)
     {
-        int finalDrawCardCount = cardInstance.isUpgraded ? drawCount + addDrawCardCount : drawCount;
+        int finalDrawCardCount = cardInstance.isUpgraded ? cardSideEffect.draw + addDrawCard : cardSideEffect.draw;
         GameEvents.OnExtraCardDraw?.Invoke(finalDrawCardCount);
     }
 
@@ -22,7 +22,7 @@ public class AddDrawCardData : CardData
 
     public override string GetDescription(CardInstance cardInstance)
     {
-        int finalDrawCardCount = cardInstance.isUpgraded ? drawCount + addDrawCardCount : drawCount;
+        int finalDrawCardCount = cardInstance.isUpgraded ? cardSideEffect.draw + addDrawCard : cardSideEffect.draw;
         return description.Replace("{draw}", $"{finalDrawCardCount}");
     }
 }

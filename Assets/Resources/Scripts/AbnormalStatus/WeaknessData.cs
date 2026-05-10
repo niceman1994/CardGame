@@ -5,13 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "WeaknessData", menuName = "StatusEffectScriptable/CreateWeaknessData")]
 public class WeaknessData : StatusEffectData
 {
-    public override void Apply(Monster target)
+    public override void ShowEffect(HealthStat healthStat)
     {
-        
+        healthStat.ActiveStatusEffect(effectName);
     }
 
-    public override void Remove(Monster target)
+    public override void HideEffect(HealthStat healthStat)
     {
-        
+        healthStat.DeactiveStatusEffect(effectName);
     }
 }
