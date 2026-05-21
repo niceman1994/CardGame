@@ -24,16 +24,16 @@ public class SoundManager : Singleton<SoundManager>
 
     public IEnumerator PlayWinSound()
     {
-        GameEvents.OnBattleEnd?.Invoke();
-        GameEvents.OnBattleWin?.Invoke();
+        EventBus.Publish(GameEventType.BATTLE_END);
+        EventBus.Publish(GameEventType.WIN);
         winAudio.Play();
         yield return new WaitForSeconds(2.0f);
     }
 
     public IEnumerator PlayLoseSound()
     {
-        GameEvents.OnBattleEnd?.Invoke();
-        GameEvents.OnBattleLose?.Invoke();
+        EventBus.Publish(GameEventType.BATTLE_END);
+        EventBus.Publish(GameEventType.LOSE);
         loseAudio.Play();
         yield return new WaitForSeconds(2.0f);
     }

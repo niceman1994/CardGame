@@ -10,10 +10,10 @@ public class ManaBoostCardData : CardData
 
     public override void Execute(CardInstance cardInstance, IHealth target = null)
     {
-        GameEvents.OnManaBoost?.Invoke(addMana);
+        EventBus<CardGameData>.Publish(GameEventType.MANABOOST, new CardGameData { value = addMana });
 
         if (cardInstance.isUpgraded)
-            GameEvents.OnCostDown?.Invoke(cardSideEffect.costDown);
+            EventBus<CardGameData>.Publish(GameEventType.COSTDOWN, new CardGameData { value = cardSideEffect.costDown });
     }
 
     public override int GetCardCost(CardInstance cardInstance)

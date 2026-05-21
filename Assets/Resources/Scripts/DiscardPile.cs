@@ -10,10 +10,10 @@ public class DiscardPile : MonoBehaviour
 
     private void Awake()
     {
-        GameEvents.OnTurnStart += ReturnToDeck;
-        GameEvents.OnReturnToDeck += ReturnToDeck;
-        GameEvents.OnBattleEnd += ReturnToDeck;
-        GameEvents.OnGameRestart += GameRestart;
+        EventBus.Subscribe(GameEventType.TURN_START, ReturnToDeck);
+        EventBus.Subscribe(GameEventType.RETURN_TO_DECK, ReturnToDeck);
+        EventBus.Subscribe(GameEventType.BATTLE_END, ReturnToDeck);
+        EventBus.Subscribe(GameEventType.RESTART, GameRestart);
     }
 
     public void MoveToDiscardPile(Card card)

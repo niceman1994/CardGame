@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Events;
 
 [System.Serializable]
 public class MonsterRuntimeStat
@@ -32,18 +33,15 @@ public class Monster : MonoBehaviour, IHealth
 
     private void OnEnable()
     {
-        GameEvents.OnPlayerAoeAttack += TakeDamage;
-        GameEvents.OnEnemyDefend += SetShield;
-        GameEvents.OnEnemyDeath += PlayDeathAni;
-        GameEvents.OnGameRestart += () => ObjectPoolManager.Instance.ReturnPooledObject(this);
+        EventBus<Monster>.Subscribe(GameEventType.ENEMYDEATH, PlayDeathAni);
+        EventBus.Subscribe(GameEventType.RESTART, () => ObjectPoolManager.Instance.ReturnPooledObject(this));
     }
 
     private void OnDisable()
     {
-        GameEvents.OnPlayerAoeAttack -= TakeDamage;
-        GameEvents.OnEnemyDefend -= SetShield;
-        GameEvents.OnEnemyDeath -= PlayDeathAni;
-        GameEvents.OnGameRestart -= () => ObjectPoolManager.Instance.ReturnPooledObject(this);
+        EventBus<int>.Unsubscribe(GameEventType.AREAATTACK, TakeDamage);
+        EventBus<Monster>.Unsubscribe(GameEventType.ENEMYDEATH, PlayDeathAni);
+        EventBus.Unsubscribe(GameEventType.RESTART, () => ObjectPoolManager.Instance.ReturnPooledObject(this));
     }
 
     public void InitMonster()
@@ -111,7 +109,7 @@ public class Monster : MonoBehaviour, IHealth
         healthStat.SetHealthBar(runtimeStat.currentHp, runtimeStat.maxHp);
 
         if (runtimeStat.currentHp <= 0)
-            GameEvents.OnEnemyDeath?.Invoke(this);
+            EventBus<Monster>.Publish(GameEventType.ENEMYDEATH, this);
     }
 
     public void AddStatusEffect(StatusEffectData data, int duration)

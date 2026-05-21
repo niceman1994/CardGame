@@ -16,8 +16,8 @@ public class GameResult : MonoBehaviour
 
     private void Start()
     {
-        GameEvents.OnBattleWin += FadeOutWinImage;
-        GameEvents.OnBattleLose += FadeOutLoseImage;
+        EventBus.Subscribe(GameEventType.WIN, FadeOutWinImage);
+        EventBus.Subscribe(GameEventType.LOSE, FadeOutLoseImage);
     }
 
     private void FadeOutWinImage()

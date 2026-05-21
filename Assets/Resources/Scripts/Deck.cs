@@ -74,9 +74,9 @@ public class Deck : MonoBehaviour
     private void InitCardDraw()
     {
         MakeCard();
-        GameEvents.OnCardDraw += CardDraw;              // 턴을 시작할 때 드로우하는 함수
-        GameEvents.OnExtraCardDraw += AddCardToHand;    // 카드를 사용해 드로우하는 함수
-        GameEvents.OnGameRestart += () => StartCoroutine(GameRestart());
+        EventBus.Subscribe(GameEventType.CARD_DRAW, CardDraw);                                                  // 턴을 시작할 때 드로우하는 함수
+        EventBus<CardGameData>.Subscribe(GameEventType.CARD_DRAW, (data) => AddCardToHand(data.value));         // 카드를 사용해 드로우하는 함수
+        EventBus.Subscribe(GameEventType.RESTART, () => StartCoroutine(GameRestart()));
     }
 
     private void MakeCard()
@@ -117,7 +117,7 @@ public class Deck : MonoBehaviour
         {
             // 덱의 카드 수가 0이면 묘지의 카드를 덱으로 되돌림
             if (currnetDeckList.Count <= 0)
-                GameEvents.OnReturnToDeck?.Invoke();
+                EventBus.Publish(GameEventType.RETURN_TO_DECK);
 
             // 덱 맨 위부터 드로우하기 때문에 리스트의 마지막 요소부터 시작함
             var targetCard = currnetDeckList[currnetDeckList.Count - 1];
@@ -171,7 +171,7 @@ public class Deck : MonoBehaviour
     public void UpgradeCard(CardInstance cardInstance)
     {
         cardInstance.isUpgraded = true;
-        GameEvents.OnUpdateCardText?.Invoke(cardInstance);
+        EventBus<CardGameData>.Publish(GameEventType.CARD_TEXT_UPDATE, new CardGameData { cardInstance = cardInstance });
     }
 
     private IEnumerator GameRestart()
@@ -180,7 +180,7 @@ public class Deck : MonoBehaviour
         DeckShuffle();
         yield return new WaitUntil(() => deckShuffleSequence.IsPlaying());
         ObjectPoolManager.Instance.SetMonsters();
-        GameEvents.OnBattleStart?.Invoke();
-        GameEvents.OnTurnStart?.Invoke();
+        EventBus.Publish(GameEventType.BATTLE_START);
+        EventBus.Publish(GameEventType.TURN_START);
     }
 }

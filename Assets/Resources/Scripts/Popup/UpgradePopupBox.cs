@@ -34,8 +34,8 @@ public class UpgradePopupBox : PopupBox
     {
         OnConfirm?.Invoke(cardInstance);
         gameObject.SetActive(false);
-        GameEvents.OnBattleStart?.Invoke();
-        GameEvents.OnTurnStart?.Invoke();
+        EventBus.Publish(GameEventType.BATTLE_START);
+        EventBus.Publish(GameEventType.TURN_START);
         ObjectPoolManager.Instance.SetMonsters();
     }
 

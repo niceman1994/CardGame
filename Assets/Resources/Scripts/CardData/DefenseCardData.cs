@@ -12,7 +12,7 @@ public class DefenseCardData : CardData
     public override void Execute(CardInstance cardInstance, IHealth target = null)
     {
         int finalShield = cardInstance.isUpgraded ? upgradeShield : shield;
-        GameEvents.OnPlayerDefend?.Invoke(finalShield);
+        EventBus<CardGameData>.Publish(GameEventType.PLAYERDEFEND, new CardGameData { value = finalShield });
     }
 
     public override int GetCardCost(CardInstance cardInstance)

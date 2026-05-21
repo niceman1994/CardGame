@@ -15,7 +15,7 @@ public class SkillCardData : CardData
     {
         int finalSkillValue = cardInstance.isUpgraded ? upgradeSkillValue : skillValue;
 
-        GameEvents.OnPlayerAoeAttack.Invoke(finalSkillValue);
+        EventBus<int>.Publish(GameEventType.AREAATTACK, finalSkillValue);
         SoundManager.Instance.PlaySkillSound(skillClip);  
     }
 

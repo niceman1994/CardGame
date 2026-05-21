@@ -5,11 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public enum TurnState
-{
-    PlayerTurn, EnemyTurn, Busy
-}
-
 public class TurnManager : Singleton<TurnManager>
 {
     [SerializeField] List<Monster> activeMonsters = new List<Monster>();
@@ -17,7 +12,6 @@ public class TurnManager : Singleton<TurnManager>
     [SerializeField] Button turnEndButton;
     [SerializeField] Text turnText;
 
-    private TurnState currentTurnState;
     private IHealth player;
     private Sequence turnSequence;
     private Coroutine attackCoroutine;
@@ -31,76 +25,68 @@ public class TurnManager : Singleton<TurnManager>
     private void InitDeckManager()
     {
         turnEndButton.interactable = false;
-        GameEvents.OnPlayerRegistered += SetPlayer;
-        GameEvents.OnTurnStart += StartPlayerTurn;
-        GameEvents.OnEnemyRegistered += SetEnemyRegister;
+        EventBus<CardGameData>.Subscribe(GameEventType.PLAYER_REGISTER, SetPlayer);
+        EventBus<CardGameData>.Subscribe(GameEventType.ENEMY_REGISTER, SetEnemyRegister);
+        EventBus.Subscribe(GameEventType.TURN_START, StartPlayerTurn);
         turnEndButton.onClick.AddListener(EndPlayerTurn);
 
-        GameEvents.OnBattleEnd += () => turnEndButton.interactable = false;
-        GameEvents.OnOpenPopup += () => turnEndButton.interactable = false;
-        GameEvents.OnClosePopup += () => turnEndButton.interactable = true;
-        GameEvents.OnGameRestart += GameRestart;
+        EventBus.Subscribe(GameEventType.BATTLE_END, () => turnEndButton.interactable = false);
+        EventBus.Subscribe(GameEventType.OPENPOPUP, () => turnEndButton.interactable = false);
+        EventBus.Subscribe(GameEventType.CLOSEPOPUP, () => turnEndButton.interactable = true);
+        EventBus.Subscribe(GameEventType.RESTART, GameRestart);
     }
 
-    private void SetPlayer(IHealth player)
+    private void SetPlayer(CardGameData data)
     {
-        this.player = player;
+        this.player = data.target;
     }
 
     private void StartPlayerTurn()
     {
         // 플레이어 턴인걸 텍스트로 알려준 다음, 드로우가 실행되게하는 시퀀스
         turnSequence = DOTween.Sequence();
-        turnSequence.AppendCallback(() =>
-            {
-                currentTurnState = TurnState.Busy;
-                turnText.transform.localPosition = new Vector3(-1600, 0, 0);
-            })
+        turnSequence.AppendCallback(() => turnText.transform.localPosition = new Vector3(-1600, 0, 0))
             .AppendInterval(0.1f)
             .AppendCallback(() =>
             {
                 SoundManager.Instance.PlayTurnChangeSound();
                 turnText.text = "Player Turn";
-                currentTurnState = TurnState.PlayerTurn;
                 turnText.transform.DOLocalMoveX(0, 0.2f);
             })
             .AppendInterval(0.7f)
             .Append(turnText.transform.DOLocalMoveX(1600, 0.2f))
             .AppendCallback(() =>
             {
-                GameEvents.OnCardDraw?.Invoke();
+                EventBus.Publish(GameEventType.CARD_DRAW);
                 menuButton.interactable = true;
             })
             .AppendInterval(0.3f)
             .OnComplete(() => turnEndButton.interactable = true);
 
-        GameEvents.OnManaRestore?.Invoke();
+        EventBus.Publish(GameEventType.MANA_RESTORE);
     }
 
-    private void SetEnemyRegister(List<Monster> dequeueMonsters)
+    private void SetEnemyRegister(CardGameData cardGameData)
     {
-        currentTurnState = TurnState.EnemyTurn;
-        activeMonsters = dequeueMonsters;
+        activeMonsters = cardGameData.registerMonsters;
+
+        foreach (var monster in activeMonsters)
+            EventBus<int>.Subscribe(GameEventType.AREAATTACK, monster.TakeDamage);
     }
 
     private void EndPlayerTurn()
     {
         turnEndButton.interactable = false;
-        GameEvents.OnTurnEnd?.Invoke();
+        EventBus.Publish(GameEventType.TURN_END);
 
         // 적 턴인걸 텍스트로 알려준 다음, 적의 공격을 차례대로 실행시키는 시퀀스
         turnSequence = DOTween.Sequence();
-        turnSequence.AppendCallback(() =>
-            {
-                currentTurnState = TurnState.Busy;
-                turnText.transform.localPosition = new Vector3(-1600, 0, 0);
-            })
+        turnSequence.AppendCallback(() => turnText.transform.localPosition = new Vector3(-1600, 0, 0))
             .AppendInterval(0.1f)
             .AppendCallback(() =>
             {
                 SoundManager.Instance.PlayTurnChangeSound();
                 turnText.text = "Enemy Turn";
-                currentTurnState = TurnState.EnemyTurn;
                 turnText.transform.DOLocalMoveX(0, 0.2f);
             })
             .AppendInterval(0.7f)
@@ -122,8 +108,8 @@ public class TurnManager : Singleton<TurnManager>
 
         if (player.CurrentHp() < 0)
             yield break;
-        
-        GameEvents.OnTurnStart?.Invoke();           // 몬스터들의 공격이 끝나면 플레이어의 턴을 시작함
+
+        EventBus.Publish(GameEventType.TURN_START);     // 몬스터들의 공격이 끝나면 플레이어의 턴을 시작함
     }
 
     // 재시작할 때 실행된 코루틴을 강제로 멈추게 하는 함수

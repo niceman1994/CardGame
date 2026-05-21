@@ -25,24 +25,24 @@ public class Player : MonoBehaviour, IHealth
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        GameEvents.OnPlayerRegistered.Invoke(this);
+        EventBus<CardGameData>.Publish(GameEventType.PLAYER_REGISTER, new CardGameData { target = this });
         InitPlayer();
     }
 
     private void OnEnable()
     {
-        GameEvents.OnPlayerAttack += PlayAttackAni;
-        GameEvents.OnPlayerDefend += SetShieldFromCard;
-        GameEvents.OnPlayerDeath += PlayDeathAni;
-        GameEvents.OnGameRestart += () => StartCoroutine(GameRestart());
+        EventBus<CardGameData>.Subscribe(GameEventType.PLAYERATTACK, (data) => PlayAttackAni(data.value, data.target));
+        EventBus<CardGameData>.Subscribe(GameEventType.PLAYERDEFEND, (data) => SetShieldFromCard(data.value));
+        EventBus.Subscribe(GameEventType.PLAYERDEATH, PlayDeathAni);
+        EventBus.Subscribe(GameEventType.BATTLE_START, () => StartCoroutine(BattleStart()));
     }
 
     private void OnDisable()
     {
-        GameEvents.OnPlayerAttack -= PlayAttackAni;
-        GameEvents.OnPlayerDefend -= SetShieldFromCard;
-        GameEvents.OnPlayerDeath -= PlayDeathAni;
-        GameEvents.OnGameRestart -= () => StartCoroutine(GameRestart());
+        EventBus<CardGameData>.Unsubscribe(GameEventType.PLAYERATTACK, (data) => PlayAttackAni(data.value, data.target));
+        EventBus<CardGameData>.Unsubscribe(GameEventType.PLAYERDEFEND, (data) => SetShieldFromCard(data.value));
+        EventBus.Unsubscribe(GameEventType.PLAYERDEATH, PlayDeathAni);
+        EventBus.Unsubscribe(GameEventType.BATTLE_START, () => StartCoroutine(BattleStart()));
     }
 
     public void InitPlayer()
@@ -86,7 +86,7 @@ public class Player : MonoBehaviour, IHealth
         healthStat.SetHealthBar(runtimeStat.currentHp, runtimeStat.maxHp);
 
         if (runtimeStat.currentHp <= 0)
-            GameEvents.OnPlayerDeath?.Invoke();
+            EventBus.Publish(GameEventType.PLAYERDEATH);
     }
 
     private void PlayDeathAni()
@@ -107,7 +107,7 @@ public class Player : MonoBehaviour, IHealth
         objectSound.PlayDeathSound(playerData.deathSound);
     }
 
-    private IEnumerator GameRestart()
+    private IEnumerator BattleStart()
     {
         yield return new WaitForSeconds(0.1f);
         InitPlayer();

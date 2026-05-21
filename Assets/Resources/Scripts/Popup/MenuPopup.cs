@@ -13,8 +13,8 @@ public class MenuPopup : MonoBehaviour
 
     private void Awake()
     {
-        GameEvents.OnBattleStart += () => menuButton.interactable = true;
-        GameEvents.OnBattleEnd += () => menuButton.interactable = false;
+        EventBus.Subscribe(GameEventType.BATTLE_START, () => menuButton.interactable = true);
+        EventBus.Subscribe(GameEventType.BATTLE_END, () => menuButton.interactable = false);
 
         menuButton.onClick.AddListener(OnClickOptionOpenButton);
         restartButton.onClick.AddListener(OnClickRestartButton);
@@ -30,19 +30,19 @@ public class MenuPopup : MonoBehaviour
     {
         menuButton.interactable = false;
         menu.gameObject.SetActive(true);
-        GameEvents.OnOpenPopup?.Invoke();
+        EventBus.Publish(GameEventType.OPENPOPUP);
     }
 
     private void OnClickRestartButton()
     {
         menu.gameObject.SetActive(false);
-        GameEvents.OnGameRestart?.Invoke();
+        EventBus.Publish(GameEventType.RESTART);
     }
 
     private void OnClickContinueButton()
     {
         menu.gameObject.SetActive(false);
-        GameEvents.OnClosePopup?.Invoke();
+        EventBus.Publish(GameEventType.CLOSEPOPUP);
         menuButton.interactable = true;
     }
 }

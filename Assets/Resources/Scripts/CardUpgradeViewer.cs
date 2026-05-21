@@ -14,7 +14,7 @@ public class CardUpgradeViewer : MonoBehaviour
 
     private void Awake()
     {
-        GameEvents.OnBattleStart += () => cardUpgradeUI.gameObject.SetActive(false);
+        EventBus.Subscribe(GameEventType.BATTLE_START, () => cardUpgradeUI.gameObject.SetActive(false));
         InitPopup();
         MakeUpgradeButton();
         deck.OnClickUpgradeButton += OnClickUpgradeButton;

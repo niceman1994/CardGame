@@ -27,13 +27,13 @@ public class Hand : MonoBehaviour
         cardSpacing = 180.0f;
         handRotateOffset = 6000.0f;
         deck.OnHandToCard += GetCardToHand;
-        GameEvents.OnCostDown += RandomCostDownInHand;
-        GameEvents.OnTurnEnd += DiscardAllCards;
-        GameEvents.OnBattleEnd += MoveToDeck;
+        EventBus<CardGameData>.Subscribe(GameEventType.COSTDOWN, (data) => RandomCostDownInHand(data.value));
+        EventBus.Subscribe(GameEventType.TURN_END, DiscardAllCards);
+        EventBus.Subscribe(GameEventType.BATTLE_END, MoveToDeck);
         // 옵션 팝업과 관련된 함수 등록
-        GameEvents.OnOpenPopup += OpenOptionPopup;
-        GameEvents.OnClosePopup += CloseOptionPopup;
-        GameEvents.OnGameRestart += GameRestart;
+        EventBus.Subscribe(GameEventType.OPENPOPUP, OpenOptionPopup);
+        EventBus.Subscribe(GameEventType.CLOSEPOPUP, CloseOptionPopup);
+        EventBus.Subscribe(GameEventType.RESTART, GameRestart);
     }
 
     private void GetCardToHand(Card targetCard)

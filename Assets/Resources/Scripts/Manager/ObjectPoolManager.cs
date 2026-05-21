@@ -33,8 +33,8 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
     {
         Player playerObject = Instantiate(playerPrefab, playerPosition);
         playerObject.name = "Player";
-        GameEvents.OnBattleStart?.Invoke();
-        GameEvents.OnTurnStart?.Invoke();
+        EventBus.Publish(GameEventType.BATTLE_START);
+        EventBus.Publish(GameEventType.TURN_START);
     }
 
     private void EnqueueMonsters()
@@ -65,7 +65,7 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
             dequeueMonster.transform.position = monsterPos[i].position;
             dequeueMonsters.Add(dequeueMonster);
         }
-        GameEvents.OnEnemyRegistered?.Invoke(dequeueMonsters);
+        EventBus<CardGameData>.Publish(GameEventType.ENEMY_REGISTER, new CardGameData { registerMonsters = dequeueMonsters });
     }
 
     public void ReturnPooledObject(Monster pooledObject)
