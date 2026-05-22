@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+namespace System.Runtime.CompilerServices
+{
+    // IsExternalInit 클래스가 없으면 init을 사용할 수 없음
+    internal static class IsExternalInit { }
+}
+
 public enum GameEventType
 {
     PLAYER_REGISTER, ENEMY_REGISTER, BATTLE_START, BATTLE_END,
@@ -13,10 +19,10 @@ public enum GameEventType
 
 public struct CardGameData
 {
-    public int value;
-    public IHealth target;
-    public CardInstance cardInstance;
-    public List<Monster> registerMonsters;
+    public int Value { get; init; }
+    public IHealth Target { get; init; }
+    public CardInstance CardInstance { get; init; }
+    public IReadOnlyList<Monster> RegisterMonsters { get; init; }
 }
 
 public class EventBus

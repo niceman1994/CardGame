@@ -17,7 +17,7 @@ public class ManaController : MonoBehaviour
     {
         EventBus.Subscribe(GameEventType.BATTLE_START, InitMana);
         EventBus.Subscribe(GameEventType.MANA_RESTORE, ManaRestore);
-        EventBus<CardGameData>.Subscribe(GameEventType.MANABOOST, (data) => AddMana(data.value));
+        EventBus<CardGameData>.Subscribe(GameEventType.MANABOOST, (data) => AddMana(data.Value));
         EventBus.Subscribe(GameEventType.BATTLE_END, () => currentMana = 0);
     }
 

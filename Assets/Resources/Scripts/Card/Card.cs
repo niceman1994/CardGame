@@ -50,7 +50,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         draw = new Draw(transform);
         SetCardState(CardState.InDeck);
         mouseInCard.cardOriginScale = transform.localScale;
-        EventBus<CardGameData>.Subscribe(GameEventType.CARD_TEXT_UPDATE, (data) => UpdateCardText(data.cardInstance));   // 강화한 카드의 텍스트를 갱신하기 위해 이벤트에 등록
+        EventBus<CardGameData>.Subscribe(GameEventType.CARD_TEXT_UPDATE, (data) => UpdateCardText(data.CardInstance));   // 강화한 카드의 텍스트를 갱신하기 위해 이벤트에 등록
     }
 
     public void SetCardData(CardInstance cardInstance)
@@ -293,7 +293,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             OnUsedCard?.Invoke(this, cardFront.CardCost);     // 현재 카드 코스트를 기준으로 마나를 소모함
             // 임시로 변환된 코스트를 원래대로 되돌리기 위해 이벤트를 호출함
-            EventBus<CardGameData>.Publish(GameEventType.CARD_TEXT_UPDATE, new CardGameData { cardInstance = this.cardInstance });   
+            EventBus<CardGameData>.Publish(GameEventType.CARD_TEXT_UPDATE, new CardGameData { CardInstance = this.cardInstance });   
         }
 
         cardArrow.gameObject.SetActive(false);

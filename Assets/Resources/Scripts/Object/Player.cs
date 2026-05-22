@@ -25,22 +25,22 @@ public class Player : MonoBehaviour, IHealth
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        EventBus<CardGameData>.Publish(GameEventType.PLAYER_REGISTER, new CardGameData { target = this });
+        EventBus<CardGameData>.Publish(GameEventType.PLAYER_REGISTER, new CardGameData { Target = this });
         InitPlayer();
     }
 
     private void OnEnable()
     {
-        EventBus<CardGameData>.Subscribe(GameEventType.PLAYERATTACK, (data) => PlayAttackAni(data.value, data.target));
-        EventBus<CardGameData>.Subscribe(GameEventType.PLAYERDEFEND, (data) => SetShieldFromCard(data.value));
+        EventBus<CardGameData>.Subscribe(GameEventType.PLAYERATTACK, (data) => PlayAttackAni(data.Value, data.Target));
+        EventBus<CardGameData>.Subscribe(GameEventType.PLAYERDEFEND, (data) => SetShieldFromCard(data.Value));
         EventBus.Subscribe(GameEventType.PLAYERDEATH, PlayDeathAni);
         EventBus.Subscribe(GameEventType.BATTLE_START, () => StartCoroutine(BattleStart()));
     }
 
     private void OnDisable()
     {
-        EventBus<CardGameData>.Unsubscribe(GameEventType.PLAYERATTACK, (data) => PlayAttackAni(data.value, data.target));
-        EventBus<CardGameData>.Unsubscribe(GameEventType.PLAYERDEFEND, (data) => SetShieldFromCard(data.value));
+        EventBus<CardGameData>.Unsubscribe(GameEventType.PLAYERATTACK, (data) => PlayAttackAni(data.Value, data.Target));
+        EventBus<CardGameData>.Unsubscribe(GameEventType.PLAYERDEFEND, (data) => SetShieldFromCard(data.Value));
         EventBus.Unsubscribe(GameEventType.PLAYERDEATH, PlayDeathAni);
         EventBus.Unsubscribe(GameEventType.BATTLE_START, () => StartCoroutine(BattleStart()));
     }

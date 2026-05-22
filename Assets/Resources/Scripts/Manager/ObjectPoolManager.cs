@@ -65,7 +65,7 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
             dequeueMonster.transform.position = monsterPos[i].position;
             dequeueMonsters.Add(dequeueMonster);
         }
-        EventBus<CardGameData>.Publish(GameEventType.ENEMY_REGISTER, new CardGameData { registerMonsters = dequeueMonsters });
+        EventBus<CardGameData>.Publish(GameEventType.ENEMY_REGISTER, new CardGameData { RegisterMonsters = dequeueMonsters });
     }
 
     public void ReturnPooledObject(Monster pooledObject)

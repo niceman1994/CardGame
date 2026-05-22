@@ -7,7 +7,7 @@ using DG.Tweening;
 
 public class TurnManager : Singleton<TurnManager>
 {
-    [SerializeField] List<Monster> activeMonsters = new List<Monster>();
+    [SerializeField] IReadOnlyList<Monster> activeMonsters = new List<Monster>();
     [SerializeField] Button menuButton;
     [SerializeField] Button turnEndButton;
     [SerializeField] Text turnText;
@@ -38,7 +38,7 @@ public class TurnManager : Singleton<TurnManager>
 
     private void SetPlayer(CardGameData data)
     {
-        this.player = data.target;
+        this.player = data.Target;
     }
 
     private void StartPlayerTurn()
@@ -68,7 +68,7 @@ public class TurnManager : Singleton<TurnManager>
 
     private void SetEnemyRegister(CardGameData cardGameData)
     {
-        activeMonsters = cardGameData.registerMonsters;
+        activeMonsters = cardGameData.RegisterMonsters;
 
         foreach (var monster in activeMonsters)
             EventBus<int>.Subscribe(GameEventType.AREAATTACK, monster.TakeDamage);

@@ -12,7 +12,7 @@ public class AddDrawCardData : CardData
     public override void Execute(CardInstance cardInstance, IHealth target)
     {
         int finalDrawCardCount = cardInstance.isUpgraded ? cardSideEffect.draw + addDrawCard : cardSideEffect.draw;
-        EventBus<CardGameData>.Publish(GameEventType.CARD_DRAW, new CardGameData { value = finalDrawCardCount });
+        EventBus<CardGameData>.Publish(GameEventType.CARD_DRAW, new CardGameData { Value = finalDrawCardCount });
     }
 
     public override int GetCardCost(CardInstance cardInstance)

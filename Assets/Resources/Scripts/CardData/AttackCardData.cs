@@ -20,8 +20,8 @@ public class AttackCardData : CardData
             int finalDuration = cardInstance.isUpgraded ? cardSideEffect.statusEffect.upgradeDuration : cardSideEffect.statusEffect.duration;
             target.AddStatusEffect(cardInstance.statusEffectData, finalDuration);
         }
-        EventBus<CardGameData>.Publish(GameEventType.PLAYERATTACK, new CardGameData { value = finalDamage, target = target });
-        EventBus<CardGameData>.Publish(GameEventType.CARD_DRAW, new CardGameData { value = cardSideEffect.draw });
+        EventBus<CardGameData>.Publish(GameEventType.PLAYERATTACK, new CardGameData { Value = finalDamage, Target = target });
+        EventBus<CardGameData>.Publish(GameEventType.CARD_DRAW, new CardGameData { Value = cardSideEffect.draw });
     }
 
     public override int GetCardCost(CardInstance cardInstance)

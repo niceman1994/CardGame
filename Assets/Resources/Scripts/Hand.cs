@@ -27,7 +27,7 @@ public class Hand : MonoBehaviour
         cardSpacing = 180.0f;
         handRotateOffset = 6000.0f;
         deck.OnHandToCard += GetCardToHand;
-        EventBus<CardGameData>.Subscribe(GameEventType.COSTDOWN, (data) => RandomCostDownInHand(data.value));
+        EventBus<CardGameData>.Subscribe(GameEventType.COSTDOWN, (data) => RandomCostDownInHand(data.Value));
         EventBus.Subscribe(GameEventType.TURN_END, DiscardAllCards);
         EventBus.Subscribe(GameEventType.BATTLE_END, MoveToDeck);
         // 옵션 팝업과 관련된 함수 등록

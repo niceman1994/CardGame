@@ -75,7 +75,7 @@ public class Deck : MonoBehaviour
     {
         MakeCard();
         EventBus.Subscribe(GameEventType.CARD_DRAW, CardDraw);                                                  // 턴을 시작할 때 드로우하는 함수
-        EventBus<CardGameData>.Subscribe(GameEventType.CARD_DRAW, (data) => AddCardToHand(data.value));         // 카드를 사용해 드로우하는 함수
+        EventBus<CardGameData>.Subscribe(GameEventType.CARD_DRAW, (data) => AddCardToHand(data.Value));         // 카드를 사용해 드로우하는 함수
         EventBus.Subscribe(GameEventType.RESTART, () => StartCoroutine(GameRestart()));
     }
 
@@ -171,7 +171,7 @@ public class Deck : MonoBehaviour
     public void UpgradeCard(CardInstance cardInstance)
     {
         cardInstance.isUpgraded = true;
-        EventBus<CardGameData>.Publish(GameEventType.CARD_TEXT_UPDATE, new CardGameData { cardInstance = cardInstance });
+        EventBus<CardGameData>.Publish(GameEventType.CARD_TEXT_UPDATE, new CardGameData { CardInstance = cardInstance });
     }
 
     private IEnumerator GameRestart()
