@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class CardFront : MonoBehaviour
+public class CardView : MonoBehaviour
 {
     [SerializeField] CardData cardData;
     [SerializeField] Image cardFrontImage;

@@ -109,7 +109,9 @@ GameObject:
   - component: {fileID: 168668846283535967}
   - component: {fileID: 3426423869562691652}
   - component: {fileID: 168668846283535954}
+  - component: {fileID: 4232903345716541389}
   - component: {fileID: 2395453883968237579}
+  - component: {fileID: 27786036631456375}
   - component: {fileID: 9151118779378518862}
   m_Layer: 5
   m_Name: DeckCardPrefab
@@ -192,11 +194,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb713199778b64642b9e04e00b1fd8af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardEdgeImage: {fileID: 2075557068148245401}
-  cardFront: {fileID: 2151935848187992355}
-  cardArrow: {fileID: 4575116158524495201}
+  draw: {fileID: 4232903345716541389}
+  cardView: {fileID: 2151935848187992355}
   cardBackImage: {fileID: 168668846579591380}
   cardSound: {fileID: 2395453883968237579}
+  cardInteraction: {fileID: 27786036631456375}
+--- !u!114 &4232903345716541389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168668846283535952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59dabdbc03ca6c14586b74eb22087469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2395453883968237579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,6 +227,21 @@ MonoBehaviour:
   cardDrawClip: {fileID: 8300000, guid: 3f906e6e37c80ab429d77c51357005ad, type: 3}
   cardHoverClip: {fileID: 8300000, guid: 013f4c32f839362488c868f753fa6d02, type: 3}
   cardCancelClip: {fileID: 8300000, guid: ccddcd7652745534ea82ec771414bb9c, type: 3}
+--- !u!114 &27786036631456375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168668846283535952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8118965562818b44bcbc5f8f25f8003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardEdgeImage: {fileID: 2075557068148245401}
+  cardBackImage: {fileID: 168668846579591380}
+  cardArrow: {fileID: 4575116158524495201}
 --- !u!82 &9151118779378518862
 AudioSource:
   m_ObjectHideFlags: 0
@@ -680,7 +709,7 @@ GameObject:
   - component: {fileID: 428276773689809538}
   - component: {fileID: 2151935848187992355}
   m_Layer: 5
-  m_Name: CardFront
+  m_Name: CardView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

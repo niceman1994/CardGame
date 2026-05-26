@@ -39,8 +39,7 @@ public class Hand : MonoBehaviour
     private void GetCardToHand(Card targetCard)
     {
         handCardList.Add(targetCard);
-        targetCard.transform.SetParent(transform);
-        targetCard.SetCardParentRects(canvas, cardUseArea);
+        targetCard.SetParentHandCard(this, canvas, cardUseArea);
         SetCardPos();
 
         targetCard.OnRaycastChange += SetOtherCardsRaycastTarget;
@@ -60,7 +59,7 @@ public class Hand : MonoBehaviour
     {
         int index = UnityEngine.Random.Range(0, handCardList.Count);
         var randomCard = handCardList[index];
-        randomCard.CardFront.CardCostDown(costDownAmount);
+        randomCard.CardCostDown(costDownAmount);
     }
 
     private void OnUsedCard(Card usedCard, int cardCost)

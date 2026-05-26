@@ -12,7 +12,6 @@ public class CardArrow : MonoBehaviour
     [SerializeField] List<RectTransform> addArrowBody = new List<RectTransform>();
 
     private float arrowBodySpacing;
-    private IHealth arrowTarget;
 
     private void Start()
     {
@@ -66,37 +65,5 @@ public class CardArrow : MonoBehaviour
         }
         // 방향에 맞게 회전
         transform.rotation = Quaternion.Euler(0, 0, angle);
-    }
-
-    public bool CheckValidTarget()
-    {
-        // UI 레이캐스트로 마우스 위치의 오브젝트 감지
-        PointerEventData pointerData = new PointerEventData(EventSystem.current);
-        pointerData.position = Input.mousePosition;
-
-        var results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(pointerData, results);
-
-        bool isValidTarget = false;
-
-        foreach (var result in results)
-        {
-            // 몬스터 하위에 몬스터 크기인 RaycastImage 를 만들고 감지를 확인하기 때문에 GetComponentInParent 를 사용함
-            var target = result.gameObject.GetComponentInParent<IHealth>();
-
-            if (target != null)
-            {
-                arrowTarget = target;
-                isValidTarget = true;
-                break;
-            }
-        }
-
-        return isValidTarget;
-    }
-
-    public IHealth GetCardArrowTarget()
-    {
-        return arrowTarget;
     }
 }
