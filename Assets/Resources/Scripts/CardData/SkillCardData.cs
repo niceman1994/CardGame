@@ -8,26 +8,29 @@ public class SkillCardData : CardData
     public int skillValue;
     public AudioClip skillClip;
     [Header("°­È­")]
-    public int upgradeCardCost;
     public int upgradeSkillValue;
 
-    public override void Execute(CardInstance cardInstance, IHealth target)
-    {
-        int finalSkillValue = cardInstance.isUpgraded ? upgradeSkillValue : skillValue;
+    private int finalSkillValue;
 
+    public override void Execute(CardInstance cardInstance, ISelectable target)
+    {
         EventBus<int>.Publish(GameEventType.AREAATTACK, finalSkillValue);
         SoundManager.Instance.PlaySkillSound(skillClip);  
     }
 
     public override int GetCardCost(CardInstance cardInstance)
     {
-        int finalCost = cardInstance.isUpgraded ? upgradeCardCost : cardCost;
+        int finalCost = cardInstance.isUpgraded ? cardCost - 1 : cardCost;
         return finalCost;
     }
 
     public override string GetDescription(CardInstance cardInstance)
     {
-        int finalSkillValue = cardInstance.isUpgraded ? upgradeSkillValue : skillValue;
+        finalSkillValue = cardInstance.isUpgraded ? upgradeSkillValue : skillValue;
+
+        if (cardInstance.isOverload)
+            finalSkillValue += overloadValue;
+
         return description.Replace("{skillValue}", $"{finalSkillValue}");
     }
 }

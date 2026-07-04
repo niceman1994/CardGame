@@ -12,15 +12,15 @@ namespace System.Runtime.CompilerServices
 public enum GameEventType
 {
     PLAYER_REGISTER, ENEMY_REGISTER, BATTLE_START, BATTLE_END,
-    TURN_START, MANA_RESTORE, CARD_DRAW, RETURN_TO_DECK, CARD_TEXT_UPDATE,
+    TURN_START, MANA_RESTORE, CARD_DRAW, CARD_SELECT, RETURN_TO_DECK, CARD_TEXT_UPGRADE,
     TURN_END, RESTART, PAUSE, QUIT, WIN, LOSE, OPENPOPUP, CLOSEPOPUP,
-    MANABOOST, COSTDOWN, AREAATTACK, PLAYERATTACK, PLAYERDEFEND, PLAYERDEATH, ENEMYATTACK, ENEMYDEATH
+    MANABOOST, COSTDOWN, OVERLOAD, AREAATTACK, PLAYERATTACK, PLAYERDEFEND, PLAYERDEATH, ENEMYATTACK, ENEMYDEATH
 }
 
 public struct CardGameData
 {
     public int Value { get; init; }
-    public IHealth Target { get; init; }
+    public ISelectable Target { get; init; }
     public CardInstance CardInstance { get; init; }
     public IReadOnlyList<Monster> RegisterMonsters { get; init; }
 }

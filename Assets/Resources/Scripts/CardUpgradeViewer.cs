@@ -12,9 +12,9 @@ public class CardUpgradeViewer : MonoBehaviour
 
     private List<CardUpgradeController> cardUpgradeControllers = new List<CardUpgradeController>();
 
-    private void Awake()
+    private void Start()
     {
-        EventBus.Subscribe(GameEventType.BATTLE_START, () => cardUpgradeUI.gameObject.SetActive(false));
+        EventBus.Subscribe(GameEventType.BATTLE_START, () => cardUpgradeUI.SetActive(false));
         InitPopup();
         MakeUpgradeButton();
         deck.OnClickUpgradeButton += OnClickUpgradeButton;
@@ -30,7 +30,7 @@ public class CardUpgradeViewer : MonoBehaviour
 
     public void ActiveUpgradeButton()
     {
-        cardUpgradeUI.gameObject.SetActive(true);
+        cardUpgradeUI.SetActive(true);
         cardUpgradeControllers.ForEach(x => x.gameObject.SetActive(true));
     }
 

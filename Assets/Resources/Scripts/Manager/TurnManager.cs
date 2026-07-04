@@ -38,14 +38,14 @@ public class TurnManager : Singleton<TurnManager>
 
     private void SetPlayer(CardGameData data)
     {
-        this.player = data.Target;
+        this.player = data.Target as IHealth;
     }
 
     private void StartPlayerTurn()
     {
         // 플레이어 턴인걸 텍스트로 알려준 다음, 드로우가 실행되게하는 시퀀스
         turnSequence = DOTween.Sequence();
-        turnSequence.AppendCallback(() => turnText.transform.localPosition = new Vector3(-1600, 0, 0))
+        turnSequence.AppendCallback(() => turnText.transform.localPosition = new Vector3(-3000, 0, 0))
             .AppendInterval(0.1f)
             .AppendCallback(() =>
             {
@@ -54,14 +54,18 @@ public class TurnManager : Singleton<TurnManager>
                 turnText.transform.DOLocalMoveX(0, 0.2f);
             })
             .AppendInterval(0.7f)
-            .Append(turnText.transform.DOLocalMoveX(1600, 0.2f))
+            .Append(turnText.transform.DOLocalMoveX(3000, 0.2f))
             .AppendCallback(() =>
             {
                 EventBus.Publish(GameEventType.CARD_DRAW);
                 menuButton.interactable = true;
             })
             .AppendInterval(0.3f)
-            .OnComplete(() => turnEndButton.interactable = true);
+            .OnComplete(() =>
+            {
+                Canvas.ForceUpdateCanvases();
+                turnEndButton.interactable = true;
+            });
 
         EventBus.Publish(GameEventType.MANA_RESTORE);
     }
@@ -81,17 +85,22 @@ public class TurnManager : Singleton<TurnManager>
 
         // 적 턴인걸 텍스트로 알려준 다음, 적의 공격을 차례대로 실행시키는 시퀀스
         turnSequence = DOTween.Sequence();
-        turnSequence.AppendCallback(() => turnText.transform.localPosition = new Vector3(-1600, 0, 0))
+        turnSequence.AppendCallback(() => turnText.transform.localPosition = new Vector3(-3000, 0, 0))
             .AppendInterval(0.1f)
             .AppendCallback(() =>
             {
                 SoundManager.Instance.PlayTurnChangeSound();
+                turnText.gameObject.SetActive(true);
                 turnText.text = "Enemy Turn";
                 turnText.transform.DOLocalMoveX(0, 0.2f);
             })
             .AppendInterval(0.7f)
-            .AppendCallback(() => turnText.transform.DOLocalMoveX(1600, 0.2f))
-            .OnComplete(() => attackCoroutine = StartCoroutine(AttackInOrder()));
+            .AppendCallback(() => turnText.transform.DOLocalMoveX(3000, 0.2f))
+            .OnComplete(() =>
+            {
+                Canvas.ForceUpdateCanvases();
+                attackCoroutine = StartCoroutine(AttackInOrder());
+            });
     }
 
     // 몬스터들이 차례대로 공격하게 하는 함수

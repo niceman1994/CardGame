@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
+using UnityEngine.Events;
 
 public enum CardState
 {
@@ -12,7 +12,7 @@ public enum CardState
 }
 
 // 마우스 상호작용의 주체는 Card 스크립트라서 IPointer 인터페이스를 여기에 추가함
-public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler
+public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler, ICard
 {
     [SerializeField] Draw draw;
     [SerializeField] CardView cardView;
@@ -21,39 +21,57 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     private CardState handCardState;
     private CardInstance cardInstance;
+    private UnityAction<CardGameData> upgradeTextAction;
 
-    public event Action<Card, bool> OnRaycastChange;
+    public event Action<Card, bool> OnIsHoverChange;
     public event Action<Card, int> OnUsedCard;
+    public event Action<Color> OnResetCostColor;
 
     public CardSound CardSound => cardSound;
 
     private void Awake()
     {
+        cardInteraction.Init(this);
         SetCardState(CardState.InDeck);
+        upgradeTextAction = (data) => UpgradeCardText(data.CardInstance);
+        OnResetCostColor += cardView.ResetCardCostColor;
     }
 
     private void OnEnable()
     {
-        EventBus<CardGameData>.Subscribe(GameEventType.CARD_TEXT_UPDATE, (data) => UpdateCardText(data.CardInstance));   // 강화한 카드의 텍스트를 갱신하기 위해 이벤트에 등록
+        EventBus<CardGameData>.Subscribe(GameEventType.CARD_TEXT_UPGRADE, upgradeTextAction);   // 버튼으로 강화된 카드의 텍스트를 갱신하기 위해 이벤트에 등록
     }
 
     private void OnDisable()
     {
-        EventBus<CardGameData>.Unsubscribe(GameEventType.CARD_TEXT_UPDATE, (data) => UpdateCardText(data.CardInstance));
+        EventBus<CardGameData>.Unsubscribe(GameEventType.CARD_TEXT_UPGRADE, upgradeTextAction);
     }
 
     public void SetCardData(CardInstance cardInstance)
     {
         this.cardInstance = cardInstance;
-        cardView.SetCardText(cardInstance);
+        cardView.SetCardText(this.cardInstance);
     }
 
-    public void UpdateCardText(CardInstance cardInstance)
+    private void UpgradeCardText(CardInstance cardInstance)
     {
         if (this.cardInstance != cardInstance) return;
 
-        cardView.SetCardText(cardInstance);
-        name = $"{cardInstance.GetCardName()}";
+        cardView.SetCardText(this.cardInstance);
+    }
+
+    public void ResetCardText()
+    {
+        cardInstance.isOverload = false;
+        cardView.ResetCardInstance(cardInstance);
+        OnResetCostColor?.Invoke(Color.white);
+    }
+
+    public void ApplyCardOverload(int overloadCost)
+    {
+        cardInstance.isOverload = true;
+        cardView.OverloadCardText(cardInstance, overloadCost);
+        cardInstance.isOverload = false;                // 1회성 강화라서 false를 다시 넣음
     }
 
     public void SetCardPos(float drawDelay, Vector3 startPos, Vector3 endScale, float cardRotateZ)
@@ -86,6 +104,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         cardDrawSequence.OnComplete(() =>
         {
+            cardInteraction.SetHover(true);
             SetCardState(CardState.InHand);
             cardInteraction.SetCardOriginRotate(transform.localRotation.eulerAngles);
         });
@@ -128,16 +147,16 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         SetCardState(cardState);
     }
 
-    private void ResetCardOriginPos()
+    public void ResetCardOriginPos()
     {
         cardInteraction.SetCardParentInArea();
-        cardInteraction.SetCardRaycaseTarget(false);
+        cardInteraction.SetHover(true);
         cardInteraction.CardResetSequence();  // 여러 카드를 빠르게 쓸 때 일부 카드가 마우스를 따라가지 않는 현상을 방지하기 위한 코드
     }
 
-    public void SetCardRaycastTarget(bool isActive)
+    public void SetIsHover(bool isActive)
     {
-        cardInteraction.SetCardRaycaseTarget(isActive);
+        cardInteraction.SetHover(isActive);
     }
 
     public void SetParentHandCard(Hand hand, RectTransform parentRect, RectTransform cardAreaRect)
@@ -146,31 +165,34 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         cardInteraction.SetCardParentRects(parentRect, cardAreaRect);
     }
 
-    public void CardCostDown(int costDownAmount)
+    public void CardCostChange(int costChangeAmount)
     {
-        cardView.CardCostDown(costDownAmount);
+        cardView.CardCostChange(costChangeAmount);
     }
 
     public void ExecuteCard()
     {
-        cardInstance.Execute(cardInteraction.GetCardArrowTarget());
+        cardInstance.Execute(cardInteraction.ArrowTaraget);
+
+        if (cardView.IsCostReset())
+            OnResetCostColor?.Invoke(Color.white);
     }
 
     public void CancelCard()
     {
         SetCardState(CardState.InHand);
         ResetCardOriginPos();
-        OnRaycastChange?.Invoke(this, true);
+        OnIsHoverChange?.Invoke(this, true);
     }
 
     #region Hover
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (handCardState == CardState.InDeck || handCardState == CardState.InDiscardPile) return;
-        if (cardInteraction.cardRaycast == false) return;
+        if (cardInteraction.IsHover == false) return;
         // 드래그 시 cardEdgeImage의 Raycast 비활성화 + 화살표(ArrowHeadImage)가 Raycast를 잡아서 Pointer 대상이 변경되므로 무시
         if (handCardState == CardState.Drag) return;
-
+        
         SetCardState(CardState.Hover);
         // 카드 위에 마우스가 있다면 해당 카드를 위로 조금 이동시키고 크기를 키우면서 다른 카드에 의해 텍스트가 가려지지 않게 하는 시퀀스
         cardInteraction.CardHoverSequence();
@@ -194,7 +216,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             SetCardState(CardState.Drag);
             cardInteraction.PointerDown(cardInstance);
-            OnRaycastChange?.Invoke(this, false);
+            OnIsHoverChange?.Invoke(this, false);
         }
     }
 
@@ -213,17 +235,19 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             cardInteraction.SetCardParentInArea();
 
             if (cardInteraction.ShouldUseCard(eventData, cardInstance))
-                SetCardState(CardState.Used);
+            {
+                if (cardInstance.currentCardData.IsValidTarget(cardInteraction.ArrowTaraget))   // 카드가 유효한 대상을 찾았을 경우
+                    SetCardState(CardState.Used);
+                else                                                                            // 카드가 유효한 대상을 찾지 못했을 경우
+                    CancelCard();
+            }
             else
                 CancelCard();
         }
 
         if (handCardState == CardState.Used)
-        {
             OnUsedCard?.Invoke(this, cardView.CardCost);     // 현재 카드 코스트를 기준으로 마나를 소모함
-            // 임시로 변환된 코스트를 원래대로 되돌리기 위해 이벤트를 호출함
-            EventBus<CardGameData>.Publish(GameEventType.CARD_TEXT_UPDATE, new CardGameData { CardInstance = this.cardInstance });   
-        }
+
         cardInteraction.DeactiveCardArrow();
     }
     #endregion

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
+using UnityEngine.Events;
 
 public class Hand : MonoBehaviour
 {
@@ -15,10 +15,12 @@ public class Hand : MonoBehaviour
     private List<Card> handCardList = new List<Card>();
     private float handRotateOffset;
     private float cardSpacing;                  // 카드 간격 설정
+    private UnityAction<CardGameData> costDownAction;
 
     // Deck의 Start에서 CardDraw함수가 실행되기 때문에 이벤트 등록을 포함하는 InitHandCard함수는 Awake에서 실행함
     private void Awake()
     {
+        costDownAction = (data) => RandomCostDownInHand(data.Value);
         InitHandCard();
     }
 
@@ -26,8 +28,9 @@ public class Hand : MonoBehaviour
     {
         cardSpacing = 180.0f;
         handRotateOffset = 6000.0f;
-        deck.OnHandToCard += GetCardToHand;
-        EventBus<CardGameData>.Subscribe(GameEventType.COSTDOWN, (data) => RandomCostDownInHand(data.Value));
+        deck.OnCardDraw += CardDraw;
+
+        EventBus<CardGameData>.Subscribe(GameEventType.COSTDOWN, costDownAction);
         EventBus.Subscribe(GameEventType.TURN_END, DiscardAllCards);
         EventBus.Subscribe(GameEventType.BATTLE_END, MoveToDeck);
         // 옵션 팝업과 관련된 함수 등록
@@ -36,30 +39,30 @@ public class Hand : MonoBehaviour
         EventBus.Subscribe(GameEventType.RESTART, GameRestart);
     }
 
-    private void GetCardToHand(Card targetCard)
+    private void CardDraw(Card targetCard)
     {
         handCardList.Add(targetCard);
         targetCard.SetParentHandCard(this, canvas, cardUseArea);
         SetCardPos();
 
-        targetCard.OnRaycastChange += SetOtherCardsRaycastTarget;
+        targetCard.OnIsHoverChange += SetIsHoverOtherCards;
         targetCard.OnUsedCard += OnUsedCard;     // 손으로 카드를 가져올 때 카드 사용 관련 함수를 등록함
     }
 
-    private void SetOtherCardsRaycastTarget(Card targetCard, bool raycastTarget)
+    private void SetIsHoverOtherCards(Card targetCard, bool isDrag)
     {
         for (int i = 0; i < handCardList.Count; i++)
         {
             if (targetCard != handCardList[i])
-                handCardList[i].SetCardRaycastTarget(raycastTarget);
+                handCardList[i].SetIsHover(isDrag);
         }
     }
 
-    private void RandomCostDownInHand(int costDownAmount)
+    private void RandomCostDownInHand(int costChangeAmount)
     {
         int index = UnityEngine.Random.Range(0, handCardList.Count);
         var randomCard = handCardList[index];
-        randomCard.CardCostDown(costDownAmount);
+        randomCard.CardCostChange(costChangeAmount);
     }
 
     private void OnUsedCard(Card usedCard, int cardCost)
@@ -69,8 +72,8 @@ public class Hand : MonoBehaviour
             handCardList.Remove(usedCard);
             discardPile.MoveToDiscardPile(usedCard);
             usedCard.ExecuteCard();
-            SetCardPos();
             RemoveCardEvent(usedCard);
+            SetCardPos();
         }
         else
         {
@@ -98,8 +101,9 @@ public class Hand : MonoBehaviour
     private void RemoveCardEvent(Card card)
     {
         // 카드를 사용하면 등록한 함수를 해제함
-        card.OnRaycastChange -= SetOtherCardsRaycastTarget;
+        card.OnIsHoverChange -= SetIsHoverOtherCards;
         card.OnUsedCard -= OnUsedCard;
+        card.ResetCardText();
     }
 
     // 턴 종료시 손패 카드를 전부 묘지로 보냄

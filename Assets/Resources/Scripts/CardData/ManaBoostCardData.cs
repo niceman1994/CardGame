@@ -5,15 +5,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ManaBoostCardData", menuName = "CardScriptable/CreateManaBoostCardData")]
 public class ManaBoostCardData : CardData
 {
-    public int addMana;
-    public CardSideEffect cardSideEffect = new CardSideEffect();
+    private int finalAddMana;
 
-    public override void Execute(CardInstance cardInstance, IHealth target = null)
+    public override void Execute(CardInstance cardInstance, ISelectable target = null)
     {
-        EventBus<CardGameData>.Publish(GameEventType.MANABOOST, new CardGameData { Value = addMana });
+        EventBus<CardGameData>.Publish(GameEventType.MANABOOST, new CardGameData { Value = finalAddMana });
 
         if (cardInstance.isUpgraded)
-            EventBus<CardGameData>.Publish(GameEventType.COSTDOWN, new CardGameData { Value = cardSideEffect.costDown });
+            EventBus<CardGameData>.Publish(GameEventType.COSTDOWN, new CardGameData { Value = cardSideEffect.costChange });
     }
 
     public override int GetCardCost(CardInstance cardInstance)
@@ -24,8 +23,10 @@ public class ManaBoostCardData : CardData
     public override string GetDescription(CardInstance cardInstance)
     {
         string finalDescription = cardInstance.isUpgraded ?
-            $"{description}\n임의의 카드 비용을 {cardSideEffect.costDown} 줄입니다." : $"{description}";
+            $"{description}\n임의의 카드 비용을 {Mathf.Abs(cardSideEffect.costChange)} 줄입니다." : $"{description}";
 
-        return finalDescription.Replace("{addMana}", $"{addMana}");
+        finalAddMana = cardInstance.isOverload ? cardSideEffect.addMana + overloadValue : cardSideEffect.addMana;
+
+        return finalDescription.Replace("{addMana}", $"{finalAddMana}");
     }
 }

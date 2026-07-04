@@ -9,9 +9,10 @@ public class DefenseCardData : CardData
     [Header("°­È­")]
     public int upgradeShield;
 
-    public override void Execute(CardInstance cardInstance, IHealth target = null)
+    private int finalShield;
+
+    public override void Execute(CardInstance cardInstance, ISelectable target = null)
     {
-        int finalShield = cardInstance.isUpgraded ? upgradeShield : shield;
         EventBus<CardGameData>.Publish(GameEventType.PLAYERDEFEND, new CardGameData { Value = finalShield });
     }
 
@@ -23,7 +24,11 @@ public class DefenseCardData : CardData
 
     public override string GetDescription(CardInstance cardInstance)
     {
-        int finalShield = cardInstance.isUpgraded ? upgradeShield : shield;
+        finalShield = cardInstance.isUpgraded ? upgradeShield : shield;
+
+        if (cardInstance.isOverload)
+            finalShield += overloadValue;
+
         return description.Replace("{shield}", $"{finalShield}");
     }
 }

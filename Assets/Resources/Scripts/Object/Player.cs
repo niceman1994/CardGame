@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Events;
 
 [System.Serializable]
 public class PlayerRuntimeStat
@@ -20,33 +21,40 @@ public class Player : MonoBehaviour, IHealth
 
     private Animator animator;
     private Sequence deathSequence;
+    private UnityAction<CardGameData> attackAction;
+    private UnityAction<CardGameData> shieldAction;
+    private UnityAction battleStartAction;
 
     // ObjectPoolManager에서 생성 후 Player의 Awake가 실행됨
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        EventBus<CardGameData>.Publish(GameEventType.PLAYER_REGISTER, new CardGameData { Target = this });
         InitPlayer();
+        EventBus<CardGameData>.Publish(GameEventType.PLAYER_REGISTER, new CardGameData { Target = this });
     }
 
     private void OnEnable()
     {
-        EventBus<CardGameData>.Subscribe(GameEventType.PLAYERATTACK, (data) => PlayAttackAni(data.Value, data.Target));
-        EventBus<CardGameData>.Subscribe(GameEventType.PLAYERDEFEND, (data) => SetShieldFromCard(data.Value));
+        EventBus<CardGameData>.Subscribe(GameEventType.PLAYERATTACK, attackAction);
+        EventBus<CardGameData>.Subscribe(GameEventType.PLAYERDEFEND, shieldAction);
         EventBus.Subscribe(GameEventType.PLAYERDEATH, PlayDeathAni);
-        EventBus.Subscribe(GameEventType.BATTLE_START, () => StartCoroutine(BattleStart()));
+        EventBus.Subscribe(GameEventType.BATTLE_START, battleStartAction);
     }
 
     private void OnDisable()
     {
-        EventBus<CardGameData>.Unsubscribe(GameEventType.PLAYERATTACK, (data) => PlayAttackAni(data.Value, data.Target));
-        EventBus<CardGameData>.Unsubscribe(GameEventType.PLAYERDEFEND, (data) => SetShieldFromCard(data.Value));
+        EventBus<CardGameData>.Unsubscribe(GameEventType.PLAYERATTACK, attackAction);
+        EventBus<CardGameData>.Unsubscribe(GameEventType.PLAYERDEFEND, shieldAction);
         EventBus.Unsubscribe(GameEventType.PLAYERDEATH, PlayDeathAni);
-        EventBus.Unsubscribe(GameEventType.BATTLE_START, () => StartCoroutine(BattleStart()));
+        EventBus.Unsubscribe(GameEventType.BATTLE_START, battleStartAction);
     }
 
     public void InitPlayer()
     {
+        attackAction = (data) => PlayAttackAni(data.Value, data.Target as IHealth);
+        shieldAction = (data) => SetShieldFromCard(data.Value);
+        battleStartAction = () => StartCoroutine(BattleStart());
+
         runtimeStat.currentShield = 0;
         runtimeStat.currentHp = playerData.playerHp;
         runtimeStat.maxHp = playerData.playerMaxHp;

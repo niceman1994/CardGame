@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 
-[System.Serializable]
+[Serializable]
 public class CardEntry
 {
     public CardData cardData;
@@ -14,18 +14,14 @@ public class CardEntry
 public class CardInstance
 {
     public bool isUpgraded;
-    public CardData cardData;
+    public bool isOverload;
+    public CardData originalCardData;
+    public CardData currentCardData;
     public StatusEffectData statusEffectData;   // 상태이상 데이터
 
-    public string GetCardName()
-    {
-        return cardData.GetCardName(this);
-    }
-
-    public void Execute(IHealth target)
-    {
-        cardData.Execute(this, target);
-    }
+    public bool CheckRequiresTarget() => currentCardData.requiresTarget == true;
+    public string GetCardName() => currentCardData.GetCardName(this);
+    public void Execute(ISelectable target) => currentCardData.Execute(this, target);
 }
 
 public class Deck : MonoBehaviour
@@ -42,12 +38,12 @@ public class Deck : MonoBehaviour
     public List<Card> CurrentDeckList => currnetDeckList;
     public int CardCount => cardInstances.Count;
 
-    public event Action<Card> OnHandToCard;
+    public event Action<Card> OnCardDraw;
     public event Action<List<CardInstance>> OnClickUpgradeButton;
 
     private void Awake()
     {
-        InitCard();
+        InitCardData();
     }
 
     private void Start()
@@ -55,19 +51,19 @@ public class Deck : MonoBehaviour
         InitCardDraw();
     }
 
-    private void InitCard()
+    private void InitCardData()
     {
         for (int i = 0; i < cardDatas.Count; i++)
         {
             for (int j = 0; j < cardDatas[i].cardCount; j++)
-            {
                 cardInstances.Add(new CardInstance
                 {
-                    cardData = cardDatas[i].cardData,
-                    statusEffectData = cardDatas[i].cardData.cardType == CardType.Attack ? (cardDatas[i].cardData as AttackCardData).cardSideEffect.statusEffect : null,
-                    isUpgraded = false
-                }) ;
-            }
+                    isUpgraded = true,
+                    isOverload = false,
+                    originalCardData = cardDatas[i].cardData,
+                    currentCardData = cardDatas[i].cardData,
+                    statusEffectData = cardDatas[i].cardData.GetStatusEffectData()
+                });
         }
     }
 
@@ -100,6 +96,11 @@ public class Deck : MonoBehaviour
         ResetDeckCardPos();
     }
 
+    public void ResetCardData()
+    {
+
+    }
+
     private void CardDraw()
     {
         OnClickUpgradeButton?.Invoke(cardInstances);
@@ -122,7 +123,18 @@ public class Deck : MonoBehaviour
             // 덱 맨 위부터 드로우하기 때문에 리스트의 마지막 요소부터 시작함
             var targetCard = currnetDeckList[currnetDeckList.Count - 1];
             currnetDeckList.Remove(targetCard);
-            OnHandToCard?.Invoke(targetCard);
+            OnCardDraw?.Invoke(targetCard);
+        }
+    }
+
+    private void CardSearch(int searchCardCount)
+    {
+        for (int i = 0; i < currnetDeckList.Count; i++)
+        {
+            var targetCard = currnetDeckList[i];
+
+            currnetDeckList.Remove(targetCard);
+            OnCardDraw?.Invoke(targetCard);
         }
     }
 
@@ -171,7 +183,7 @@ public class Deck : MonoBehaviour
     public void UpgradeCard(CardInstance cardInstance)
     {
         cardInstance.isUpgraded = true;
-        EventBus<CardGameData>.Publish(GameEventType.CARD_TEXT_UPDATE, new CardGameData { CardInstance = cardInstance });
+        EventBus<CardGameData>.Publish(GameEventType.CARD_TEXT_UPGRADE, new CardGameData { CardInstance = cardInstance });
     }
 
     private IEnumerator GameRestart()

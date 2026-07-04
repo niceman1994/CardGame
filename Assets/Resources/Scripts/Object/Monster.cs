@@ -25,23 +25,25 @@ public class Monster : MonoBehaviour, IHealth
     private Animator animator;
     private Sequence deathSequence;
     private List<StatusEffectInstance> effects = new List<StatusEffectInstance>();
+    private UnityAction restartAction;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        restartAction = () => ObjectPoolManager.Instance.ReturnPooledObject(this);
     }
 
     private void OnEnable()
     {
         EventBus<Monster>.Subscribe(GameEventType.ENEMYDEATH, PlayDeathAni);
-        EventBus.Subscribe(GameEventType.RESTART, () => ObjectPoolManager.Instance.ReturnPooledObject(this));
+        EventBus.Subscribe(GameEventType.RESTART, restartAction);
     }
 
     private void OnDisable()
     {
         EventBus<int>.Unsubscribe(GameEventType.AREAATTACK, TakeDamage);
         EventBus<Monster>.Unsubscribe(GameEventType.ENEMYDEATH, PlayDeathAni);
-        EventBus.Unsubscribe(GameEventType.RESTART, () => ObjectPoolManager.Instance.ReturnPooledObject(this));
+        EventBus.Unsubscribe(GameEventType.RESTART, restartAction);
     }
 
     public void InitMonster()

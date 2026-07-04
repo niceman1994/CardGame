@@ -6,22 +6,21 @@ using UnityEngine;
 public class AttackCardData : CardData
 {
     public int damage;
-    public CardSideEffect cardSideEffect = new CardSideEffect();
     [Header("강화")]
     public int addDamage;
 
-    public override void Execute(CardInstance cardInstance, IHealth target)
-    {
-        int finalDamage = cardInstance.isUpgraded ? damage + addDamage : damage;
+    private int finalDamage;
 
-        // 적에게 상태이상을 적용시킴
-        if (cardInstance.statusEffectData != null)
-        {
-            int finalDuration = cardInstance.isUpgraded ? cardSideEffect.statusEffect.upgradeDuration : cardSideEffect.statusEffect.duration;
-            target.AddStatusEffect(cardInstance.statusEffectData, finalDuration);
-        }
+    public override bool IsValidTarget(ISelectable target)
+    {
+        return target is IHealth;
+    }
+
+    public override void Execute(CardInstance cardInstance, ISelectable target)
+    {
+        if (target is not IHealth) return;
+
         EventBus<CardGameData>.Publish(GameEventType.PLAYERATTACK, new CardGameData { Value = finalDamage, Target = target });
-        EventBus<CardGameData>.Publish(GameEventType.CARD_DRAW, new CardGameData { Value = cardSideEffect.draw });
     }
 
     public override int GetCardCost(CardInstance cardInstance)
@@ -31,20 +30,11 @@ public class AttackCardData : CardData
 
     public override string GetDescription(CardInstance cardInstance)
     {
-        int finalDamage = cardInstance.isUpgraded ? damage + addDamage : damage;
-        string finalDescription = string.Empty;
+        finalDamage = cardInstance.isUpgraded ? damage + addDamage : damage;
 
-        if (cardSideEffect.statusEffect != null)
-        {
-            int finalDuration = cardInstance.isUpgraded ? cardSideEffect.statusEffect.upgradeDuration : cardSideEffect.statusEffect.duration;
+        if (cardInstance.isOverload)
+            finalDamage += overloadValue;
 
-            finalDescription = description.Replace("{damage}", $"{finalDamage}")
-            .Replace("{duration}", $"{finalDuration}")
-            .Replace("{extraDraw}", $"{cardSideEffect.draw}");
-        }
-        else
-            finalDescription = description.Replace("{damage}", $"{finalDamage}");
-
-        return finalDescription;
+        return description.Replace("{damage}", $"{finalDamage}");
     }
 }
