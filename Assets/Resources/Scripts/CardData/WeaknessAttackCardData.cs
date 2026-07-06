@@ -21,9 +21,9 @@ public class WeaknessAttackCardData : CardData
 
         // 적에게 상태이상을 적용시킴
         if (target is IHealth)
-            (target as IHealth).AddStatusEffect(cardInstance.statusEffectData, finalStatusDuration);
+            (target as IHealth).AddStatusEffect(cardInstance.StatusEffectData, finalStatusDuration);
 
-        EventBus<CardGameData>.Publish(GameEventType.PLAYERATTACK, new CardGameData { Value = damage, Target = target });
+        EventBus<CardGameData>.Publish(GameEventType.PLAYERATTACK, new CardGameData { Value = finalDamage, Target = target });
         EventBus<CardGameData>.Publish(GameEventType.CARD_DRAW, new CardGameData { Value = cardSideEffect.draw });
     }
 
@@ -35,10 +35,10 @@ public class WeaknessAttackCardData : CardData
     public override string GetDescription(CardInstance cardInstance)
     {
         finalDamage = damage;
-        finalStatusDuration = cardInstance.isUpgraded ? cardSideEffect.statusEffect.upgradeDuration : cardSideEffect.statusEffect.duration;
+        finalStatusDuration = cardInstance.IsUpgraded ? cardSideEffect.statusEffect.upgradeDuration : cardSideEffect.statusEffect.duration;
 
-        if (cardInstance.isOverload)
-            finalDamage += overloadValue;
+        if (cardInstance.IsOverload)
+            finalDamage += overloadValue * cardInstance.OverloadStack;
 
         return description.Replace("{damage}", $"{finalDamage}")
             .Replace("{duration}", $"{finalStatusDuration}")

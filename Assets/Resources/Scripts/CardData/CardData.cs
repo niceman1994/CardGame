@@ -16,11 +16,16 @@ public abstract class CardData : ScriptableObject
     public CardSideEffect cardSideEffect = new CardSideEffect();
     public int overloadValue;
 
-    public virtual bool IsValidTarget(ISelectable target) => true;
     // 카드 효과 처리만을 담당하는 함수(코스트는 Hand 스크립트에서 처리함)
     public abstract void Execute(CardInstance cardInstance, ISelectable target);
     public abstract int GetCardCost(CardInstance cardInstance);
     public abstract string GetDescription(CardInstance cardInstance);
+
+    // 카드가 가리킨 대상이 유효한 대상인지 확인하는 함수
+    public virtual bool IsValidTarget(ISelectable target)
+    {
+        return true;
+    }
 
     public StatusEffectData GetStatusEffectData()
     {
@@ -33,6 +38,6 @@ public abstract class CardData : ScriptableObject
     // 카드 이름이 강화 여부에 따라 바뀜
     public virtual string GetCardName(CardInstance cardInstance)
     {
-        return cardInstance.isUpgraded ? $"{cardName}+" : $"{cardName}";
+        return cardInstance.IsUpgraded ? $"{cardName}+" : $"{cardName}";
     }
 }

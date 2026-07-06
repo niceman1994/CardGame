@@ -1,3 +1,4 @@
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ using UnityEngine;
 public class OverloadCardData : CardData
 {
     public int overloadCost;
+
+    private StringBuilder sbOverload = new StringBuilder();
 
     public override bool IsValidTarget(ISelectable target)
     {
@@ -16,10 +19,11 @@ public class OverloadCardData : CardData
     {
         if (target is not ICard) return;
 
-        (target as ICard).ApplyCardOverload(overloadCost);
+        int finalOverloadCost = cardInstance.IsUpgraded ? 0 : overloadCost;
+        (target as ICard).ApplyCardOverload(finalOverloadCost);
 
-        if (cardInstance.isUpgraded)
-            EventBus<CardGameData>.Publish(GameEventType.MANABOOST, new CardGameData { Value = cardSideEffect.addMana });
+        if (cardInstance.IsOverload)
+            EventBus.Publish(GameEventType.OVERLOAD);
     }
 
     public override int GetCardCost(CardInstance cardInstance)
@@ -29,9 +33,14 @@ public class OverloadCardData : CardData
 
     public override string GetDescription(CardInstance cardInstance)
     {
-        string finalDescription = cardInstance.isUpgraded ?
-            $"{description}\n마나를 {cardSideEffect.addMana} 증가시킵니다." : $"{description}";
+        sbOverload.Clear();
 
-        return finalDescription;
+        string finalDescription = cardInstance.IsUpgraded ? "카드 1장을 코스트 증가 없이 효과를 강화합니다." : $"{description}";
+        sbOverload.Append(finalDescription);
+
+        if (cardInstance.IsOverload)
+            sbOverload.Append($"(임의의 카드 {overloadValue}장의 효과를 강화합니다.)");
+
+        return sbOverload.ToString();
     }
 }

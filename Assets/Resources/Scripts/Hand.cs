@@ -31,6 +31,7 @@ public class Hand : MonoBehaviour
         deck.OnCardDraw += CardDraw;
 
         EventBus<CardGameData>.Subscribe(GameEventType.COSTDOWN, costDownAction);
+        EventBus.Subscribe(GameEventType.OVERLOAD, RandomOverloadInHand);
         EventBus.Subscribe(GameEventType.TURN_END, DiscardAllCards);
         EventBus.Subscribe(GameEventType.BATTLE_END, MoveToDeck);
         // 옵션 팝업과 관련된 함수 등록
@@ -63,6 +64,14 @@ public class Hand : MonoBehaviour
         int index = UnityEngine.Random.Range(0, handCardList.Count);
         var randomCard = handCardList[index];
         randomCard.CardCostChange(costChangeAmount);
+    }
+
+    // 과부하된 과부하 카드를 사용했을 때 랜덤으로 패의 카드 1장의 효과를 강화시키는 함수
+    private void RandomOverloadInHand()
+    {
+        int index = UnityEngine.Random.Range(0, handCardList.Count);
+        var randomOverloadCard = handCardList[index];
+        randomOverloadCard.ApplyCardOverload(0);
     }
 
     private void OnUsedCard(Card usedCard, int cardCost)

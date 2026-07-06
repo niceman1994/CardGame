@@ -11,7 +11,7 @@ public class ManaBoostCardData : CardData
     {
         EventBus<CardGameData>.Publish(GameEventType.MANABOOST, new CardGameData { Value = finalAddMana });
 
-        if (cardInstance.isUpgraded)
+        if (cardInstance.IsUpgraded)
             EventBus<CardGameData>.Publish(GameEventType.COSTDOWN, new CardGameData { Value = cardSideEffect.costChange });
     }
 
@@ -22,10 +22,10 @@ public class ManaBoostCardData : CardData
 
     public override string GetDescription(CardInstance cardInstance)
     {
-        string finalDescription = cardInstance.isUpgraded ?
+        string finalDescription = cardInstance.IsUpgraded ?
             $"{description}\n임의의 카드 비용을 {Mathf.Abs(cardSideEffect.costChange)} 줄입니다." : $"{description}";
 
-        finalAddMana = cardInstance.isOverload ? cardSideEffect.addMana + overloadValue : cardSideEffect.addMana;
+        finalAddMana = cardInstance.IsOverload ? cardSideEffect.addMana + (overloadValue * cardInstance.OverloadStack) : cardSideEffect.addMana;
 
         return finalDescription.Replace("{addMana}", $"{finalAddMana}");
     }

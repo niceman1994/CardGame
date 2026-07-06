@@ -22,10 +22,10 @@ public class AddDrawCardData : CardData
 
     public override string GetDescription(CardInstance cardInstance)
     {
-        finalAddDrawCard = cardInstance.isUpgraded ? cardSideEffect.draw + addDrawCard : cardSideEffect.draw;
+        finalAddDrawCard = cardInstance.IsUpgraded ? cardSideEffect.draw + addDrawCard : cardSideEffect.draw;
 
-        if (cardInstance.isOverload)
-            finalAddDrawCard += overloadValue;
+        if (cardInstance.IsOverload)
+            finalAddDrawCard += overloadValue * cardInstance.OverloadStack;
 
         return description.Replace("{draw}", $"{finalAddDrawCard}");
     }

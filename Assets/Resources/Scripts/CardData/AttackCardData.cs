@@ -30,10 +30,10 @@ public class AttackCardData : CardData
 
     public override string GetDescription(CardInstance cardInstance)
     {
-        finalDamage = cardInstance.isUpgraded ? damage + addDamage : damage;
+        finalDamage = cardInstance.IsUpgraded ? damage + addDamage : damage;
 
-        if (cardInstance.isOverload)
-            finalDamage += overloadValue;
+        if (cardInstance.IsOverload)
+            finalDamage += overloadValue * cardInstance.OverloadStack;
 
         return description.Replace("{damage}", $"{finalDamage}");
     }

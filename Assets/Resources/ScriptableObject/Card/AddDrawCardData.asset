@@ -23,5 +23,5 @@ MonoBehaviour:
     addMana: 0
     costChange: 0
     statusEffect: {fileID: 0}
-  overloadValue: 2
+  overloadValue: 1
   addDrawCard: 1

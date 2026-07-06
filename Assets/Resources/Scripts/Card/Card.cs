@@ -62,16 +62,15 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void ResetCardText()
     {
-        cardInstance.isOverload = false;
+        cardInstance.ResetOverloadStack();
         cardView.ResetCardInstance(cardInstance);
         OnResetCostColor?.Invoke(Color.white);
     }
 
     public void ApplyCardOverload(int overloadCost)
     {
-        cardInstance.isOverload = true;
+        cardInstance.AddOverloadStack();
         cardView.OverloadCardText(cardInstance, overloadCost);
-        cardInstance.isOverload = false;                // 1회성 강화라서 false를 다시 넣음
     }
 
     public void SetCardPos(float drawDelay, Vector3 startPos, Vector3 endScale, float cardRotateZ)
@@ -236,7 +235,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
             if (cardInteraction.ShouldUseCard(eventData, cardInstance))
             {
-                if (cardInstance.currentCardData.IsValidTarget(cardInteraction.ArrowTaraget))   // 카드가 유효한 대상을 찾았을 경우
+                if (cardInstance.CurrentCardData.IsValidTarget(cardInteraction.ArrowTaraget))   // 카드가 유효한 대상을 찾았을 경우
                     SetCardState(CardState.Used);
                 else                                                                            // 카드가 유효한 대상을 찾지 못했을 경우
                     CancelCard();

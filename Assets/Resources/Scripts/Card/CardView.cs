@@ -22,7 +22,7 @@ public class CardView : MonoBehaviour
 
     public void SetCardText(CardInstance cardInstance)
     {
-        cardData = cardInstance.currentCardData;
+        cardData = cardInstance.CurrentCardData;
         SetCardView(cardInstance);
     }
 
@@ -34,7 +34,7 @@ public class CardView : MonoBehaviour
 
     public void ResetCardInstance(CardInstance cardInstance)
     {
-        cardData = cardInstance.originalCardData;
+        cardData = cardInstance.OriginalCardData;
         SetCardView(cardInstance);
     }
 
@@ -68,6 +68,7 @@ public class CardView : MonoBehaviour
         costTextDefaultScale = cardCost.transform.localScale;
         displayCardCost += costChangeAmount;
 
+        costChangeSequence.Complete();
         // 어떤 카드의 코스트가 줄었는지 보여주기 위해 사용하는 시퀀스
         costChangeSequence = DOTween.Sequence();
         costChangeSequence.Append(cardCost.transform.DOScale(6.0f, 0.1f))

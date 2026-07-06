@@ -18,7 +18,7 @@ public class StunCardData : CardData
 
         // 적에게 상태이상을 적용시킴
         if (target is IHealth)
-            (target as IHealth).AddStatusEffect(cardInstance.statusEffectData, finalStatusDuration);
+            (target as IHealth).AddStatusEffect(cardInstance.StatusEffectData, finalStatusDuration);
 
         EventBus<CardGameData>.Publish(GameEventType.PLAYERATTACK, new CardGameData { Value = 0, Target = target });
     }
@@ -30,10 +30,10 @@ public class StunCardData : CardData
 
     public override string GetDescription(CardInstance cardInstance)
     {
-        finalStatusDuration = cardInstance.isUpgraded ? cardSideEffect.statusEffect.upgradeDuration : cardSideEffect.statusEffect.duration;
+        finalStatusDuration = cardInstance.IsUpgraded ? cardSideEffect.statusEffect.upgradeDuration : cardSideEffect.statusEffect.duration;
 
-        if (cardInstance.isOverload)
-            finalStatusDuration += overloadValue;
+        if (cardInstance.IsOverload)
+            finalStatusDuration += overloadValue * cardInstance.OverloadStack;
 
         return description.Replace("{duration}", $"{finalStatusDuration}");
     }

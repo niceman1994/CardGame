@@ -60,7 +60,7 @@ public class Monster : MonoBehaviour, IHealth
 
     public IEnumerator ExecuteMonsterAction(IHealth target)
     {
-        if (!effects.Any(x => x.data.effectName.Equals("기절")) && target.CurrentHp() > 0)
+        if (!effects.Any(x => x.CheckStatusEffectName("기절")) && target.CurrentHp() > 0)
         {
             switch (monsterBattleStat.DecideAction())
             {
@@ -90,7 +90,7 @@ public class Monster : MonoBehaviour, IHealth
     public void TakeDamage(int damage)
     {
         // 약점 상태일 때 받는 대미지 50% 증가(소수점 버림)
-        if (effects.Any(x => x.data.effectName.Contains("약점")))
+        if (effects.Any(x => x.CheckStatusEffectName("약점")))
             damage = (int)(damage * 1.5f);
 
         animator.Play("Take Hit");
@@ -116,7 +116,7 @@ public class Monster : MonoBehaviour, IHealth
 
     public void AddStatusEffect(StatusEffectData data, int duration)
     {
-        var effectExisting = effects.Find(e => e.data == data);
+        var effectExisting = effects.Find(e => e.IsSameStatusEffect(data));
 
         // 같은 상태이상이 추가될 경우 적용 턴을 추가함
         if (effectExisting == null)
@@ -131,16 +131,16 @@ public class Monster : MonoBehaviour, IHealth
     {
         for (int i = effects.Count - 1; i >= 0; i--)
         {
-            effects[i].remainingTurn--;
+            effects[i].DecreaseStatusTurn();
 
-            if (runtimeStat.currentHp <= 0 || effects[i].remainingTurn <= 0)
+            if (runtimeStat.currentHp <= 0 || effects[i].HasStatusDuration())
                 RemoveStatusEffect(effects[i], i);
         }
     }
 
     private void RemoveStatusEffect(StatusEffectInstance statusEffectInstance, int index)
     {
-        statusEffectInstance.data.HideEffect(healthStat);
+        statusEffectInstance.HideEffect(healthStat);
         effects.RemoveAt(index);
     }
 
@@ -157,6 +157,7 @@ public class Monster : MonoBehaviour, IHealth
 
     private void MonsterDeath()
     {
+        CheckStatusEffect();
         animator.Play("Death");
         objectSound.PlayDeathSound(monsterData.deathSound);
     }

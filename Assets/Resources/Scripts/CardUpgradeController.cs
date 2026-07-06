@@ -28,7 +28,7 @@ public class CardUpgradeController : MonoBehaviour
         this.cardInstance = cardInstance;
         cardUpgradeBackground.raycastTarget = true;
 
-        if (cardInstance.isUpgraded == true)
+        if (cardInstance.IsUpgraded == true)
             cardUpgradeButton.interactable = false;
         else
             cardUpgradeButton.interactable = true;

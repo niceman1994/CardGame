@@ -18,16 +18,16 @@ public class DefenseCardData : CardData
 
     public override int GetCardCost(CardInstance cardInstance)
     {
-        int finalCardCost = cardInstance.isUpgraded ? cardCost - 1 : cardCost;
+        int finalCardCost = cardInstance.IsUpgraded ? cardCost - 1 : cardCost;
         return finalCardCost;
     }
 
     public override string GetDescription(CardInstance cardInstance)
     {
-        finalShield = cardInstance.isUpgraded ? upgradeShield : shield;
+        finalShield = cardInstance.IsUpgraded ? upgradeShield : shield;
 
-        if (cardInstance.isOverload)
-            finalShield += overloadValue;
+        if (cardInstance.IsOverload)
+            finalShield += overloadValue * cardInstance.OverloadStack;
 
         return description.Replace("{shield}", $"{finalShield}");
     }

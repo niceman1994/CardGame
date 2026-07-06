@@ -20,16 +20,16 @@ public class SkillCardData : CardData
 
     public override int GetCardCost(CardInstance cardInstance)
     {
-        int finalCost = cardInstance.isUpgraded ? cardCost - 1 : cardCost;
+        int finalCost = cardInstance.IsUpgraded ? cardCost - 1 : cardCost;
         return finalCost;
     }
 
     public override string GetDescription(CardInstance cardInstance)
     {
-        finalSkillValue = cardInstance.isUpgraded ? upgradeSkillValue : skillValue;
+        finalSkillValue = cardInstance.IsUpgraded ? upgradeSkillValue : skillValue;
 
-        if (cardInstance.isOverload)
-            finalSkillValue += overloadValue;
+        if (cardInstance.IsOverload)
+            finalSkillValue += overloadValue * cardInstance.OverloadStack;
 
         return description.Replace("{skillValue}", $"{finalSkillValue}");
     }

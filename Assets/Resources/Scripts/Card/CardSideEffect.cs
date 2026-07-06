@@ -4,7 +4,7 @@
 [System.Serializable]
 public class CardSideEffect
 {
-    public bool requiresStatusEffect;              // 상태 이상 필요 여부
+    public bool requiresStatusEffect;              // 상태이상 필요 여부
     public int draw = 0;                           // 드로우
     public int addMana = 0;                        // 마나 증가량
     public int costChange = 0;                     // 코스트 변화
