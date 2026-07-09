@@ -20,7 +20,7 @@ MonoBehaviour:
   cardSideEffect:
     requiresStatusEffect: 0
     draw: 0
-    addMana: 2
     costChange: -1
     statusEffect: {fileID: 0}
   overloadValue: 2
+  addMana: 2

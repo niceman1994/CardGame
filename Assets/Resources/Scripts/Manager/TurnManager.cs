@@ -73,9 +73,6 @@ public class TurnManager : Singleton<TurnManager>
     private void SetEnemyRegister(CardGameData cardGameData)
     {
         activeMonsters = cardGameData.RegisterMonsters;
-
-        foreach (var monster in activeMonsters)
-            EventBus<int>.Subscribe(GameEventType.AREAATTACK, monster.TakeDamage);
     }
 
     private void EndPlayerTurn()

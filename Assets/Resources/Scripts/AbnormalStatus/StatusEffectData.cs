@@ -4,11 +4,12 @@ using UnityEngine;
 
 public abstract class StatusEffectData : ScriptableObject
 {
-    public string effectName;
-    public int duration;
-    [Header("°­È­")]
-    public int upgradeDuration;
+    [SerializeField] protected string effectName;
+    [SerializeField] protected int duration;
 
+    public int Duration => duration;
+
+    public abstract bool HasStatusEffect(string effectName);
     public virtual void ShowEffect(HealthStat healthStat) { }
     public virtual void HideEffect(HealthStat healthStat) { }
 }

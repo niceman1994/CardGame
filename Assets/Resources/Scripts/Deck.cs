@@ -43,10 +43,7 @@ public class Deck : MonoBehaviour
         for (int i = 0; i < cardDatas.Count; i++)
         {
             for (int j = 0; j < cardDatas[i].cardCount; j++)
-            {
-                cardInstances.Add(
-                      new CardInstance(false, cardDatas[i].cardData, cardDatas[i].cardData, cardDatas[i].cardData.GetStatusEffectData()));
-            }
+                cardInstances.Add(new CardInstance(false, cardDatas[i].cardData, cardDatas[i].cardData.GetStatusEffectData()));
         }
     }
 
@@ -64,7 +61,7 @@ public class Deck : MonoBehaviour
         {
             Card cardGameobject = Instantiate(deckCardPrefab, transform);
             cardGameobject.SetCardData(cardInstances[i]);
-            cardGameobject.name = $"{cardInstances[i].GetCardName()}_{i}";
+            cardGameobject.name = cardInstances[i].GetCardName();
             currnetDeckList.Add(cardGameobject);
         }
 

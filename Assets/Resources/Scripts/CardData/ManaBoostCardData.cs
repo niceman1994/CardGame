@@ -5,14 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ManaBoostCardData", menuName = "CardScriptable/CreateManaBoostCardData")]
 public class ManaBoostCardData : CardData
 {
-    private int finalAddMana;
+    [SerializeField] private int addMana;
 
-    public override void Execute(CardInstance cardInstance, ISelectable target = null)
+    public int AddMana => addMana;
+
+    public override void CreateCardEffect()
     {
-        EventBus<CardGameData>.Publish(GameEventType.MANABOOST, new CardGameData { Value = finalAddMana });
-
-        if (cardInstance.IsUpgraded)
-            EventBus<CardGameData>.Publish(GameEventType.COSTDOWN, new CardGameData { Value = cardSideEffect.costChange });
+        CardEffect = new ManaBoostEffect();
     }
 
     public override int GetCardCost(CardInstance cardInstance)
@@ -22,11 +21,6 @@ public class ManaBoostCardData : CardData
 
     public override string GetDescription(CardInstance cardInstance)
     {
-        string finalDescription = cardInstance.IsUpgraded ?
-            $"{description}\n임의의 카드 비용을 {Mathf.Abs(cardSideEffect.costChange)} 줄입니다." : $"{description}";
-
-        finalAddMana = cardInstance.IsOverload ? cardSideEffect.addMana + (overloadValue * cardInstance.OverloadStack) : cardSideEffect.addMana;
-
-        return finalDescription.Replace("{addMana}", $"{finalAddMana}");
+        return CardEffect.GetDescription(cardInstance);
     }
 }

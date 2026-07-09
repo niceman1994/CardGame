@@ -35,6 +35,7 @@ public class Monster : MonoBehaviour, IHealth
 
     private void OnEnable()
     {
+        EventBus<int>.Subscribe(GameEventType.AREAATTACK, TakeDamage);
         EventBus<Monster>.Subscribe(GameEventType.ENEMYDEATH, PlayDeathAni);
         EventBus.Subscribe(GameEventType.RESTART, restartAction);
     }
@@ -60,7 +61,7 @@ public class Monster : MonoBehaviour, IHealth
 
     public IEnumerator ExecuteMonsterAction(IHealth target)
     {
-        if (!effects.Any(x => x.CheckStatusEffectName("기절")) && target.CurrentHp() > 0)
+        if (!effects.Any(x => x.HasStatusEffect("기절")) && target.CurrentHp() > 0)
         {
             switch (monsterBattleStat.DecideAction())
             {
@@ -90,7 +91,7 @@ public class Monster : MonoBehaviour, IHealth
     public void TakeDamage(int damage)
     {
         // 약점 상태일 때 받는 대미지 50% 증가(소수점 버림)
-        if (effects.Any(x => x.CheckStatusEffectName("약점")))
+        if (effects.Any(x => x.HasStatusEffect("약점")))
             damage = (int)(damage * 1.5f);
 
         animator.Play("Take Hit");

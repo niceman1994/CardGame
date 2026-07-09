@@ -5,14 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AddDrawCardData", menuName = "CardScriptable/CreateAddDrawCardData")]
 public class AddDrawCardData : CardData
 {
-    [Header("°­È­")]
-    public int addDrawCard;
-
-    private int finalAddDrawCard;
-
-    public override void Execute(CardInstance cardInstance, ISelectable target = null)
+    public override void CreateCardEffect()
     {
-        EventBus<CardGameData>.Publish(GameEventType.CARD_DRAW, new CardGameData { Value = finalAddDrawCard });
+        CardEffect = new AddDrawEffect();
     }
 
     public override int GetCardCost(CardInstance cardInstance)
@@ -22,11 +17,6 @@ public class AddDrawCardData : CardData
 
     public override string GetDescription(CardInstance cardInstance)
     {
-        finalAddDrawCard = cardInstance.IsUpgraded ? cardSideEffect.draw + addDrawCard : cardSideEffect.draw;
-
-        if (cardInstance.IsOverload)
-            finalAddDrawCard += overloadValue * cardInstance.OverloadStack;
-
-        return description.Replace("{draw}", $"{finalAddDrawCard}");
+        return CardEffect.GetDescription(cardInstance);
     }
 }

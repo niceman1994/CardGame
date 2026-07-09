@@ -28,17 +28,17 @@ public class StatusEffectInstance
         remainingTurn -= 1;
     }
 
+    public bool HasStatusEffect(string effectName)
+    {
+        return data.HasStatusEffect(effectName);
+    }
+
     public bool HasStatusDuration()
     {
         if (remainingTurn <= 0)
             return true;
 
         return false;
-    }
-
-    public bool CheckStatusEffectName(string effectName)
-    {
-        return data.effectName.Contains(effectName);
     }
 
     public void HideEffect(HealthStat healthStat)

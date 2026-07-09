@@ -43,7 +43,7 @@ public class CardUpgradeController : MonoBehaviour
 
     private void OnClickUpgradeButton()
     {
-        string popupText = $"({this.cardInstance.GetCardName()}) 카드를 강화하시겠습니까?";
+        string popupText = $"({cardInstance.GetCardName()}) 카드를 강화하시겠습니까?";
         upgradeQuestionPopup.GetCardInstanceInfo(cardInstance);
         upgradeQuestionPopup.OpenPopup(popupText);
     }

@@ -108,7 +108,7 @@ public class CardInteraction : MonoBehaviour
         cardArrow.SetArrowPos();
 
         // 카드가 마우스를 잘 따라가도록 최상단 캔버스를 부모로 설정함
-        if (!cardInstance.CurrentCardData.requiresTarget)
+        if (!cardInstance.CardData.RequiresTarget)
             transform.SetParent(rootCanvas);
     }
 

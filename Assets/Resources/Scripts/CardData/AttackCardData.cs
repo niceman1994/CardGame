@@ -5,22 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AttackCardData", menuName = "CardScriptable/CreateAttackCardData")]
 public class AttackCardData : CardData
 {
-    public int damage;
-    [Header("°­È­")]
-    public int addDamage;
+    [SerializeField] private int damage;
 
-    private int finalDamage;
+    public int Damage => damage;
 
-    public override bool IsValidTarget(ISelectable target)
+    public override void CreateCardEffect()
     {
-        return target is IHealth;
-    }
-
-    public override void Execute(CardInstance cardInstance, ISelectable target)
-    {
-        if (target is not IHealth) return;
-
-        EventBus<CardGameData>.Publish(GameEventType.PLAYERATTACK, new CardGameData { Value = finalDamage, Target = target });
+        CardEffect = new AttackEffect();
     }
 
     public override int GetCardCost(CardInstance cardInstance)
@@ -30,11 +21,6 @@ public class AttackCardData : CardData
 
     public override string GetDescription(CardInstance cardInstance)
     {
-        finalDamage = cardInstance.IsUpgraded ? damage + addDamage : damage;
-
-        if (cardInstance.IsOverload)
-            finalDamage += overloadValue * cardInstance.OverloadStack;
-
-        return description.Replace("{damage}", $"{finalDamage}");
+        return CardEffect.GetDescription(cardInstance);
     }
 }

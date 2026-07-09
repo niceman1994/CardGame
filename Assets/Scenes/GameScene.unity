@@ -1099,7 +1099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardDatas:
   - cardData: {fileID: 11400000, guid: 83ad01405d8559f43bc01b55d6a21316, type: 2}
-    cardCount: 4
+    cardCount: 5
   - cardData: {fileID: 11400000, guid: 39b5b2b8a7b39bb44b18944def77ec9e, type: 2}
     cardCount: 4
   - cardData: {fileID: 11400000, guid: f890ce8280268f34692c133e8baf9065, type: 2}
@@ -1109,11 +1109,11 @@ MonoBehaviour:
   - cardData: {fileID: 11400000, guid: 20b82b114b8e4dd40b0976094e6870bc, type: 2}
     cardCount: 3
   - cardData: {fileID: 11400000, guid: 0df894324c4822c4792f0951623575fd, type: 2}
-    cardCount: 4
+    cardCount: 5
   - cardData: {fileID: 11400000, guid: 33b49e284d1ba9a4a944af781f5d4a2d, type: 2}
     cardCount: 2
   - cardData: {fileID: 11400000, guid: fa0368f392d09854d823f54495a4233b, type: 2}
-    cardCount: 6
+    cardCount: 4
   deckCardPrefab: {fileID: 168668846283535954, guid: 8e544838c64aa864bbb165eb4b093363, type: 3}
   deckShuffleSound: {fileID: 493443821}
   drawCardCount: 5
@@ -2809,7 +2809,7 @@ GameObject:
   - component: {fileID: 1137680446}
   - component: {fileID: 1137680445}
   m_Layer: 0
-  m_Name: SkillAudio
+  m_Name: AreaAttackAudio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2825,7 +2825,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 5f429732ea31efe4c97d4e3e5fbfad06, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -4593,7 +4593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa59aa92094f5543b9cb1e36547bd28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillAudio: {fileID: 1137680445}
+  areaAttackAudio: {fileID: 1137680445}
   turnChangeAudio: {fileID: 1817840091}
   winAudio: {fileID: 1731414529}
   loseAudio: {fileID: 1842680589}

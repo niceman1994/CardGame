@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7b7724b9bfa15a4ca9aca32ce8e7bc9, type: 3}
-  m_Name: SkillCardData
+  m_Name: AreaAttackCardData
   m_EditorClassIdentifier: 
   requiresTarget: 0
   cardCost: 4

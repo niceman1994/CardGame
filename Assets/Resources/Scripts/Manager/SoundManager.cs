@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class SoundManager : Singleton<SoundManager>
 {
-    [SerializeField] AudioSource skillAudio;
+    [SerializeField] AudioSource areaAttackAudio;
     [SerializeField] AudioSource turnChangeAudio;
     [SerializeField] AudioSource winAudio;
     [SerializeField] AudioSource loseAudio;
     [SerializeField] AudioSource cardUpgradeAudio;
 
-    public void PlaySkillSound(AudioClip audioClip)
+    public void PlayAreaAttackSound()
     {
-        skillAudio.clip = audioClip;
-        skillAudio.Play();
+        areaAttackAudio.Play();
     }
 
     public void PlayTurnChangeSound()

@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class CardView : MonoBehaviour
 {
-    [SerializeField] CardData cardData;
+    [SerializeField] CardData cardDataCache;
     [SerializeField] Image cardFrontImage;
     [SerializeField] Text cardCost;
     [SerializeField] Text cardName;
@@ -22,33 +22,27 @@ public class CardView : MonoBehaviour
 
     public void SetCardText(CardInstance cardInstance)
     {
-        cardData = cardInstance.CurrentCardData;
+        cardDataCache = cardInstance.CardData;
         SetCardView(cardInstance);
     }
 
     public void OverloadCardText(CardInstance cardInstance, int costChangeAmount)
     {
         CardCostChange(costChangeAmount);
-        description.text = cardData.GetDescription(cardInstance);
-    }
-
-    public void ResetCardInstance(CardInstance cardInstance)
-    {
-        cardData = cardInstance.OriginalCardData;
-        SetCardView(cardInstance);
+        description.text = cardDataCache.GetDescription(cardInstance);
     }
 
     private void SetCardView(CardInstance cardInstance)
     {
         SetCardCost(cardInstance);
-        cardFrontImage.sprite = cardData.cardFrontImage;
+        cardFrontImage.sprite = cardDataCache.CardFrontImage;
         cardName.text = cardInstance.GetCardName();
-        description.text = cardData.GetDescription(cardInstance);
+        description.text = cardDataCache.GetDescription(cardInstance);
     }
 
     private void SetCardCost(CardInstance cardInstance)
     {
-        displayCardCost = cardData.GetCardCost(cardInstance);
+        displayCardCost = cardDataCache.GetCardCost(cardInstance);
         cardCost.text = $"{displayCardCost}";
     }
 

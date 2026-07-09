@@ -58,12 +58,13 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         if (this.cardInstance != cardInstance) return;
 
         cardView.SetCardText(this.cardInstance);
+        name = this.cardInstance.GetCardName();
     }
 
     public void ResetCardText()
     {
         cardInstance.ResetOverloadStack();
-        cardView.ResetCardInstance(cardInstance);
+        cardView.SetCardText(cardInstance);
         OnResetCostColor?.Invoke(Color.white);
     }
 
@@ -235,9 +236,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
             if (cardInteraction.ShouldUseCard(eventData, cardInstance))
             {
-                if (cardInstance.CurrentCardData.IsValidTarget(cardInteraction.ArrowTaraget))   // 카드가 유효한 대상을 찾았을 경우
+                if (cardInstance.IsValidTarget(cardInteraction.ArrowTaraget))          // 카드가 유효한 대상을 찾았을 경우
                     SetCardState(CardState.Used);
-                else                                                                            // 카드가 유효한 대상을 찾지 못했을 경우
+                else                                                                   // 카드가 유효한 대상을 찾지 못했을 경우
                     CancelCard();
             }
             else
