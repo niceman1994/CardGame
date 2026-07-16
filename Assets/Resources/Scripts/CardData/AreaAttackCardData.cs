@@ -2,10 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AreaAttackCardData", menuName = "CardScriptable/CreateAreaAttackCardData")]
+[System.Serializable]
 public class AreaAttackCardData : CardData
 {
-    [SerializeField] private int skillValue;
+    public override void CreateCardData(CardJsonData data, Sprite handleSprite, CardSideEffect cardSideEffect)
+    {
+        requiresTarget = data.requiresTarget;
+        cardCost = data.cost;
+        cardName = data.cardName;
+        description = data.description;
+        cardImage = handleSprite;
+        this.cardSideEffect = cardSideEffect;
+        overloadValue = data.overloadValue;
+        skillValue = data.cardEffectValue;
+    }
+
+    private int skillValue;
 
     public int SkillValue => skillValue;
 
@@ -18,10 +30,5 @@ public class AreaAttackCardData : CardData
     {
         int finalCost = cardInstance.IsUpgraded ? cardCost - 1 : cardCost;
         return finalCost;
-    }
-
-    public override string GetDescription(CardInstance cardInstance)
-    {
-        return CardEffect.GetDescription(cardInstance);
     }
 }

@@ -2,10 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "OverloadCardData", menuName = "CardScriptable/CreateSearchCardData")]
+[System.Serializable]
 public class OverloadCardData : CardData
 {
-    [SerializeField] private int overloadCost;
+    public override void CreateCardData(CardJsonData data, Sprite handleSprite, CardSideEffect cardSideEffect)
+    {
+        requiresTarget = data.requiresTarget;
+        cardCost = data.cost;
+        cardName = data.cardName;
+        description = data.description;
+        cardImage = handleSprite;
+        this.cardSideEffect = cardSideEffect;
+        overloadValue = data.overloadValue;
+        overloadCost = data.cardEffectValue;
+    }
+
+    private int overloadCost;
 
     public int OverloadCost => overloadCost;
 
@@ -17,10 +29,5 @@ public class OverloadCardData : CardData
     public override int GetCardCost(CardInstance cardInstance)
     {
         return cardCost;
-    }
-
-    public override string GetDescription(CardInstance cardInstance)
-    {
-        return CardEffect.GetDescription(cardInstance);
     }
 }

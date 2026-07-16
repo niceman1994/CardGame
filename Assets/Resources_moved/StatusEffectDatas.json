@@ -1,0 +1,19 @@
+{
+  "statusEffects": {
+    "StunData": {
+      "effectName": "기절",
+      "duration": 2,
+      "damage": 0
+    },
+    "WeaknessData": {
+      "effectName": "약점",
+      "duration": 2,
+      "damage": 0
+    },
+    "PosionData": {
+      "effectName": "독",
+      "duration": 2,
+      "damage": 1
+    }
+  }
+}

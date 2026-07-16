@@ -3,37 +3,60 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 카드의 기본 정보를 가진 스크립터블 오브젝트
-/// </summary>
-public abstract class CardData : ScriptableObject
+public class CardSideEffectData
 {
-    [SerializeField] protected bool requiresTarget;                // 대상 지정 여부
-    [SerializeField] protected int cardCost;
-    [SerializeField] protected string cardName;
-    [SerializeField, TextArea] protected string description;
-    [SerializeField] protected Sprite cardFrontImage;
-    [SerializeField] protected CardSideEffect cardSideEffect = new CardSideEffect();
-    [SerializeField] protected int overloadValue;
+    public bool requiresStatusEffect;
+    public int draw;
+    public int costChange;
+    public string statusEffect;
+}
 
+public class CardJsonData
+{
+    public bool requiresTarget;
+    public int cost;
+    public string cardName;
+    public string description;
+    public string spriteName;
+    public CardSideEffectData cardSideEffect;
+    public int overloadValue;
+    public int cardEffectValue;
+    public int cardCount;
+}
+
+public class CardJsonList
+{
+    public Dictionary<string, CardJsonData> cards;
+}
+
+/// <summary>
+/// 카드 원본 클래스
+/// </summary>
+public abstract class CardData
+{
+    protected bool requiresTarget;                // 대상 지정 여부
+    protected int cardCost;
+    protected string cardName;
+    protected string description;
+    protected Sprite cardImage;
+    protected CardSideEffect cardSideEffect;
+    protected int overloadValue;
+    
     public bool RequiresTarget => requiresTarget;
     public string CardName => cardName;
     public string Description => description;
-    public Sprite CardFrontImage => cardFrontImage;
+    public Sprite CardImage => cardImage;
     public CardSideEffect CardSideEffect => cardSideEffect;
     public int OverloadValue => overloadValue;
     public ICardEffect CardEffect { get; protected set; }
 
+    public abstract void CreateCardData(CardJsonData data, Sprite handleSprite, CardSideEffect cardSideEffect);
     public abstract void CreateCardEffect();
     // 카드 효과 처리만을 담당하는 함수(코스트는 Hand 스크립트에서 처리함)
     public abstract int GetCardCost(CardInstance cardInstance);
-    public abstract string GetDescription(CardInstance cardInstance);
 
-    public StatusEffectData GetStatusEffectData()
+    public virtual string GetDescription(CardInstance cardInstance)
     {
-        if (cardSideEffect.RequiresStatusEffect == true)
-            return cardSideEffect.StatusEffect;
-
-        return null;
+        return CardEffect.GetDescription(cardInstance);
     }
 }

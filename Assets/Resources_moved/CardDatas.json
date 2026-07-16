@@ -1,0 +1,148 @@
+{
+	"cards": {
+		"AttackCard": {
+			"requiresTarget": true,
+			"cost": 2,
+			"cardName": "검 휘두르기",
+			"description": "{cardDamage}의 피해를 입힙니다.",
+			"spriteName": "AttackImage",
+			"cardSideEffect": {
+				"requiresStatusEffect": false,
+				"draw": 0,
+				"costChange": 0,
+				"statusEffect": ""
+			},
+			"overloadValue": 2,
+			"cardEffectValue": 5,
+			"cardCount": 4
+		},
+		"AddDrawCard": {
+			"requiresTarget": false,
+			"cost": 1,
+			"cardName": "카드 추가",
+			"description": "카드를 {draw}장 드로우합니다.",
+			"spriteName": "DrawImage",
+			"cardSideEffect": {
+				"requiresStatusEffect": false,
+				"draw": 2,
+				"costChange": 0,
+				"statusEffect": ""
+			},
+			"overloadValue": 1,
+			"cardEffectValue": 0,
+			"cardCount": 3
+		},
+		"AreaAttackCard": {
+			"requiresTarget": false,
+			"cost": 4,
+			"cardName": "광역 공격",
+			"description": "모든 적에게 {skillValue}의\n피해를 입힙니다.",
+			"spriteName": "AreaAttackImage",
+			"cardSideEffect": {
+				"requiresStatusEffect": false,
+				"draw": 0,
+				"costChange": 0,
+				"statusEffect": ""
+			},
+			"overloadValue": 2,
+			"cardEffectValue": 3,
+			"cardCount": 4
+		},
+		"ManaBoostCard": {
+			"requiresTarget": false,
+			"cost": 0,
+			"cardName": "마나 증가",
+			"description": "마나를 {addMana} 증가시킵니다.",
+			"spriteName": "ManaBoostImage",
+			"cardSideEffect": {
+				"requiresStatusEffect": false,
+				"draw": 0,
+				"costChange": -1,
+				"statusEffect": ""
+			},
+			"overloadValue": 2,
+			"cardEffectValue": 2,
+			"cardCount": 4
+		},
+		"OverloadCard": {
+			"requiresTarget": true,
+			"cost": 1,
+			"cardName": "과부하",
+			"description": "카드 1장의 코스트를 1 증가시키고 효과를 강화합니다.",
+			"spriteName": "OverloadImage",
+			"cardSideEffect": {
+				"requiresStatusEffect": false,
+				"draw": 0,
+				"costChange": 0,
+				"statusEffect": ""
+			},
+			"overloadValue": 1,
+			"cardEffectValue": 1,
+			"cardCount": 3
+		},
+		"ShieldCard": {
+			"requiresTarget": false,
+			"cost": 2,
+			"cardName": "쉴드 생성",
+			"description": "{shield}의 쉴드를 얻습니다.",
+			"spriteName": "ShieldImage",
+			"cardSideEffect": {
+				"requiresStatusEffect": false,
+				"draw": 0,
+				"costChange": 0,
+				"statusEffect": ""
+			},
+			"overloadValue": 2,
+			"cardEffectValue": 4,
+			"cardCount": 3
+		},
+		"StunCard": {
+			"requiresTarget": true,
+			"cost": 2,
+			"cardName": "기절시키기",
+			"description": "적을 {duration}턴동안\n기절시킵니다.",
+			"spriteName": "StunAttackImage",
+			"cardSideEffect": {
+				"requiresStatusEffect": true,
+				"draw": 0,
+				"costChange": 0,
+				"statusEffect": "StunData"
+			},
+			"overloadValue": 1,
+			"cardEffectValue": 0,
+			"cardCount": 2
+		},
+		"WeaknessAttackCard": {
+			"requiresTarget": true,
+			"cost": 3,
+			"cardName": "약점 공격",
+			"description": "{cardDamage}의 피해를 입히고\n{duration}턴동안 약점을 부여하고\n카드를 {extraDraw}장 드로우합니다.",
+			"spriteName": "WeaknessAttackImage",
+			"cardSideEffect": {
+				"requiresStatusEffect": true,
+				"draw": 1,
+				"costChange": 0,
+				"statusEffect": "WeaknessData"
+			},
+			"overloadValue": 2,
+			"cardEffectValue": 1,
+			"cardCount": 3
+		},
+		"PosionAttackCard": {
+			"requiresTarget": true,
+			"cost": 5,
+			"cardName": "독 공격",
+			"description": "{cardDamage}의 피해를 입히고\n{duration}턴동안 독을 부여해\n상대 턴이 끝날 때마다\n1의 피해를 입힙니다.",
+			"spriteName": "PosionImage",
+			"cardSideEffect": {
+				"requiresStatusEffect": true,
+				"draw": 0,
+				"costChange": 0,
+				"statusEffect": "PosionData"
+			},
+			"overloadValue": 1,
+			"cardEffectValue": 3,
+			"cardCount": 6
+		}
+	}
+}

@@ -17,32 +17,48 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 993e7c9a91fcab042b0559c1d8dad6c9
   m_SerializeEntries:
-  - m_GUID: 4e368dfaf5a751a4a9bb296667ae9de8
-    m_Address: UIImages3
+  - m_GUID: 393c605fa70e32c48944124cc18cf325
+    m_Address: CardDatas
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 834df334d7b0b4842871e67c839d80af
-    m_Address: UIImages2
+  - m_GUID: def8570040ef6404abfa638eb186cd86
+    m_Address: DrawImage
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 0a91795c266d1a74282beed16c7df558
-    m_Address: GameResutlImage
+  - m_GUID: 6c5fa36fa47de6d4cb7caad2a155ffb4
+    m_Address: AreaAttackImage
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: c1b74a23146dd204daf23343b0464fa0
-    m_Address: UIImages1
+  - m_GUID: 5e27e72fd70f3654ea8c1abda0d86ecf
+    m_Address: OverloadImage
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: c0f16028dc0545c4b92752499d38a449
-    m_Address: CardSpritesheet
+  - m_GUID: 3df0f715bed2e644f823a26a8c4a0ffd
+    m_Address: ManaBoostImage
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 58b5238e1fd5507428a8fe7316ad373e
-    m_Address: transparent
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: e857d203a10524c4680701153bcc61f3
+  - m_GUID: e4a07f85778b71a419562f752f3bce1a
     m_Address: ShieldImage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0be57511c9613cc4791a9d084aeedf21
+    m_Address: AttackImage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d4e6c375a5a5fee4290f53be2dd591ef
+    m_Address: StunAttackImage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 02966a1fcd1f58448af383a8cfd35665
+    m_Address: WeaknessAttackImage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 36a0181d361bc8e499450dfbb08fac89
+    m_Address: StatusEffectDatas
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 048f68bac655285438db27c186554e6f
+    m_Address: PosionImage
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

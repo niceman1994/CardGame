@@ -37,6 +37,7 @@ public class Player : MonoBehaviour, IHealth
     {
         EventBus<CardGameData>.Subscribe(GameEventType.PLAYERATTACK, attackAction);
         EventBus<CardGameData>.Subscribe(GameEventType.PLAYERDEFEND, shieldAction);
+        EventBus<int>.Subscribe(GameEventType.ENEMYATTACK, TakeDamage);
         EventBus.Subscribe(GameEventType.PLAYERDEATH, PlayDeathAni);
         EventBus.Subscribe(GameEventType.BATTLE_START, battleStartAction);
     }
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour, IHealth
     {
         EventBus<CardGameData>.Unsubscribe(GameEventType.PLAYERATTACK, attackAction);
         EventBus<CardGameData>.Unsubscribe(GameEventType.PLAYERDEFEND, shieldAction);
+        EventBus<int>.Unsubscribe(GameEventType.ENEMYATTACK, TakeDamage);
         EventBus.Unsubscribe(GameEventType.PLAYERDEATH, PlayDeathAni);
         EventBus.Unsubscribe(GameEventType.BATTLE_START, battleStartAction);
     }

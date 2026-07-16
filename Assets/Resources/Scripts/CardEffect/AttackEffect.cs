@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class AttackEffect : ICardEffect
 {
     private int damage;
@@ -26,6 +22,6 @@ public class AttackEffect : ICardEffect
         if (cardInstance.IsOverload)
             damage += data.OverloadValue * cardInstance.OverloadStack;
 
-        return data.Description.Replace("{damage}", $"{damage}");
+        return data.Description.Replace("{cardDamage}", $"{damage}");
     }
 }

@@ -5,21 +5,20 @@ using UnityEngine;
 public class CardInstance
 {
     private bool isUpgraded;
-    private int overloadStack;                   // 과부하가 중첩이 가능하도록 하는 과부하 스택 변수
-    private CardData cardData;            
-    private StatusEffectData statusEffectData;   // 상태이상 데이터
+    private int overloadStack;                   // 과부하가 중첩 가능하도록 하는 스택 변수
+    private CardData cardData;
+    //private StatusEffectData statusEffectData;   // 상태이상 데이터
 
     public bool IsUpgraded => isUpgraded;
     public bool IsOverload => overloadStack > 0;
     public int OverloadStack => overloadStack;
     public CardData CardData => cardData;
-    public StatusEffectData StatusEffectData => statusEffectData;
+    public StatusEffectData StatusEffectData => cardData.CardSideEffect.StatusEffect;
 
-    public CardInstance(bool isUpgraded, CardData cardData, StatusEffectData statusEffectData)
+    public CardInstance(bool isUpgraded, CardData cardData)
     {
         this.isUpgraded = isUpgraded;
         this.cardData = cardData;
-        this.statusEffectData = statusEffectData;
         this.cardData.CreateCardEffect();
     }
 

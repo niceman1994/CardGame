@@ -2,10 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AttackCardData", menuName = "CardScriptable/CreateAttackCardData")]
+[System.Serializable]
 public class AttackCardData : CardData
 {
-    [SerializeField] private int damage;
+    public override void CreateCardData(CardJsonData data, Sprite handleSprite, CardSideEffect cardSideEffect)
+    {
+        requiresTarget = data.requiresTarget;
+        cardCost = data.cost;
+        cardName = data.cardName;
+        description = data.description;
+        cardImage = handleSprite;
+        this.cardSideEffect = cardSideEffect;
+        overloadValue = data.overloadValue;
+        damage = data.cardEffectValue;
+    }
+
+    private int damage;
 
     public int Damage => damage;
 
@@ -17,10 +29,5 @@ public class AttackCardData : CardData
     public override int GetCardCost(CardInstance cardInstance)
     {
         return cardCost;
-    }
-
-    public override string GetDescription(CardInstance cardInstance)
-    {
-        return CardEffect.GetDescription(cardInstance);
     }
 }

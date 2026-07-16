@@ -25,7 +25,7 @@ public struct CardGameData
     public IReadOnlyList<Monster> RegisterMonsters { get; init; }
 }
 
-public class EventBus
+public static class EventBus
 {
     private static readonly IDictionary<GameEventType, UnityEvent> Events = new Dictionary<GameEventType, UnityEvent>();
 
@@ -60,7 +60,7 @@ public class EventBus
     }
 }
 
-public class EventBus<T>
+public static class EventBus<T>
 {
     private static readonly IDictionary<GameEventType, UnityEvent<T>> Events = new Dictionary<GameEventType, UnityEvent<T>>();
 

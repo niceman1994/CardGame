@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HealthStat : MonoBehaviour
 {
@@ -12,16 +13,16 @@ public class HealthStat : MonoBehaviour
     [SerializeField] GameObject shield;
     [SerializeField] Text currentShieldText;
     [SerializeField] Transform damageTextPos;
-    [SerializeField] Text statusText1;
-    [SerializeField] Text statusText2;
+    [SerializeField] List<TextMeshProUGUI> statusTexts = new List<TextMeshProUGUI>();
 
     private int currentHp;
     private int currentShield;
+    private List<string> activeStatusEffects = new List<string>();      // 활성화된 상태이상 문자열을 가진 리스트
 
     public void ResetStatusEffect()
     {
-        statusText1.gameObject.SetActive(false);
-        statusText2.gameObject.SetActive(false);
+        for (int i = 0; i < statusTexts.Count; i++)
+            statusTexts[i].text = "";
     }
 
     public void SetHealthBar(int currentHp, int maxHp)
@@ -52,17 +53,28 @@ public class HealthStat : MonoBehaviour
 
     public void ActiveStatusEffect(string statusEffectName)
     {
-        if (statusText1.text.Contains(statusEffectName))
-            statusText1.gameObject.SetActive(true);
-        else
-            statusText2.gameObject.SetActive(true);
-    }
+        activeStatusEffects.Add(statusEffectName);
 
+        for (int i = 0; i < activeStatusEffects.Count; i++)
+        {
+            statusTexts[i].gameObject.SetActive(true);
+            statusTexts[i].SetText(activeStatusEffects[i]);
+        }
+    }
+    
     public void DeactiveStatusEffect(string statusEffectName)
     {
-        if (statusText1.text.Contains(statusEffectName))
-            statusText1.gameObject.SetActive(false);
-        else
-            statusText2.gameObject.SetActive(false);
+        activeStatusEffects.Remove(statusEffectName);
+    }
+
+    public void RefreshStatusEffectText()
+    {
+        for (int i = 0; i < statusTexts.Count; i++)
+        {
+            statusTexts[i].text = "";
+
+            if (i <= activeStatusEffects.Count - 1)
+                statusTexts[i].SetText(activeStatusEffects[i]);
+        }
     }
 }

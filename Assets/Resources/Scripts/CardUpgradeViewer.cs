@@ -12,8 +12,9 @@ public class CardUpgradeViewer : MonoBehaviour
 
     private List<CardUpgradeController> cardUpgradeControllers = new List<CardUpgradeController>();
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitUntil(() => deck.IsCardInit);
         EventBus.Subscribe(GameEventType.BATTLE_START, () => cardUpgradeUI.SetActive(false));
         InitPopup();
         MakeUpgradeButton();

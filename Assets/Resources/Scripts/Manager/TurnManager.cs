@@ -93,24 +93,20 @@ public class TurnManager : Singleton<TurnManager>
             })
             .AppendInterval(0.7f)
             .AppendCallback(() => turnText.transform.DOLocalMoveX(3000, 0.2f))
-            .OnComplete(() =>
-            {
-                Canvas.ForceUpdateCanvases();
-                attackCoroutine = StartCoroutine(AttackInOrder());
-            });
+            .OnComplete(() => attackCoroutine = StartCoroutine(AttackInOrder()));
     }
 
-    // 몬스터들이 차례대로 공격하게 하는 함수
+    // 활성화된 몬스터들이 차례대로 공격하게 하는 함수
     private IEnumerator AttackInOrder()
     {
-        foreach (var monster in activeMonsters)
+        for (int i = 0; i < activeMonsters.Count; i++)
         {
-            var monsterAction = monster.ExecuteMonsterAction(player);
+            var monsterAction = activeMonsters[i].ExecuteMonsterAction(player);
             yield return StartCoroutine(monsterAction);
         }
-        // 공격 이후에 상태이상에 대한 처리를 실행함
-        foreach (var monster in activeMonsters)
-            monster.CheckStatusEffect();
+        // 공격 이후 상태이상 처리를 진행함
+        for (int i = 0; i < activeMonsters.Count; i++)
+            activeMonsters[i].CheckStatusEffect();
 
         if (player.CurrentHp() < 0)
             yield break;

@@ -18,8 +18,8 @@ public class Draw : MonoBehaviour
         if (isDraw == false)
         {
             drawSequence.SetDelay(drawDelay)
-            .Append(transform.DOLocalMove(startPos, 0.1f).SetEase(Ease.OutExpo))
-            .Join(transform.DOScale(endScale, 0.1f));        // 덱에 있는 카드를 드로우하면서 커지게 함
+                .Append(transform.DOLocalMove(startPos, 0.1f).SetEase(Ease.OutExpo))
+                .Join(transform.DOScale(endScale, 0.1f));        // 덱에 있는 카드를 드로우하면서 커지게 함
         }
        else
         {

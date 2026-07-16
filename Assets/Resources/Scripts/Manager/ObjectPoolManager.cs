@@ -48,8 +48,8 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
             {
                 Monster queueObject = Instantiate(monsterPrefab[i]);
                 queueObject.transform.SetParent(monsterCanvas);
-                queueObject.InitMonster();
                 queueObject.gameObject.SetActive(false);
+                queueObject.InitMonster();
                 monsterPools[i].Enqueue(queueObject);
             }
         }
@@ -57,11 +57,13 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
 
     public void SetMonsters()
     {
+        // 비활성화된 몬스터들 중에 필드에 나올 몬스터들만 다시 활성화시키고 Monster 스크립트에서 이벤트를 등록함
         for (int i = 0; i < monsterPos.Count; i++)
         {
             Monster dequeueMonster = monsterPools[Random.Range(0, monsterPools.Count)].Dequeue();
             dequeueMonster.transform.SetParent(monsterPos[i]);
             dequeueMonster.gameObject.SetActive(true);
+            dequeueMonster.SubscribeEvent();
             dequeueMonster.transform.position = monsterPos[i].position;
             dequeueMonsters.Add(dequeueMonster);
         }
@@ -73,6 +75,7 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
         if (pooledObject.gameObject.activeSelf == true)
         {
             pooledObject.gameObject.SetActive(false);
+            pooledObject.UnsubscribeEvent();
 
             for (int i = 0; i < monsterPools.Count; i++)
             {

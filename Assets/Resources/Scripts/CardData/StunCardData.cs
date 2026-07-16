@@ -2,10 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "StunCardData", menuName = "CardScriptable/CreateStunCardData")]
+[System.Serializable]
 public class StunCardData : CardData
 {
-    public int StatusDuration => cardSideEffect.StatusEffect.Duration;
+    public override void CreateCardData(CardJsonData data, Sprite handleSprite, CardSideEffect cardSideEffect)
+    {
+        requiresTarget = data.requiresTarget;
+        cardCost = data.cost;
+        cardName = data.cardName;
+        description = data.description;
+        cardImage = handleSprite;
+        this.cardSideEffect = cardSideEffect;
+        overloadValue = data.overloadValue;
+        statusDuration = this.cardSideEffect.StatusEffect.Duration;
+    }
+
+    private int statusDuration;
+
+    public int StatusDuration => statusDuration;
 
     public override void CreateCardEffect()
     {
@@ -15,10 +29,5 @@ public class StunCardData : CardData
     public override int GetCardCost(CardInstance cardInstance)
     {
         return cardCost;
-    }
-
-    public override string GetDescription(CardInstance cardInstance)
-    {
-        return CardEffect.GetDescription(cardInstance);
     }
 }
