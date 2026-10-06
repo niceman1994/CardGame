@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,10 +11,11 @@ public class MenuPopup : MonoBehaviour
 
     private void Awake()
     {
-        EventBus.Subscribe(GameEventType.BATTLE_START, () => menuButton.interactable = true);
         EventBus.Subscribe(GameEventType.BATTLE_END, () => menuButton.interactable = false);
+        // 플레이어의 턴이 시작됐을 때 게임을 재시작하면 5장이 아닌 10장을 드로우하는 현상을 방지하기 위한 코드
+        EventBus.Subscribe(GameEventType.TURN_START, () => menu.gameObject.SetActive(false));
 
-        menuButton.onClick.AddListener(OnClickOptionOpenButton);
+        menuButton.onClick.AddListener(OnClickOptionButton);
         restartButton.onClick.AddListener(OnClickRestartButton);
         continueButton.onClick.AddListener(OnClickContinueButton);
 #if UNITY_EDITOR
@@ -26,7 +25,7 @@ public class MenuPopup : MonoBehaviour
 #endif
     }
 
-    private void OnClickOptionOpenButton()
+    private void OnClickOptionButton()
     {
         menuButton.interactable = false;
         menu.gameObject.SetActive(true);

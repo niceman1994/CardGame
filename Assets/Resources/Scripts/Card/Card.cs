@@ -34,17 +34,18 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         cardInteraction.Init(this);
         SetCardState(CardState.InDeck);
         upgradeTextAction = (data) => UpgradeCardText(data.CardInstance);
-        OnResetCostColor += cardView.ResetCardCostColor;
     }
 
     private void OnEnable()
     {
         EventBus<CardGameData>.Subscribe(GameEventType.CARD_TEXT_UPGRADE, upgradeTextAction);   // 버튼으로 강화된 카드의 텍스트를 갱신하기 위해 이벤트에 등록
+        OnResetCostColor += cardView.ResetCardCostColor;
     }
 
     private void OnDisable()
     {
         EventBus<CardGameData>.Unsubscribe(GameEventType.CARD_TEXT_UPGRADE, upgradeTextAction);
+        OnResetCostColor -= cardView.ResetCardCostColor;
     }
 
     public void SetCardData(CardInstance cardInstance)
@@ -71,7 +72,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public void ApplyCardOverload(int overloadCost)
     {
         cardInstance.AddOverloadStack();
-        cardView.OverloadCardText(cardInstance, overloadCost);
+        cardView.ChangeCardText(cardInstance, overloadCost);
     }
 
     public void SetCardPos(float drawDelay, Vector3 startPos, Vector3 endScale, float cardRotateZ)
@@ -79,8 +80,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         cardInteraction.SetCardOriginPos(startPos);
 
         draw.DrawSequence(drawDelay, startPos, endScale)
-            .AppendCallback(() => CheckAlreadyInHand(draw.IsDraw, cardRotateZ))
-            .OnComplete(() => cardInteraction.SetCardOriginIndex(transform.GetSiblingIndex()));
+            .AppendCallback(() => CheckAlreadyInHand(draw.IsDraw, cardRotateZ));
     }
 
     private void CheckAlreadyInHand(bool isDraw, float cardRotateZ)
@@ -90,8 +90,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         // 이미 드로우한 카드의 시퀀스 재실행을 방지하기 위한 코드
         if (isDraw == false)
         {
-            cardDrawSequence.Join(transform.DORotate(new Vector3(0, 90, transform.localRotation.z), 0.2f).SetEase(Ease.InOutCubic))
-                .Append(transform.DORotate(new Vector3(0, 0, cardRotateZ), 0.2f).SetEase(Ease.InOutCubic))
+            cardDrawSequence.Join(transform.DORotate(new Vector3(0, 90, transform.localRotation.z), 0.15f).SetEase(Ease.InOutCubic))
+                .Append(transform.DORotate(new Vector3(0, 0, cardRotateZ), 0.15f).SetEase(Ease.InOutCubic))
                 .JoinCallback(() =>
                 {
                     FlipCard(true);
@@ -104,9 +104,10 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
         cardDrawSequence.OnComplete(() =>
         {
-            cardInteraction.SetHover(true);
             SetCardState(CardState.InHand);
             cardInteraction.SetCardOriginRotate(transform.localRotation.eulerAngles);
+            cardInteraction.SetCardOriginIndex(transform.GetSiblingIndex());
+            cardInteraction.SetHover(true);
         });
     }
 
@@ -132,8 +133,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         Sequence cardTransitionSequence = DOTween.Sequence();
         cardTransitionSequence.AppendCallback(() => CardTransition(parent, cardZoneList, cardState))
-            .Append(transform.DOScale(Vector3.one, 0.2f))
-            .Join(transform.DOLocalRotateQuaternion(Quaternion.Euler(Vector3.zero), 0.2f));
+            .Append(transform.DOScale(Vector3.one, 0.15f))
+            .Join(transform.DOLocalRotateQuaternion(Quaternion.Euler(Vector3.zero), 0.15f));
 
         return cardTransitionSequence;
     }
@@ -172,7 +173,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void ExecuteCard()
     {
-        cardInstance.Execute(cardInteraction.ArrowTaraget);
+        StartCoroutine(cardInstance.Execute(cardInteraction.ArrowTaraget));
+        cardInstance.ResetRuntimeValue();
 
         if (cardView.IsCostReset())
             OnResetCostColor?.Invoke(Color.white);

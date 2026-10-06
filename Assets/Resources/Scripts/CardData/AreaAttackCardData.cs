@@ -2,33 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class AreaAttackCardData : CardData
 {
-    public override void CreateCardData(CardJsonData data, Sprite handleSprite, CardSideEffect cardSideEffect)
+    private int skillPower;
+
+    public override void CreateCardData(CardJsonData data, Sprite handleSprite, StatusEffectData effectData)
     {
         requiresTarget = data.requiresTarget;
         cardCost = data.cost;
         cardName = data.cardName;
         description = data.description;
+        upgradeDescription = data.upgradeDescription;
         cardImage = handleSprite;
-        this.cardSideEffect = cardSideEffect;
+        statusEffectData = effectData;
         overloadValue = data.overloadValue;
-        skillValue = data.cardEffectValue;
+        skillPower = data.cardEffectValue;
+        CardEffects = new List<ICardEffect> { new AreaAttackEffect(), new AreaAttackEffect() };
     }
 
-    private int skillValue;
-
-    public int SkillValue => skillValue;
-
-    public override void CreateCardEffect()
+    public override CardRuntimeValue CreateRuntimeValue()
     {
-        CardEffect = new AreaAttackEffect();
+        return new CardRuntimeValue(skillPower, 0, 0, 0, 0);
     }
 
     public override int GetCardCost(CardInstance cardInstance)
     {
-        int finalCost = cardInstance.IsUpgraded ? cardCost - 1 : cardCost;
-        return finalCost;
+        return cardCost;
+    }
+
+    public override string GetDescription(CardInstance cardInstance, CardRuntimeValue cardRuntimeValue)
+    {
+        if (cardInstance.IsOverload)
+            cardRuntimeValue.skillValue += overloadValue * cardInstance.OverloadStack;
+
+        if (cardInstance.IsUpgraded)
+            return upgradeDescription.Replace("{skillPower}", $"{cardRuntimeValue.skillValue}");
+        else
+            return description.Replace("{skillPower}", $"{cardRuntimeValue.skillValue}");
     }
 }

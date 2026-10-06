@@ -26,10 +26,10 @@ public class CardView : MonoBehaviour
         SetCardView(cardInstance);
     }
 
-    public void OverloadCardText(CardInstance cardInstance, int costChangeAmount)
+    public void ChangeCardText(CardInstance cardInstance, int costChangeAmount)
     {
         CardCostChange(costChangeAmount);
-        description.text = cardDataCache.GetDescription(cardInstance);
+        description.text = cardInstance.GetDescription();
     }
 
     private void SetCardView(CardInstance cardInstance)
@@ -37,7 +37,7 @@ public class CardView : MonoBehaviour
         SetCardCost(cardInstance);
         cardFrontImage.sprite = cardDataCache.CardImage;
         cardName.text = cardInstance.GetCardName();
-        description.text = cardDataCache.GetDescription(cardInstance);
+        description.text = cardInstance.GetDescription();
     }
 
     private void SetCardCost(CardInstance cardInstance)
@@ -86,6 +86,8 @@ public class CardView : MonoBehaviour
             cardCost.color = Color.red;
         
         cardCost.text = $"{displayCardCost}";
+        isCostDown = false;
+        isCostUp = false;
     }
 
     public void ResetCardCostColor(Color textColor)

@@ -1,22 +1,13 @@
+using System.Collections;
+using UnityEngine;
+
 public class AreaAttackEffect : ICardEffect
 {
-    private int skillPower;
-
-    public void Execute(CardInstance cardInstance, ISelectable target = null)
+    public void Execute(CardInstance cardInstance, CardRuntimeValue cardRuntimeValue, ISelectable target = null)
     {
-        EventBus<int>.Publish(GameEventType.AREAATTACK, skillPower);
+        EventBus<int>.Publish(GameEventType.AREAATTACK, cardRuntimeValue.skillValue);
         SoundManager.Instance.PlayAreaAttackSound();
     }
 
-    public string GetDescription(CardInstance cardInstance)
-    {
-        AreaAttackCardData data = (AreaAttackCardData)cardInstance.CardData;
-
-        skillPower = cardInstance.IsUpgraded ? data.SkillValue + 1 : data.SkillValue;
-
-        if (cardInstance.IsOverload)
-            skillPower += data.OverloadValue * cardInstance.OverloadStack;
-
-        return data.Description.Replace("{skillValue}", $"{skillPower}");
-    }
+    public float GetEffectInterval() => 0.15f;
 }

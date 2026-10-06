@@ -7,11 +7,12 @@ using DG.Tweening;
 
 public class TurnManager : Singleton<TurnManager>
 {
-    [SerializeField] IReadOnlyList<Monster> activeMonsters = new List<Monster>();
     [SerializeField] Button menuButton;
     [SerializeField] Button turnEndButton;
     [SerializeField] Text turnText;
-
+    [SerializeField] GameObject panel;
+    
+    private IReadOnlyList<Monster> activeMonsters = new List<Monster>();
     private IHealth player;
     private Sequence turnSequence;
     private Coroutine attackCoroutine;
@@ -30,23 +31,33 @@ public class TurnManager : Singleton<TurnManager>
         EventBus.Subscribe(GameEventType.TURN_START, StartPlayerTurn);
         turnEndButton.onClick.AddListener(EndPlayerTurn);
 
-        EventBus.Subscribe(GameEventType.BATTLE_END, () => turnEndButton.interactable = false);
-        EventBus.Subscribe(GameEventType.OPENPOPUP, () => turnEndButton.interactable = false);
-        EventBus.Subscribe(GameEventType.CLOSEPOPUP, () => turnEndButton.interactable = true);
+        EventBus.Subscribe(GameEventType.BATTLE_END, DeactiveTurnEndButton);
+        EventBus.Subscribe(GameEventType.OPENPOPUP, DeactiveTurnEndButton);
+        EventBus.Subscribe(GameEventType.CLOSEPOPUP, ActiveTurnEndButton);
         EventBus.Subscribe(GameEventType.RESTART, GameRestart);
     }
 
     private void SetPlayer(CardGameData data)
     {
-        this.player = data.Target as IHealth;
+        player = data.Target as IHealth;
+    }
+
+    private void ActiveTurnEndButton()
+    {
+        turnEndButton.interactable = true;
+    }
+
+    private void DeactiveTurnEndButton()
+    {
+        turnEndButton.interactable = false;
     }
 
     private void StartPlayerTurn()
     {
+        turnText.transform.localPosition = new Vector3(-3000, 0, 0);
         // 플레이어 턴인걸 텍스트로 알려준 다음, 드로우가 실행되게하는 시퀀스
         turnSequence = DOTween.Sequence();
-        turnSequence.AppendCallback(() => turnText.transform.localPosition = new Vector3(-3000, 0, 0))
-            .AppendInterval(0.1f)
+        turnSequence.AppendInterval(0.1f)
             .AppendCallback(() =>
             {
                 SoundManager.Instance.PlayTurnChangeSound();
@@ -63,7 +74,7 @@ public class TurnManager : Singleton<TurnManager>
             .AppendInterval(0.3f)
             .OnComplete(() =>
             {
-                Canvas.ForceUpdateCanvases();
+                panel.gameObject.SetActive(false);
                 turnEndButton.interactable = true;
             });
 
@@ -77,13 +88,13 @@ public class TurnManager : Singleton<TurnManager>
 
     private void EndPlayerTurn()
     {
+        turnText.transform.localPosition = new Vector3(-3000, 0, 0);
         turnEndButton.interactable = false;
         EventBus.Publish(GameEventType.TURN_END);
 
         // 적 턴인걸 텍스트로 알려준 다음, 적의 공격을 차례대로 실행시키는 시퀀스
         turnSequence = DOTween.Sequence();
-        turnSequence.AppendCallback(() => turnText.transform.localPosition = new Vector3(-3000, 0, 0))
-            .AppendInterval(0.1f)
+        turnSequence.AppendInterval(0.1f)
             .AppendCallback(() =>
             {
                 SoundManager.Instance.PlayTurnChangeSound();
@@ -96,14 +107,15 @@ public class TurnManager : Singleton<TurnManager>
             .OnComplete(() => attackCoroutine = StartCoroutine(AttackInOrder()));
     }
 
-    // 활성화된 몬스터들이 차례대로 공격하게 하는 함수
+    // 행동 순서를 보장하기 위해 TurnManager에서 몬스터들의 ExecuteMonsterAction 함수를 호출함
     private IEnumerator AttackInOrder()
     {
         for (int i = 0; i < activeMonsters.Count; i++)
         {
             var monsterAction = activeMonsters[i].ExecuteMonsterAction(player);
-            yield return StartCoroutine(monsterAction);
+            yield return monsterAction;
         }
+
         // 공격 이후 상태이상 처리를 진행함
         for (int i = 0; i < activeMonsters.Count; i++)
             activeMonsters[i].CheckStatusEffect();
@@ -112,6 +124,7 @@ public class TurnManager : Singleton<TurnManager>
             yield break;
 
         EventBus.Publish(GameEventType.TURN_START);     // 몬스터들의 공격이 끝나면 플레이어의 턴을 시작함
+        panel.gameObject.SetActive(true);
     }
 
     // 재시작할 때 실행된 코루틴을 강제로 멈추게 하는 함수

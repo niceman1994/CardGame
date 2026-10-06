@@ -1,27 +1,18 @@
+using System.Collections;
+
 public class AttackEffect : ICardEffect
 {
-    private int damage;
-
     public bool IsValidTarget(ISelectable target)
     {
         return target is IHealth;
     }
 
-    public void Execute(CardInstance cardInstance, ISelectable target)
+    public void Execute(CardInstance cardInstance, CardRuntimeValue cardRuntimeValue, ISelectable target)
     {
         if (target is not IHealth) return;
 
-        EventBus<CardGameData>.Publish(GameEventType.PLAYERATTACK, new CardGameData { Value = damage, Target = target });
+        EventBus<CardGameData>.Publish(GameEventType.PLAYERATTACK, new CardGameData { Value = cardRuntimeValue.skillValue, Target = target });
     }
 
-    public string GetDescription(CardInstance cardInstance)
-    {
-        AttackCardData data = (AttackCardData)cardInstance.CardData;
-        damage = cardInstance.IsUpgraded ? data.Damage + 2 : data.Damage;
-
-        if (cardInstance.IsOverload)
-            damage += data.OverloadValue * cardInstance.OverloadStack;
-
-        return data.Description.Replace("{cardDamage}", $"{damage}");
-    }
+    public float GetEffectInterval() => 0.0f;
 }

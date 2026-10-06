@@ -40,11 +40,16 @@ public class CardInteraction : MonoBehaviour
 
     public void Init(Card card) => self = card;
     public void SetCardParentInArea() => transform.SetParent(cardAreaRectTransform);
-    public void SetCardOriginIndex(int index) => mouseInCard.cardOriginIndex = index;
-    public void SetCardOriginPos(Vector3 originPos) => mouseInCard.cardOriginPos = originPos;
-    public void SetCardOriginRotate(Vector3 originRotate) => mouseInCard.cardOriginRotate = originRotate;
     public void SetHover(bool isHover) => this.isHover = isHover;
+    public void SetCardOriginIndex(int index) => mouseInCard.cardOriginIndex = index;
+    public void SetCardOriginRotate(Vector3 originRotate) => mouseInCard.cardOriginRotate = originRotate;
     public void DeactiveCardArrow() => cardArrow.gameObject.SetActive(false);
+
+    public void SetCardOriginPos(Vector3 originPos)
+    {
+        isHover = false;
+        mouseInCard.cardOriginPos = originPos;
+    }
 
     public void SetFlip(bool isFlip)
     {
@@ -63,8 +68,8 @@ public class CardInteraction : MonoBehaviour
         mouseInCard.shufflePos = new Vector3(0, cardEdgeImage.rectTransform.rect.height, transform.localPosition.z);
 
         Sequence shuffleSequence = DOTween.Sequence();
-        shuffleSequence.SetDelay(delay).Append(transform.DOLocalMove(mouseInCard.shufflePos, 0.08f).SetEase(Ease.InOutCubic))
-            .Append(transform.DOLocalMove(new Vector3(0, 0, transform.localPosition.z), 0.08f).SetEase(Ease.InOutCubic))
+        shuffleSequence.SetDelay(delay).Append(transform.DOLocalMove(mouseInCard.shufflePos, 0.07f).SetEase(Ease.InOutCubic))
+            .Append(transform.DOLocalMove(new Vector3(0, 0, transform.localPosition.z), 0.07f).SetEase(Ease.InOutCubic))
             .JoinCallback(() => cardState = CardState.InDeck);
 
         return shuffleSequence;
@@ -76,17 +81,21 @@ public class CardInteraction : MonoBehaviour
         cardHoverSequence?.Kill();
 
         cardResetSequence = DOTween.Sequence();
-        cardResetSequence.JoinCallback(() => transform.SetSiblingIndex(mouseInCard.cardOriginIndex))
-            .Append(transform.DOLocalMove(mouseInCard.cardOriginPos, 0.2f))
-            .Join(transform.DOScale(mouseInCard.cardOriginScale, 0.2f))
-            .Join(transform.DOLocalRotateQuaternion(Quaternion.Euler(mouseInCard.cardOriginRotate), 0.2f))
-            .OnComplete(() => cardEdgeImage.raycastTarget = true);  // 여러 카드를 빠르게 쓸 때 일부 카드가 마우스를 따라가지 않는 현상을 방지하기 위한 코드
+        cardResetSequence.Append(transform.DOLocalMove(mouseInCard.cardOriginPos, 0.15f))
+            .Join(transform.DOScale(mouseInCard.cardOriginScale, 0.15f))
+            .Join(transform.DOLocalRotateQuaternion(Quaternion.Euler(mouseInCard.cardOriginRotate), 0.15f))
+            .OnComplete(() =>
+            {
+                cardEdgeImage.raycastTarget = true;     // 여러 카드를 빠르게 쓸 때 일부 카드가 마우스를 따라가지 않는 현상을 방지하기 위한 코드
+                transform.SetSiblingIndex(mouseInCard.cardOriginIndex);
+            });  
     }
     
     public void CardHoverSequence()
     {
         transform.SetParent(rootCanvas);
         cardResetSequence?.Kill();
+        transform.SetAsLastSibling();
 
         float cardHoverScale = 1.65f;
         float scaledHeight = cardEdgeImage.rectTransform.rect.height * cardHoverScale;
@@ -96,7 +105,6 @@ public class CardInteraction : MonoBehaviour
         cardHoverSequence = DOTween.Sequence();
         cardHoverSequence.AppendCallback(() =>
         {
-                transform.SetAsLastSibling();
                 transform.localRotation = Quaternion.Euler(Vector3.zero);
             })
             .Append(transform.DOLocalMove(cardPos, 0.2f))
@@ -125,9 +133,9 @@ public class CardInteraction : MonoBehaviour
         localPoint.x = Mathf.Clamp(localPoint.x, -halfWidth, halfWidth);
         localPoint.y = Mathf.Clamp(localPoint.y, -halfHeight, halfHeight);
         
-        if (cardInstance.CheckRequiresTarget())                               // 사용한 카드가 공격 카드 또는 과부하 카드일 경우
+        if (cardInstance.CheckRequiresTarget())                               // 사용한 카드가 대상 지정이 필요한 카드일 경우
             cardArrow.DrawArrow(transform.position, eventData.position);
-        else                                                                  // 사용한 카드가 공격 이외의 카드일 경우
+        else                                                                  // 사용한 카드가 대상 지정이 필요하지 않은 카드일 경우
             transform.localPosition = localPoint;
     }
     

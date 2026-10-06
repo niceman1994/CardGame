@@ -24,10 +24,8 @@ public class Hand : MonoBehaviour
         InitHandCard();
     }
 
-    private void InitHandCard()
+    private void OnEnable()
     {
-        cardSpacing = 180.0f;
-        handRotateOffset = 6000.0f;
         deck.OnCardDraw += CardDraw;
 
         EventBus<CardGameData>.Subscribe(GameEventType.COSTDOWN, costDownAction);
@@ -38,6 +36,26 @@ public class Hand : MonoBehaviour
         EventBus.Subscribe(GameEventType.OPENPOPUP, OpenOptionPopup);
         EventBus.Subscribe(GameEventType.CLOSEPOPUP, CloseOptionPopup);
         EventBus.Subscribe(GameEventType.RESTART, GameRestart);
+    }
+
+    private void OnDisable()
+    {
+        deck.OnCardDraw -= CardDraw;
+
+        EventBus<CardGameData>.Unsubscribe(GameEventType.COSTDOWN, costDownAction);
+        EventBus.Unsubscribe(GameEventType.OVERLOAD, RandomOverloadInHand);
+        EventBus.Unsubscribe(GameEventType.TURN_END, DiscardAllCards);
+        EventBus.Unsubscribe(GameEventType.BATTLE_END, MoveToDeck);
+        // 옵션 팝업과 관련된 함수 등록
+        EventBus.Unsubscribe(GameEventType.OPENPOPUP, OpenOptionPopup);
+        EventBus.Unsubscribe(GameEventType.CLOSEPOPUP, CloseOptionPopup);
+        EventBus.Unsubscribe(GameEventType.RESTART, GameRestart);
+    }
+
+    private void InitHandCard()
+    {
+        cardSpacing = 180.0f;
+        handRotateOffset = 6000.0f;
     }
 
     private void CardDraw(Card targetCard)
@@ -61,6 +79,8 @@ public class Hand : MonoBehaviour
 
     private void RandomCostDownInHand(int costChangeAmount)
     {
+        if (handCardList.Count == 0) return;
+
         int index = UnityEngine.Random.Range(0, handCardList.Count);
         var randomCard = handCardList[index];
         randomCard.CardCostChange(costChangeAmount);
@@ -104,6 +124,7 @@ public class Hand : MonoBehaviour
 
             // y에 반지름을 뺀 값과 x값을 넣어 손패의 좌표 정렬 함수를 실행함
             handCardList[i].SetCardPos(0.03f * (i + 1), new Vector3(cardPosX, cardPosY - handRotateOffset, 0), Vector3.one, cardRotZ);
+            handCardList[i].transform.SetSiblingIndex(i);
         }
     }
 

@@ -2,32 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class StunCardData : CardData
 {
-    public override void CreateCardData(CardJsonData data, Sprite handleSprite, CardSideEffect cardSideEffect)
+    private int statusDuration;
+
+    public override void CreateCardData(CardJsonData data, Sprite handleSprite, StatusEffectData effectData)
     {
         requiresTarget = data.requiresTarget;
         cardCost = data.cost;
         cardName = data.cardName;
         description = data.description;
+        upgradeDescription = data.upgradeDescription;
         cardImage = handleSprite;
-        this.cardSideEffect = cardSideEffect;
+        statusEffectData = effectData;
         overloadValue = data.overloadValue;
-        statusDuration = this.cardSideEffect.StatusEffect.Duration;
+        statusDuration = statusEffectData.Duration;
+        CardEffects = new List<ICardEffect> { new AttackEffect(), new AddStatusEffect() };
     }
 
-    private int statusDuration;
-
-    public int StatusDuration => statusDuration;
-
-    public override void CreateCardEffect()
+    public override CardRuntimeValue CreateRuntimeValue()
     {
-        CardEffect = new StunEffect();
+        return new CardRuntimeValue(0, 0, 0, 0, statusDuration);
     }
 
     public override int GetCardCost(CardInstance cardInstance)
     {
         return cardCost;
+    }
+
+    public override string GetDescription(CardInstance cardInstance, CardRuntimeValue cardRuntimeValue)
+    {
+        cardRuntimeValue.statusDuration = cardInstance.IsUpgraded ? statusDuration + 1 : statusDuration;
+
+        if (cardInstance.IsOverload)
+            cardRuntimeValue.statusDuration += overloadValue * cardInstance.OverloadStack;
+
+        return description.Replace("{duration}", $"{cardRuntimeValue.statusDuration}");
     }
 }

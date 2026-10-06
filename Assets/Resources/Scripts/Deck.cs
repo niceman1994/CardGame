@@ -7,6 +7,7 @@ using DG.Tweening;
 using Newtonsoft.Json;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.Assertions;
 
 public class CardEntry
 {
@@ -38,12 +39,26 @@ public class Deck : MonoBehaviour
     public List<Card> CurrentDeckList => currnetDeckList;
     public int CardCount => cardInstances.Count;
 
-    public event Action<Card> OnCardDraw;
+    public event Action<Card> OnCardDraw;                               // 드로우한 카드 1장의 함수를 등록하기 위한 이벤트
     public event Action<List<CardInstance>> OnClickUpgradeButton;
 
     private void Awake()
     {
         InitCardData();
+    }
+
+    private void OnEnable()
+    {
+        EventBus.Subscribe(GameEventType.CARD_DRAW, CardDraw);                                                  // 턴을 시작할 때 드로우하는 함수
+        EventBus<CardGameData>.Subscribe(GameEventType.CARD_DRAW, (data) => AddCardToHand(data.Value));         // 카드를 사용해 드로우하는 함수
+        EventBus.Subscribe(GameEventType.RESTART, () => StartCoroutine(GameRestart()));
+    }
+
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe(GameEventType.CARD_DRAW, CardDraw);
+        EventBus<CardGameData>.Unsubscribe(GameEventType.CARD_DRAW, (data) => AddCardToHand(data.Value));
+        EventBus.Unsubscribe(GameEventType.RESTART, () => StartCoroutine(GameRestart()));
     }
 
     private IEnumerator Start()
@@ -55,50 +70,45 @@ public class Deck : MonoBehaviour
     private void InitCardData()
     {
         // 상태이상 데이터 json 파일의 Key와 카드 데이터 json 파일의 StatusEffect 값을 일치시켜 데이터 매핑 용도로 사용
-        Addressables.LoadAssetAsync<TextAsset>("StatusEffectDatas").Completed += (handle) =>
+        Addressables.LoadAssetAsync<TextAsset>("StatusEffectDatas").Completed += handle =>
         {
-            if (handle.Status == AsyncOperationStatus.Succeeded)
-            {
-                StatusEffectJsonList data = JsonConvert.DeserializeObject<StatusEffectJsonList>(handle.Result.text);
-                statusEffectDatas = data.statusEffects;
-            }
+            Assert.IsFalse(handle.Status != AsyncOperationStatus.Succeeded, "StatusEffectDatas를 찾지 못했습니다.");
+
+            StatusEffectJsonList data = JsonConvert.DeserializeObject<StatusEffectJsonList>(handle.Result.text);
+            statusEffectDatas = data.statusEffects;
         };
         Addressables.LoadAssetAsync<TextAsset>("CardDatas").Completed += (handle) =>
         {
-            if (handle.Status == AsyncOperationStatus.Succeeded)
-            {
-                CardJsonList data = JsonConvert.DeserializeObject<CardJsonList>(handle.Result.text);
-                cardJsonData = data.cards;
-                
-                LoadCardImages();
-            }
+            Assert.IsFalse(handle.Status != AsyncOperationStatus.Succeeded, "CardDatas를 찾지 못했습니다.");
+
+            CardJsonList data = JsonConvert.DeserializeObject<CardJsonList>(handle.Result.text);
+            cardJsonData = data.cards;
+
+            LoadCardImages();
         };
     }
 
     private void LoadCardImages()
     {
         int completeCount = 0;
-        var cardJsonKeys = cardJsonData.Keys.ToList();
-        var cardJsonValues = cardJsonData.Values.ToList();
+        StatusEffectData effectData = default;
 
-        for (int i = 0; i < cardJsonData.Count; i++)
+        foreach (var pair in cardJsonData)
         {
-            int index = i;      // 클로저 문제를 해결하기 위한 int 변수(for문 위에 두면 같은 이미지를 넣기 때문에 안쪽에 변수를 뒀음)
-            Addressables.LoadAssetAsync<Sprite>(cardJsonValues[index].spriteName).Completed += (handle) =>
+            string cardKey = pair.Key;
+            CardJsonData cardJson = pair.Value;
+
+            Addressables.LoadAssetAsync<Sprite>(cardJson.spriteName).Completed += (handle) =>
             {
-                CardSideEffect cardSideEffect = new CardSideEffect(cardJsonValues[index].cardSideEffect);
-                
-                if (statusEffectDatas.ContainsKey(cardJsonValues[index].cardSideEffect.statusEffect))
+                if (statusEffectDatas.ContainsKey(cardJson.statusEffect))
                 {
-                    string effectName = cardJsonValues[index].cardSideEffect.statusEffect;
-                    StatusEffectData effectData = StatusEffectFactory.GetStatusEffect(effectName);
-                    effectData.CreateStatusEffectData(statusEffectDatas[effectName]);
-                    cardSideEffect.CreateStatusEffect(effectData);
+                    effectData = StatusEffectFactory.GetStatusEffect(cardJson.statusEffect);
+                    effectData.CreateStatusEffectData(statusEffectDatas[cardJson.statusEffect]);
                 }
-                
-                CardData cardData = CardDataFactory.GetCard(cardJsonKeys[index]);
-                cardData.CreateCardData(cardJsonValues[index], handle.Result, cardSideEffect);
-                cardEntrys.Add(new CardEntry(cardData, cardJsonValues[index].cardCount));
+
+                CardData cardData = CardDataFactory.GetCard(cardKey);
+                cardData.CreateCardData(cardJson, handle.Result, effectData);
+                cardEntrys.Add(new CardEntry(cardData, cardJson.cardCount));
 
                 ++completeCount;
                 // 필요한 카드 데이터가 다 들어갔을 때 카드를 생성함
@@ -113,17 +123,13 @@ public class Deck : MonoBehaviour
         for (int i = 0; i < cardEntrys.Count; i++)
         {
             for (int j = 0; j < cardEntrys[i].cardCount; j++)
-                cardInstances.Add(new CardInstance(false, cardEntrys[i].cardData));
+                cardInstances.Add(new CardInstance(true, cardEntrys[i].cardData));
         }
         isCardInit = true;
     }
 
     private void MakeCard()
     {
-        EventBus.Subscribe(GameEventType.CARD_DRAW, CardDraw);                                                  // 턴을 시작할 때 드로우하는 함수
-        EventBus<CardGameData>.Subscribe(GameEventType.CARD_DRAW, (data) => AddCardToHand(data.Value));         // 카드를 사용해 드로우하는 함수
-        EventBus.Subscribe(GameEventType.RESTART, () => StartCoroutine(GameRestart()));
-
         for (int i = 0; i < cardInstances.Count; i++)
         {
             Card cardGameobject = Instantiate(deckCardPrefab, transform);
@@ -158,7 +164,7 @@ public class Deck : MonoBehaviour
     {
         for (int i = 0; i < drawCardCount; i++)
         {
-            // 덱의 카드 수가 0이면 묘지의 카드를 덱으로 되돌림
+            // 덱에 카드가 없다면 묘지의 카드를 덱으로 되돌림
             if (currnetDeckList.Count <= 0)
                 EventBus.Publish(GameEventType.RETURN_TO_DECK);
 

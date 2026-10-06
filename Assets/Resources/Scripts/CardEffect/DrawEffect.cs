@@ -1,10 +1,10 @@
 using System.Collections;
 
-public class ShieldEffect : ICardEffect
+public class DrawEffect : ICardEffect
 {
     public void Execute(CardInstance cardInstance, CardRuntimeValue cardRuntimeValue, ISelectable target = null)
     {
-        EventBus<CardGameData>.Publish(GameEventType.PLAYERDEFEND, new CardGameData { Value = cardRuntimeValue.skillValue });
+        EventBus<CardGameData>.Publish(GameEventType.CARD_DRAW, new CardGameData { Value = cardRuntimeValue.addDrawCard });
     }
 
     public float GetEffectInterval() => 0.0f;

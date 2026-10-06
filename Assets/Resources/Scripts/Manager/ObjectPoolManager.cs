@@ -97,8 +97,8 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
     {
         for (int i = dequeueMonsters.Count - 1; i >= 0; i--)
             ReturnPooledObject(dequeueMonsters[i]);
-
-        dequeueMonsters.Clear();
+        
+        //dequeueMonsters.Clear();
         player.InitPlayer();
     }
 

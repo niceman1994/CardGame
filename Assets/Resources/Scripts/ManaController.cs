@@ -34,15 +34,14 @@ public class ManaController : MonoBehaviour
 
     private void ManaRestore()
     {
-        if (currentMana + restoreMana <= maxMana)
-            currentMana += restoreMana;
-        else
-            currentMana = maxMana;
-
-        currentManaText.text = $"{currentMana}";
+        currentMana = restoreMana;
 
         if (restoreMana < maxMana)
             restoreMana++;
+        else
+            restoreMana = maxMana;
+
+        currentManaText.text = $"{currentMana}";
     }
 
     public bool TrySpendMana(int cardCost)
